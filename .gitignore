@@ -1,2 +1,26 @@
-frontend/e-scooter/node_modules
-frontend/e-scooter/package.json
+frontend/eScooter/node_modules
+frontend/eScooter/package.json
+
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+
+frontend/eScooter/.pnp
+frontend/eScooter/.pnp.js
+
+# testing
+/coverage
+
+# production
+frontend/eScooter/build
+
+# misc
+frontend/eScooter/.DS_Store
+frontend/eScooter/.env.local
+frontend/eScooter/.env.development.local
+frontend/eScooter/.env.test.local
+frontend/eScooter/.env.production.local
+
+frontend/eScooter/npm-debug.log*
+frontend/eScooter/yarn-debug.log*
+frontend/eScooter/yarn-error.log*
