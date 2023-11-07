@@ -1,0 +1,1 @@
+Vår grupp har fått i uppgift att konstruera ett system efter en kunds specifika önskningar. I det här fallet är det “Svenska Elsparkcyklar AB” som vill ha ett system som ska hantera uthyrning av elsparkcyklar utifrån en kravspecifikation. Den kräver att vårt system ska kunna göra en rad olika saker: 
