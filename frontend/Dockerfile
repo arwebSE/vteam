@@ -1,8 +1,11 @@
-FROM node:18.17.1 as builder
-RUN mkdir /app
+FROM node:18.17.1
+
 WORKDIR /app
-COPY ./e-scooter/package.json .
+
+COPY ./scooter/package*.json ./scooter/
+
 RUN npm install
-COPY ./e-scooter .
-EXPOSE 3000
+
+COPY . .
+
 CMD ["npm", "start"]

@@ -2,11 +2,15 @@ version: '3.8'
 
 services:
   app:
-    image: stegler/e-scooter:0.1
+    container_name: scooter
+    build:
+      context: .
+      dockerfile: ./frontend/Dockerfile
     ports:
       - "3000:3000"
     volumes:
-      - ./frontend/e-scooter:/app
+      - ./frontend/scooter:/app
+
     stdin_open: true
     tty: true
   #server:
