@@ -4,7 +4,7 @@ WORKDIR /app
 
 RUN mkdir scooter
 
-COPY ./scooter/package*.json ./scooter/
+COPY ./scooter/package.json ./scooter/
 
 RUN npm install
 
