@@ -24,3 +24,6 @@ frontend/scooter/.env.production.local
 frontend/scooter/npm-debug.log*
 frontend/scooter/yarn-debug.log*
 frontend/scooter/yarn-error.log*
+
+# macOS
+.DS_Store
