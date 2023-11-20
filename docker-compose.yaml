@@ -1,6 +1,19 @@
 version: '3.8'
 
 services:
+  mysql:
+    image: "mysql:latest"
+    restart: always
+    ports: 
+      - "13306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD="password"
+    volumes:
+     - ./backend/databases/sql:/docker-entrypoint-initdb.d
+  mysql_client:
+    image: "mysql:latest"
+
+
   app:
     container_name: scooter
     build:
@@ -13,4 +26,6 @@ services:
 
     stdin_open: true
     tty: true
-  #server:
+
+volumes:
+  mysql_data: {}
