@@ -1,1 +1,1 @@
-This is the development branch for the main database section of the system. As of right now, the database is implemented together with a mysql-sever using docker-compose.
+Vår grupp har fått i uppgift att konstruera ett system efter en kunds specifika önskningar. I det här fallet är det “Svenska Elsparkcyklar AB” som vill ha ett system som ska hantera uthyrning av elsparkcyklar utifrån en kravspecifikation. Den kräver att vårt system ska kunna göra en rad olika saker: 
