@@ -13,4 +13,6 @@ services:
 
     stdin_open: true
     tty: true
-  #server:
+
+volumes:
+  mysql_data: {}
