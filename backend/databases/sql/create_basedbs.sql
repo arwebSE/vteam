@@ -1,8 +1,4 @@
-CREATE USER 'adm'@'%' IDENTIFIED BY 'pass'; GRANT ALL PRIVILEGES
-ON
-    adm.* TO 'adm'@'%';
-CREATE DATABASE users_andbikes; USE
-    users_andbikes;
+
 CREATE TABLE Users(
     userId INT NOT NULL,
     username VARCHAR(45) NOT NULL,
