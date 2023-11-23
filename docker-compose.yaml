@@ -14,5 +14,17 @@ services:
     stdin_open: true
     tty: true
 
+  db:
+    container_name: scooter_db
+    build:
+      context: .
+      dockerfile: ./backend/Dockerfile
+    ports:
+      - "1337:1337"
+    volumes:
+      - ./backend:/app
+    stdin_open: true
+    tty: true
+
 volumes:
   mysql_data: {}
