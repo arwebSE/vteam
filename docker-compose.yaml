@@ -1,18 +1,28 @@
-version: '3.8'
+version: "3.8"
 
 services:
-  app:
-    container_name: scooter
-    build:
-      context: .
-      dockerfile: ./frontend/Dockerfile
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./frontend/scooter:/app
-
-    stdin_open: true
-    tty: true
+    frontend:
+        container_name: boi_frontend
+        build:
+            context: .
+            dockerfile: ./frontend/Dockerfile
+        ports:
+            - "3000:3000"
+        volumes:
+            - ./frontend/scooter:/frontend
+        stdin_open: true
+        tty: true
+    backend:
+        container_name: boi_backend
+        build:
+            context: .
+            dockerfile: ./backend/Dockerfile
+        ports:
+            - "3001:3001"
+        volumes:
+            - ./backend/scooter:/frontend
+        stdin_open: true
+        tty: true
 
 volumes:
-  mysql_data: {}
+    mysql_data: {}
