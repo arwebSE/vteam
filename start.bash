@@ -1,2 +1,4 @@
 npm install --prefix ./frontend/scooter
-docker-compose up -d app
+npm install --prefix ./backend
+docker-compose up -d frontend
+docker-compose up -d backend
