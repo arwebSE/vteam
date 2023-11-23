@@ -20,7 +20,7 @@ services:
         ports:
             - "3001:3001"
         volumes:
-            - ./backend/scooter:/server
+            - ./backend/scooter:/frontend
         stdin_open: true
         tty: true
 
