@@ -1,0 +1,67 @@
+<!-- form.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Form Submission</title>
+</head>
+<body>
+
+<form id="testForm" action="/user" method="post">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required>
+    <br>
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+    <br>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+    <button type="button" onclick="submitForm()">Submit</button>
+</form>
+
+<script>
+    console.log('Script loaded!');
+async function submitForm() {
+    console.log("Button clicked");
+    // Get form data
+    var username = document.getElementById("username").value;
+    var email = document.getElementById("email").value;
+    var password = document.getElementById("password").value;
+
+    // Create a FormData object
+    const jsonData = {
+        username: username,
+        email: email,
+        password: password
+    };
+
+    console.log(jsonData);
+
+    // Send a POST request to your API endpoint
+    await fetch('http://localhost:1337/user', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'  // Set content type to JSON
+        },
+        body: JSON.stringify(jsonData)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json(); // Assuming the API returns JSON
+    })
+    .then(data => {
+        console.log('Success:', data);
+        // Handle success, e.g., show a success message to the user
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        // Handle errors, e.g., show an error message to the user
+    });
+}
+</script>
+
+</body>
+</html>

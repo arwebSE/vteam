@@ -20,10 +20,15 @@ app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 app.get('/', (req, res) => {
-    res.send('Hello World!');
+    //res.send('Hello World!');
+    res.sendFile(__dirname + '/routes/test.html');
 });
 
 app.use("/user", userRoute);
+// Serve the form at the '/form' route
+app.get('/form', (req, res) => {
+    
+});
 
 
 app.listen(port, () => {
