@@ -1,10 +1,13 @@
 require('dotenv').config()
 
 const express = require('express');
-const cors = require('cors')
-const morgan = require('morgan')
-const bodyParser = require('body-parser')
-
+const cors = require('cors');
+const morgan = require('morgan');
+const bodyParser = require('body-parser');
+const sqlite3 = require('sqlite3');
+var GoogleAuth = require('passport-google-oauth20');
+var passport = require('passport');
+var dotenv = require('dotenv').config();
 
 const app = express();
 const port = 1337;
@@ -18,6 +21,10 @@ app.use(cors())
 app.disable('x-powered-by');
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+
+
+
+passport.use
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
