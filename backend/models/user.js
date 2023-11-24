@@ -2,7 +2,7 @@
 
 const userModel = {
     getAll: function (res) {
-        database.query('SELECT * FROM user', function (error, results, fields) {
+        database.all('SELECT * FROM user', function (error, results, fields) {
             if (error) throw error;
             res.json(results);
         });
