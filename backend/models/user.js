@@ -14,30 +14,55 @@ const userModel = {
         });
     },
     create: function (user, res) {
-        //console.log(user);
-        const sql = 'INSERT INTO Users (userId, username, email, passwd) VALUES (4, ?, ?, ?)';
-        const params = [user.username, user.email, user.password];
+        //console.log(user.body);
+        const sql = 'INSERT INTO Users (username, email, passwd) VALUES (?, ?, ?)';
+        const params = [user.body.username, user.body.email, user.body.password];
 
+        database.run(sql, params, function (error) {
+            if (error) {
+                console.error('Error:', error);
+                res.status(500).json({ error: 'Internal Server Error' });
+                return;
+            }
+            res.status(201).json({ message: 'User created successfully', userId: this.lastID });
+            console.log('User created successfully. Last inserted ID:', this.lastID);
+        });
+    },
+    update: function (userId, user, res) {
+        // Build the SQL query and parameters based on the provided or existing data
+        const sql = 'UPDATE Users SET ' +
+        'username = COALESCE(?, username), ' +
+        'email = COALESCE(?, email), ' +
+        'passwd = COALESCE(?, passwd) ' +
+        'WHERE userId = ?';
+
+        // Ensure that undefined values are replaced with null
+        const params = [
+            user.username || null,
+            user.email || null,
+            user.passwd || null,
+            userId
+        ];
+    
         database.run(sql, params, function (error, results) {
             if (error) {
                 console.error('Error:', error);
                 res.status(500).json({ error: 'Internal Server Error' });
                 return;
             }
-            res.status(201).json({ message: 'User created successfully' });
-            console.log(results);
+            res.status(201).json({ message: 'User updated successfully' });
+            console.log('User updated successfully.');
         });
-    },
-    update: function (user, res) {
-        database.run('UPDATE user SET ? WHERE id = ?', [user, user.id], function (error, results, fields) {
-            if (error) throw error;
-            res.json(results);
-        });
-    },
+    },    
     delete: function (id, res) {
-        database.run('DELETE FROM user WHERE id = ?', id, function (error, results, fields) {
-            if (error) throw error;
-            res.json(results);
+        const sql = 'DELETE FROM Users WHERE userId = ?';
+        database.run(sql, id, function (error, results) {
+            if (error) {
+                console.error('Error:', error);
+                res.status(500).json({ error: 'Internal Server Error' });
+                return;
+            }
+            res.json({ message: 'User deleted successfully' });
         });
     }
 };

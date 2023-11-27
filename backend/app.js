@@ -26,9 +26,9 @@ app.get('/', (req, res) => {
 
 app.use("/user", userRoute);
 // Serve the form at the '/form' route
-app.get('/form', (req, res) => {
+/*app.get('/form', (req, res) => {
     
-});
+});*/
 
 
 app.listen(port, () => {

@@ -1,20 +1,18 @@
 
-CREATE TABLE Users(
-    userId INT NOT NULL,
+CREATE TABLE Users (
+    userId INTEGER PRIMARY KEY AUTOINCREMENT,
     username VARCHAR(45) NOT NULL,
     email VARCHAR(45) NOT NULL,
-    passwd VARCHAR(45) NOT NULL,
-    PRIMARY KEY(userId)
+    passwd VARCHAR(45) NOT NULL
 ); CREATE TABLE City(
     cityId INT NOT NULL,
     id VARCHAR(45) NOT NULL,
     lat FLOAT NOT NULL,
     lon FLOAT NOT NULL
 ); CREATE TABLE Scooter(
-    scooterId INT NOT NULL,
+    scooterId INTEGER PRIMARY KEY AUTOINCREMENT,
     lon FLOAT,
     city_cityid INT,
-    PRIMARY KEY(scooterId),
     FOREIGN KEY(city_cityid) REFERENCES city(cityId)
 ); CREATE TABLE Zones(
     pointname VARCHAR(45),
