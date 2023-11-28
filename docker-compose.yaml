@@ -23,4 +23,14 @@ services:
       - ./backend/:/backend
     stdin_open: true
     tty: true
-
+  simulation:
+    container_name: simulation
+    build:
+      context: .
+      dockerfile: ./simulation/Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./simulation/sim:/sim
+    stdin_open: true
+    tty: true
