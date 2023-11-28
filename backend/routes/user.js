@@ -25,6 +25,10 @@ passport.use(new GoogleAuth({
 ))
 
 router.get("/", (req, res) => userModel.getAll(res));
+router.get("/:userId", (req, res) => userModel.getOne(req.params.userId, res));
+router.post("/", (req, res) => userModel.create(req, res));
+router.put("/:userId", (req, res) => userModel.update(req.params.userId, req.body, res));
+router.delete("/:userId", (req, res) => userModel.delete(req.params.userId, res));
 
 // Provisory loginpage for oauth testing
 router.get('/login', passport.authenticate('google'));

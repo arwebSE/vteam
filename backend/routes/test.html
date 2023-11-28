@@ -1,0 +1,155 @@
+<!-- form.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Form Submission</title>
+</head>
+<body>
+
+<h1> CREATE FORM</h1>
+<form id="testForm" action="/user" method="post">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required>
+    <br>
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+    <br>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+    <button type="button" onclick="submitForm()">Submit</button>
+</form>
+
+<h1>DELETE FORM</h1>
+<form id="deleteForm">
+    <label for="userId">User ID:</label>
+    <input type="text" id="userId" name="userId" required>
+    <button type="button" onclick="deleteUser()">Delete User</button>
+</form>
+
+<h1>CHANGE FORM</h1>
+<form id="updateForm" action="/user" method="put">
+    <label for="userId_edit">User ID:</label>
+    <input type="text" id="userId_edit" name="userId_edit" required>
+    <h3>UPDATE DATA</h3>
+    <label for="username_edit">Username:</label>
+    <input type="text" id="username_edit" name="username_edit" required>
+    <br>
+    <label for="email_edit">Email:</label>
+    <input type="email" id="email_edit" name="email_edit" required>
+    <br>
+    <label for="passwd_edit">Password:</label>
+    <input type="password" id="passwd_edit" name="passwd_edit" required>
+    <br>
+    <button type="button" onclick="updateUser()">Update User</button>
+</form>
+
+<script>
+    console.log('Script loaded!');
+async function submitForm() {
+    console.log("Button clicked");
+    // Get form data
+    var username = document.getElementById("username").value;
+    var email = document.getElementById("email").value;
+    var password = document.getElementById("password").value;
+
+    // Create a FormData object
+    const jsonData = {
+        username: username,
+        email: email,
+        password: password
+    };
+
+    console.log(jsonData);
+
+    // Send a POST request to your API endpoint
+    await fetch('http://localhost:1337/user', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'  // Set content type to JSON
+        },
+        body: JSON.stringify(jsonData)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json(); // Assuming the API returns JSON
+    })
+    .then(data => {
+        console.log('Success:', data);
+        // Handle success, e.g., show a success message to the user
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        // Handle errors, e.g., show an error message to the user
+    });
+}
+
+function deleteUser() {
+    const userId = document.getElementById("userId").value;
+
+    // Make an asynchronous DELETE request using Fetch API or XMLHttpRequest
+    fetch(`/user/${userId}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('User deleted successfully:', data);
+        // Add any additional logic or UI updates as needed
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        // Handle errors or display error messages as needed
+    });
+}
+
+async function updateUser() {
+    console.log("Update");
+    const userId = document.getElementById("userId_edit").value;
+    const username = document.getElementById("username_edit").value;
+    const email = document.getElementById("email_edit").value;
+    const passwd = document.getElementById("passwd_edit").value;
+
+    const user = {
+        username: username,
+        email: email,
+        passwd: passwd
+    };
+
+    // Make an asynchronous UPDATE request using Fetch API or XMLHttpRequest
+    await fetch(`http://localhost:1337/user/${userId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(user)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('User updated successfully:', data);
+        // Add any additional logic or UI updates as needed
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        // Handle errors or display error messages as needed
+    });
+}
+</script>
+
+</body>
+</html>
