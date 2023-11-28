@@ -1,11 +1,13 @@
-const database = require('../databases/sql/database.js');
+const db = require("../databases/sql/database.js");
 
 const userModel = {
     getAll: function (res) {
-        database.all('SELECT * FROM Users', function (error, results, fields) {
+        console.log("get all");
+        db.all('SELECT * FROM Users', function (error, results, fields) {
             if (error) throw error;
             res.json(results);
         });
+        db.close();
     },
     getOne: function (id, res) {
         database.get('SELECT * FROM Users WHERE userId = ?', id, function (error, results, fields) {
@@ -31,10 +33,10 @@ const userModel = {
     update: function (userId, user, res) {
         // Build the SQL query and parameters based on the provided or existing data
         const sql = 'UPDATE Users SET ' +
-        'username = COALESCE(?, username), ' +
-        'email = COALESCE(?, email), ' +
-        'passwd = COALESCE(?, passwd) ' +
-        'WHERE userId = ?';
+            'username = COALESCE(?, username), ' +
+            'email = COALESCE(?, email), ' +
+            'passwd = COALESCE(?, passwd) ' +
+            'WHERE userId = ?';
 
         // Ensure that undefined values are replaced with null
         const params = [
@@ -43,7 +45,7 @@ const userModel = {
             user.passwd || null,
             userId
         ];
-    
+
         database.run(sql, params, function (error, results) {
             if (error) {
                 console.error('Error:', error);
@@ -53,7 +55,7 @@ const userModel = {
             res.status(201).json({ message: 'User updated successfully' });
             console.log('User updated successfully.');
         });
-    },    
+    },
     delete: function (id, res) {
         const sql = 'DELETE FROM Users WHERE userId = ?';
         database.run(sql, id, function (error, results) {
