@@ -1,0 +1,38 @@
+@keyframes scooter-move {
+    0% {
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+
+    10% {
+        opacity: 1;
+        transform: translateX(-80%);
+    }
+
+    90% {
+        opacity: 1;
+        transform: translateX(80%);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .scooter {
+        animation: scooter-move 3s linear infinite;
+    }
+}
+
+.leaflet-container {
+    width: 95vw;
+    height: 50vh;
+}
+
+/* or */
+#map {
+    width: 100vw;
+    height: 100vh;
+}
