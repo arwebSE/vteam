@@ -1,4 +1,5 @@
 frontend/scooter/node_modules
+simulation/sim/node_modules
 node_modules
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
@@ -8,6 +9,8 @@ node_modules
 frontend/scooter/.pnp
 frontend/scooter/.pnp.js
 
+simulation/sim/.pnp
+simulation/sim/.pnp.js
 # testing
 /coverage
 
@@ -24,6 +27,20 @@ frontend/scooter/.env.production.local
 frontend/scooter/npm-debug.log*
 frontend/scooter/yarn-debug.log*
 frontend/scooter/yarn-error.log*
+
+# production
+simulation/sim/build
+
+# misc
+simulation/sim/.DS_Store
+simulation/sim/.env.local
+simulation/sim/.env.development.local
+simulation/sim/.env.test.local
+simulation/sim/.env.production.local
+
+simulation/sim/npm-debug.log*
+simulation/sim/yarn-debug.log*
+simulation/sim/yarn-error.log*
 
 # macOS
 .DS_Store

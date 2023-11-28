@@ -1,4 +1,3 @@
-
 CREATE TABLE Users (
     userId INTEGER PRIMARY KEY,
     username VARCHAR(45) NOT NULL,
