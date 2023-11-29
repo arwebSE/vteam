@@ -6,9 +6,8 @@ const userModel = require('../models/user');
 var passport = require('passport');
 var GoogleAuth = require('passport-google-oauth20');
 const database = require('../databases/sql/database.js');
+
 require('dotenv').config();
-
-
 
 
 
