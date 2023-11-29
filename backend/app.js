@@ -9,6 +9,7 @@ const port = 1337;
 
 // Routes
 const userRoute = require('./routes/user');
+const cityRoute = require('./routes/city');
 
 //Middleware
 app.use(cors())
@@ -28,6 +29,7 @@ app.get('/', (req, res) => {
 
 
 app.use("/user", userRoute);
+app.use("/city", cityRoute);
 // Serve the form at the '/form' route
 /*app.get('/form', (req, res) => {
     

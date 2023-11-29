@@ -5,7 +5,7 @@ CREATE TABLE Users (
     email VARCHAR(45) NOT NULL,
     passwd VARCHAR(45) NOT NULL
 ); CREATE TABLE City(
-    cityId INT primary key,
+    cityId INTEGER primary key AUTOINCREMENT,
     id VARCHAR(45) NOT NULL,
     lat FLOAT NOT NULL,
     lon FLOAT NOT NULL
