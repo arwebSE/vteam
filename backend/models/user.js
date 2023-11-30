@@ -4,7 +4,7 @@ const userModel = {
     getAll: function (res) {
         db.all('SELECT * FROM Users', function (error, results, fields) {
             if (error) throw error;
-            res.json(results);
+            return res.json(results);
         });
     },
     getOne: function (id, res) {
@@ -14,9 +14,9 @@ const userModel = {
         });
     },
     create: function (user, res) {
-        //console.log(user.body);
         const sql = 'INSERT INTO Users (username, email, passwd) VALUES (?, ?, ?)';
-        const params = [user.body.username, user.body.email, user.body.password];
+        const params = [user.body.username, user.body.email, user.body.passwd];
+        console.log(params);
 
         db.run(sql, params, function (error) {
             if (error) {
@@ -25,7 +25,6 @@ const userModel = {
                 return;
             }
             res.status(201).json({ message: 'User created successfully', userId: this.lastID });
-            console.log('User created successfully. Last inserted ID:', this.lastID);
         });
     },
     update: function (userId, user, res) {
