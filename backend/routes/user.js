@@ -11,7 +11,6 @@ require('dotenv').config();
 
 
 
-
 passport.use(new GoogleAuth({
     clientID: '123314154390-dbgte1hjv7a79ugi5v6vvdp4qu3itvru.apps.googleusercontent.com',
     clientSecret: process.env['GOOGLE_CLIENT_SECRET'],
@@ -74,7 +73,6 @@ router.put("/:userId", (req, res) => userModel.update(req.params.userId, req.bod
 router.delete("/:userId", (req, res) => userModel.delete(req.params.userId, res));
 
 // Provisory loginpage for oauth testing
-
 router.get('/login/google', passport.authenticate('google'));
 
 // Processing the auth response and redirects to start
