@@ -8,5 +8,4 @@ router.put("/:userId", (req, res) => userModel.update(req.params.userId, req.bod
 router.delete("/:userId", (req, res) => userModel.delete(req.params.userId, res));
 
 
-
 module.exports = router;
