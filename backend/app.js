@@ -9,10 +9,7 @@ const port = 1337;
 
 // Routes
 const userRoute = require('./routes/user');
-<<<<<<< HEAD
 const authRoute = require('./routes/auth')
-=======
->>>>>>> 0fb28972eb672d0b0680e0264c1b794bdbee80f1
 const cityRoute = require('./routes/city');
 
 //Middleware
