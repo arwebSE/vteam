@@ -9,7 +9,7 @@ const port = 1337;
 
 // Routes
 const userRoute = require('./routes/user');
-
+const authRoute = require('./routes/auth')
 //Middleware
 app.use(cors())
 // app.use(options('*', cors()));
@@ -26,13 +26,12 @@ app.get('/', (req, res) => {
 
 
 
-
+app.use("/auth", authRoute);
 app.use("/user", userRoute);
 // Serve the form at the '/form' route
 /*app.get('/form', (req, res) => {
     
 });*/
-
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
