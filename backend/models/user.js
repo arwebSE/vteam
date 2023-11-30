@@ -2,15 +2,13 @@ const db = require("../databases/sql/database.js");
 
 const userModel = {
     getAll: function (res) {
-        console.log("get all");
         db.all('SELECT * FROM Users', function (error, results, fields) {
             if (error) throw error;
             res.json(results);
         });
-        db.close();
     },
     getOne: function (id, res) {
-        database.get('SELECT * FROM Users WHERE userId = ?', id, function (error, results, fields) {
+        db.get('SELECT * FROM Users WHERE userId = ?', id, function (error, results, fields) {
             if (error) throw error;
             res.json(results);
         });
@@ -20,7 +18,7 @@ const userModel = {
         const sql = 'INSERT INTO Users (username, email, passwd) VALUES (?, ?, ?)';
         const params = [user.body.username, user.body.email, user.body.password];
 
-        database.run(sql, params, function (error) {
+        db.run(sql, params, function (error) {
             if (error) {
                 console.error('Error:', error);
                 res.status(500).json({ error: 'Internal Server Error' });
@@ -46,7 +44,7 @@ const userModel = {
             userId
         ];
 
-        database.run(sql, params, function (error, results) {
+        db.run(sql, params, function (error, results) {
             if (error) {
                 console.error('Error:', error);
                 res.status(500).json({ error: 'Internal Server Error' });
@@ -58,7 +56,7 @@ const userModel = {
     },
     delete: function (id, res) {
         const sql = 'DELETE FROM Users WHERE userId = ?';
-        database.run(sql, id, function (error, results) {
+        db.run(sql, id, function (error, results) {
             if (error) {
                 console.error('Error:', error);
                 res.status(500).json({ error: 'Internal Server Error' });
