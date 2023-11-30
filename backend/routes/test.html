@@ -92,6 +92,46 @@
     <button type="button" onclick="updateCity()">Update City</button>
 </form>
 
+<h1>CREATE SCOOTER FORM</h1>
+<form id="scooterForm" action="/scooter" method="post">
+    <label for="lon">Longitude:</label>
+    <input type="number" id="lon" name="lon" step="any" required>
+    <br>
+    <label for="city_cityid">City ID:</label>
+    <input type="number" id="city_cityid" name="city_cityid" required>
+    <button type="button" onclick="createScooter()">Submit</button>
+</form>
+
+<h2>See all scooters: <a href="http://localhost:1337/scooter">/scooter</a></h2>
+<h2>See one scooter: <a href="http://localhost:1337/scooter/1">/scooter/{scooterId}</a></h2>
+
+<h1>DELETE SCOOTER FORM</h1>
+<form id="deleteForm">
+    <label for="scooterId">Scooter ID:</label>
+    <input type="text" id="scooterId" name="scooterId" required>
+    <button type="button" onclick="deleteScooter()">Delete Scooter</button>
+</form>
+
+<h1>CHANGE SCOOTER FORM</h1>
+<form id="updateForm" action="/scooter" method="put">
+    <label for="scooterId_edit">Scooter ID:</label>
+    <input type="text" id="scooterId_edit" name="scooterId_edit" required>
+    <h3>UPDATE DATA</h3>
+    <label for="lon_scooter_edit">Longitude:</label>
+    <input type="number" id="lon_scooter_edit" name="lon_scooter_edit" step="any" required>
+    <br>
+    <label for="city_cityid_edit">City ID:</label>
+    <input type="number" id="city_cityid_edit" name="city_cityid_edit" required>
+    <br>
+    <button type="button" onclick="updateScooter()">Update Scooter</button>
+</form>
+
+<h1>Delete All Scooters</h1>
+    
+<button id="deleteAllButton" onclick="confirmDelete()">Delete All Scooters</button>
+
+
+
 <script>
     console.log('Script loaded!');
 async function submitForm() {
@@ -300,6 +340,141 @@ async function updateCity() {
         // Handle errors or display error messages as needed
     });
 }
+
+async function createScooter() {
+    console.log("Button clicked");
+
+    // Get form data
+    var lon = document.getElementById("lon").value;
+    var city_cityid = document.getElementById("city_cityid").value;
+
+    // Create a FormData object
+    const jsonData = {
+        lon: parseFloat(lon),
+        city_cityid: parseInt(city_cityid)
+    };
+
+    console.log(jsonData);
+
+    // Send a POST request to your API endpoint
+    await fetch('http://localhost:1337/scooter', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'  // Set content type to JSON
+        },
+        body: JSON.stringify(jsonData)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json(); // Assuming the API returns JSON
+    })
+    .then(data => {
+        console.log('Success:', data);
+        // Handle success, e.g., show a success message to the user
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        // Handle errors, e.g., show an error message to the user
+    });
+}
+
+function deleteScooter() {
+    const scooterId = document.getElementById("scooterId").value;
+
+    // Make an asynchronous DELETE request using Fetch API or XMLHttpRequest
+    fetch(`/scooter/${scooterId}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Scooter deleted successfully:', data);
+        // Add any additional logic or UI updates as needed
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        // Handle errors or display error messages as needed
+    });
+}
+
+async function updateScooter() {
+    const scooterId = document.getElementById("scooterId_edit").value;
+    const lon = document.getElementById("lon_scooter_edit").value;
+    const city_cityid = document.getElementById("city_cityid_edit").value;
+
+    const scooter = {
+        lon: parseFloat(lon),
+        city_cityid: parseInt(city_cityid)
+    };
+
+    // Make an asynchronous UPDATE request using Fetch API or XMLHttpRequest
+    await fetch(`http://localhost:1337/scooter/${scooterId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(scooter)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Scooter updated successfully:', data);
+        // Add any additional logic or UI updates as needed
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        // Handle errors or display error messages as needed
+    });
+}
+
+function confirmDelete() {
+    const confirmation = confirm("Are you sure you want to delete all scooters?");
+    if (confirmation) {
+        deleteAllScooters();
+    } else {
+        console.log("Deletion canceled.");
+    }
+}
+
+async function deleteAllScooters() {
+    try {
+        const response = await fetch('http://localhost:1337/scooter', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log('All scooters deleted successfully:', data);
+        // Add any additional logic or UI updates as needed
+    } catch (error) {
+        console.error('Error:', error);
+        // Handle errors or display error messages as needed
+    }
+}
+
+
+
+
+
 </script>
 
 </body>

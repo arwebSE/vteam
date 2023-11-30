@@ -2,7 +2,6 @@ const db = require("../databases/sql/database.js");
 
 const userModel = {
     getAll: function (res) {
-        console.log("get all");
         db.all('SELECT * FROM Users', function (error, results, fields) {
             if (error) throw error;
             return res.json(results);
@@ -18,6 +17,7 @@ const userModel = {
         const sql = 'INSERT INTO Users (username, email, passwd) VALUES (?, ?, ?)';
         const params = [user.body.username, user.body.email, user.body.passwd];
         console.log(params);
+
         db.run(sql, params, function (error) {
             if (error) {
                 console.error('Error:', error);
