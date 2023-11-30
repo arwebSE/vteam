@@ -2,9 +2,11 @@ const express = require('express');
 const router = express.Router();
 const userModel = require('../models/user');
 
+
 var passport = require('passport');
 var GoogleAuth = require('passport-google-oauth20');
 const database = require('../databases/sql/database.js');
+
 require('dotenv').config();
 
 
@@ -55,10 +57,11 @@ passport.use(new GoogleAuth({
 
 
 
+
                     });
 
-            }
-
+                }
+                
         });
     }
 ));
@@ -74,8 +77,8 @@ router.get('/login/google', passport.authenticate('google'));
 
 // Processing the auth response and redirects to start
 router.get('/oauth2/redir/google',
-    passport.authenticate('google', { failureRedirect: '/login', failureMessage: true }),
-    function (req, res) {
+    passport.authenticate('google', {failureRedirect: '/login', failureMessage: true}),
+    function(req, res) {
         res.redirect('/');
     });
 

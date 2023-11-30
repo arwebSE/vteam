@@ -8,7 +8,8 @@
 </head>
 <body>
 
-<h1> CREATE FORM</h1>
+
+<h1> CREATE USER FORM</h1>
 <form id="testForm" action="/user" method="post">
     <label for="username">Username:</label>
     <input type="text" id="username" name="username" required>
@@ -21,7 +22,10 @@
     <button type="button" onclick="submitForm()">Submit</button>
 </form>
 
-<h1>DELETE FORM</h1>
+<h2>See all users: <a href="http://localhost:1337/user">/user</a></h2>
+<h2>See one users: <a href="http://localhost:1337/user/1">/user/{userId}</a></h2>
+
+<h1>DELETE USER FORM</h1>
 <form id="deleteForm">
     <label for="userId">User ID:</label>
     <input type="text" id="userId" name="userId" required>
@@ -30,7 +34,7 @@
 
 <a href="/login/google">Sign in with Google</a>
 
-<h1>CHANGE FORM</h1>
+<h1>CHANGE USER FORM</h1>
 <form id="updateForm" action="/user" method="put">
     <label for="userId_edit">User ID:</label>
     <input type="text" id="userId_edit" name="userId_edit" required>
@@ -45,6 +49,47 @@
     <input type="password" id="passwd_edit" name="passwd_edit" required>
     <br>
     <button type="button" onclick="updateUser()">Update User</button>
+</form>
+
+
+<h1> CREATE CITY FORM</h1>
+<form id="testForm" action="/city" method="post">
+    <label for="cityName">City Name:</label>
+    <input type="text" id="cityName" name="cityName" required>
+    <br>
+    <label for="latitude">Latitude:</label>
+    <input type="number" id="latitude" name="latitude" step="any" required>
+    <br>
+    <label for="longitude">Longitude:</label>
+    <input type="number" id="longitude" name="longitude" step="any" required>
+    <button type="button" onclick="createCity()">Submit</button>
+</form>
+
+<h2>See all cities: <a href="http://localhost:1337/city">/city</a></h2>
+<h2>See one city: <a href="http://localhost:1337/city/Stockholm">/city/{cityName/cityId}</a></h2>
+
+<h1>DELETE CITY FORM</h1>
+<form id="deleteForm">
+    <label for="cityId">City ID or Name:</label>
+    <input type="text" id="cityId" name="cityId" required>
+    <button type="button" onclick="deleteCity()">Delete City</button>
+</form>
+
+<h1>CHANGE CITY FORM</h1>
+<form id="updateForm" action="/city" method="put">
+    <label for="cityId_edit">City ID or Name:</label>
+    <input type="text" id="cityId_edit" name="cityId_edit" required>
+    <h3>UPDATE DATA</h3>
+    <label for="cityName_edit">City Name:</label>
+    <input type="text" id="cityName_edit" name="cityName_edit" required>
+    <br>
+    <label for="lat_edit">Latitude:</label>
+    <input type="number" id="lat_edit" name="lat_edit" step="any" required>
+    <br>
+    <label for="lon_edit">Longitude:</label>
+    <input type="number" id="lon_edit" name="lon_edit" step="any" required>
+    <br>
+    <button type="button" onclick="updateCity()">Update City</button>
 </form>
 
 <script>
@@ -151,7 +196,126 @@ async function updateUser() {
         // Handle errors or display error messages as needed
     });
 }
+
+async function createCity() {
+    console.log("Button clicked");
+
+    // Get form data
+    var cityName = document.getElementById("cityName").value;
+    var latitude = document.getElementById("latitude").value;
+    var longitude = document.getElementById("longitude").value;
+
+    // Create a FormData object
+    const jsonData = {
+        id: cityName, // Assuming city name as the id
+        lat: parseFloat(latitude),
+        lon: parseFloat(longitude)
+    };
+
+    console.log(jsonData);
+
+    // Send a POST request to your API endpoint
+    await fetch('http://localhost:1337/city', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'  // Set content type to JSON
+        },
+        body: JSON.stringify(jsonData)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json(); // Assuming the API returns JSON
+    })
+    .then(data => {
+        console.log('Success:', data);
+        // Handle success, e.g., show a success message to the user
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        // Handle errors, e.g., show an error message to the user
+    });
+}
+
+function deleteCity() {
+    const cityId = document.getElementById("cityId").value;
+
+    // Make an asynchronous DELETE request using Fetch API or XMLHttpRequest
+    fetch(`/city/${cityId}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('City deleted successfully:', data);
+        // Add any additional logic or UI updates as needed
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        // Handle errors or display error messages as needed
+    });
+}
+
+async function updateCity() {
+    console.log("Update");
+    const cityId = document.getElementById("cityId_edit").value;
+    const cityName = document.getElementById("cityName_edit").value;
+    const lat = document.getElementById("lat_edit").value;
+    const lon = document.getElementById("lon_edit").value;
+
+    const city = {
+        id: cityName,
+        lat: parseFloat(lat),
+        lon: parseFloat(lon)
+    };
+
+    // Make an asynchronous UPDATE request using Fetch API or XMLHttpRequest
+    await fetch(`http://localhost:1337/city/${cityId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(city)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('City updated successfully:', data);
+        // Add any additional logic or UI updates as needed
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        // Handle errors or display error messages as needed
+    });
+}
 </script>
 
 </body>
 </html>
+
+<style>
+    body {
+        background-color: #666;
+        color: #111;
+    }
+
+    a {
+        color: blue;
+        text-decoration: none;
+    }
+    a:hover {
+        color: white;
+    }
+</style>
