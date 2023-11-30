@@ -17,14 +17,14 @@ app.disable('x-powered-by');
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
-
+process.env.SIM = true
 
 app.get('/', (req, res) => {
     //res.send('Hello World!');
     res.sendFile(__dirname + '/routes/test.html');
 });
 
-
+process.env.ENV = 'simulation';
 
 
 app.use("/user", userRoute);

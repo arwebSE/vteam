@@ -5,7 +5,7 @@ import { AuthProvider } from "./util/AuthContext";
 
 import "./index.css";
 import Navbar from "./components/Navbar";
-import Login from "./views/Login/Login";
+import Login from "./views/start/start";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
