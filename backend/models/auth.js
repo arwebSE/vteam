@@ -32,7 +32,7 @@ function enableAuth() {
 
     passport.use(new GoogleAuth({
         clientID: '123314154390-dbgte1hjv7a79ugi5v6vvdp4qu3itvru.apps.googleusercontent.com',
-        clientSecret: process.env['GOOGLE_CLIENT_SECRET'],
+        clientSecret: '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',
         callbackURL: 'oauth2/redir/google',
         scope: [ 'profile' ],
         state: true
