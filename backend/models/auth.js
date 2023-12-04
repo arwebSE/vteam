@@ -13,7 +13,7 @@ function enableAuth() {
     router.use(session({
         secret: "boi",
         resave: false,
-        saveUnitialized: true
+        saveUninitialized: false
 
 
     }));
