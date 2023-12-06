@@ -6,8 +6,10 @@ const passport = require('passport');
 
 router.use(enableAuth)
 // Provisory loginpage for oauth testing
-router.get('/login/google', passport.authenticate('google'));
-
+router.get('/login/google', (req, res) => {
+    console.log('Reached /login/google route');
+    passport.authenticate('google')(req, res);
+  });
 // Processing the auth response and redirects to start
 router.get('/oauth2/redir/google',
 passport.authenticate('google', {failureRedirect: 'http://localhost:1337/', failureMessage: true}),
