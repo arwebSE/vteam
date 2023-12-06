@@ -28,7 +28,7 @@ app.get('/', (req, res) => {
 
 
 
-app.use("/auth", authRoute);
+app.use("/oauth2", authRoute);
 app.use("/user", userRoute);
 app.use("/city", cityRoute);
 // Serve the form at the '/form' route

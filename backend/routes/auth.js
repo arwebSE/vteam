@@ -11,7 +11,7 @@ router.get('/login/google', (req, res) => {
     passport.authenticate('google')(req, res);
   });
 // Processing the auth response and redirects to start
-router.get('/oauth2/redir/google',
+router.get('/redir/google',
 passport.authenticate('google', {failureRedirect: 'http://localhost:1337/', failureMessage: true}),
 function(req, res) {
     res.redirect('http://localhost:1337/');
