@@ -25,7 +25,7 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/routes/test.html');
 });
 
-process.env.ENV = 'simulation';
+// process.env.ENV = 'simulation';
 
 app.use("/auth", authRoute);
 app.use("/user", userRoute);
