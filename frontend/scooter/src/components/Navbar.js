@@ -16,8 +16,9 @@ function Navbar() {
     return (
         <nav className="bg-white bg-opacity-75 backdrop-blur-lg p-4 text-gray-800 fixed w-full top-0 z-50 shadow-md">
             <div className="container mx-auto flex justify-between items-center">
-                <div>
+                <div className="flex gap-10">
                     <a href="/home" className="text-xl font-bold text-gray-800">boi</a>
+                    <a href="/admin" className="text-xl font-bold text-gray-800">ADMIN</a>
                 </div>
                 <div className="space-x-4">
                     {isLoggedIn && (
