@@ -4,7 +4,7 @@ CREATE TABLE Users (
     email VARCHAR(45),
     passwd VARCHAR(45),
     authprov VARCHAR(20) NOT NULL,
-    user_subject TEXT NOT NULL,
+    user_authid TEXT NOT NULL,
     userrole TEXT NOT NULL 
 ); CREATE TABLE City(
     cityId INTEGER primary key AUTOINCREMENT,
