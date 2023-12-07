@@ -45,31 +45,25 @@ function enableAuth() {
                 if (err) {return callback(err); }
 
                 if (!cred) {
+                    
                     // First time logging in with google on the site.
-                    database.run('INSERT INTO Users (username) VALUES (?)', [
-                        profile.displayName
+                    database.run('INSERT INTO Users (username, authprov, user_authid) VALUES (?, ?, ?)', [
+                        profile.displayName,
+                        'google',
+                        profile.id
                     ], function (err) {
-                        if (err) { return callback(err); }
-                        
-                        var id = this.lastID;
-                        database.run('INSERT INTO Credentials (user_id, authprov, user_subject) VALUES (?, ?, ?)', [
-                            id,
-                            'google',
-                            profile.id
-                        ], function(err) {
-                            if (err) {return callback(err); }
+                        if (err) {return callback(err); }
 
-                            var user = {
-                                id: id,
-                                name: profile.displayName
-                            };
-                            callback(null, user);
-                        });
+                        var user = {
+                            id: id,
+                            name: profile.displayName
+                        };
+                        callback(null, user);
                     });
                     } else {
                         // User has logged in with google before.
-                        database.get('SELECT * FROM Users WHERE userID = ?', 
-                        [cred.userId], function(err, user) {
+                        database.get('SELECT * FROM Users WHERE user_authid = ?', 
+                        [cred.user_authid], function(err, user) {
                             if (err) { return callback(err); }
                             if (!err) { return callback(null, false); }
                             callback(null, user);
