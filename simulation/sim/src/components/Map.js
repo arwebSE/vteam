@@ -34,9 +34,6 @@ export default function SimpleMap() {
         marker: true,
     }
 
-
-
-
     const handleMapClick = (e) => {
         setCurrentLocation(e.latlng);
     };
@@ -53,6 +50,7 @@ export default function SimpleMap() {
                 </Popup>
             </Marker>
         </MapContainer>
+
 
     );
 }

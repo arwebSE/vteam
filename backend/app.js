@@ -11,6 +11,8 @@ const port = 1337;
 const userRoute = require('./routes/user');
 const authRoute = require('./routes/auth')
 const cityRoute = require('./routes/city');
+const scooterRoute = require('./routes/scooter');
+const zoneRoute = require('./routes/zone');
 
 //Middleware
 app.use(cors())
@@ -19,18 +21,18 @@ app.disable('x-powered-by');
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
-
-
 app.get('/', (req, res) => {
     //res.send('Hello World!');
     res.sendFile(__dirname + '/routes/test.html');
 });
 
-
+// process.env.ENV = 'simulation';
 
 app.use("/oauth2", authRoute);
 app.use("/user", userRoute);
 app.use("/city", cityRoute);
+app.use("/scooter", scooterRoute);
+app.use("/zone", zoneRoute);
 // Serve the form at the '/form' route
 /*app.get('/form', (req, res) => {
     
