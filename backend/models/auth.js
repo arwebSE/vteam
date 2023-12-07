@@ -38,14 +38,15 @@ function enableAuth() {
         state: true
         },
         function verify(acessToken, refreshToken, profile, callback) {
-            database.get('SELECT * FROM Credentials WHERE authprov = ? AND user_subject = ?', [
+
+            database.get('SELECT * FROM Users WHERE authprov = ? AND user_authid = ?', [
                 'google',
                 profile.id
             ], function(err, cred) {
                 if (err) {return callback(err); }
 
                 if (!cred) {
-                    
+                    var id = this.lastid
                     // First time logging in with google on the site.
                     database.run('INSERT INTO Users (username, authprov, user_authid) VALUES (?, ?, ?)', [
                         profile.displayName,
@@ -56,7 +57,8 @@ function enableAuth() {
 
                         var user = {
                             id: id,
-                            name: profile.displayName
+                            name: profile.displayName,
+
                         };
                         callback(null, user);
                     });
@@ -67,9 +69,7 @@ function enableAuth() {
                             if (err) { return callback(err); }
                             if (!err) { return callback(null, false); }
                             callback(null, user);
-
-
-
+                            
                         });
 
                     }
