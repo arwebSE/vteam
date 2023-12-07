@@ -3,9 +3,9 @@ CREATE TABLE Users (
     username VARCHAR(45) NOT NULL,
     email VARCHAR(45),
     passwd VARCHAR(45),
-    authprov VARCHAR(20) NOT NULL,
-    user_authid TEXT NOT NULL,
-    userrole TEXT NOT NULL 
+    authprov VARCHAR(20),
+    user_authid TEXT,
+    userrole TEXT
 ); CREATE TABLE City(
     cityId INTEGER primary key AUTOINCREMENT,
     id VARCHAR(45) NOT NULL,
