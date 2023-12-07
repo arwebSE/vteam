@@ -9,127 +9,180 @@
 <body>
 
 
-<h1> CREATE USER FORM</h1>
-<form id="testForm" action="/user" method="post">
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" required>
-    <br>
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required>
-    <br>
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required>
-    <button type="button" onclick="submitForm()">Submit</button>
-</form>
+<div>
+    <h1> CREATE USER FORM</h1>
+    <form id="testForm" action="/user" method="post">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <br>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <button type="button" onclick="submitForm()">Submit</button>
+    </form>
 
-<h2>See all users: <a href="http://localhost:1337/user">/user</a></h2>
-<h2>See one users: <a href="http://localhost:1337/user/1">/user/{userId}</a></h2>
+    <h2>See all users: <a href="http://localhost:1337/user">/user</a></h2>
+    <h2>See one users: <a href="http://localhost:1337/user/1">/user/{userId}</a></h2>
 
-<h1>DELETE USER FORM</h1>
-<form id="deleteForm">
-    <label for="userId">User ID:</label>
-    <input type="text" id="userId" name="userId" required>
-    <button type="button" onclick="deleteUser()">Delete User</button>
-</form>
+    <h1>DELETE USER FORM</h1>
+    <form id="deleteForm">
+        <label for="userId">User ID:</label>
+        <input type="text" id="userId" name="userId" required>
+        <button type="button" onclick="deleteUser()">Delete User</button>
+    </form>
 
-<a href="auth/login/google">Sign in with Google</a>
+    <a href="auth/login/google">Sign in with Google</a>
 
-<h1>CHANGE USER FORM</h1>
-<form id="updateForm" action="/user" method="put">
-    <label for="userId_edit">User ID:</label>
-    <input type="text" id="userId_edit" name="userId_edit" required>
-    <h3>UPDATE DATA</h3>
-    <label for="username_edit">Username:</label>
-    <input type="text" id="username_edit" name="username_edit" required>
-    <br>
-    <label for="email_edit">Email:</label>
-    <input type="email" id="email_edit" name="email_edit" required>
-    <br>
-    <label for="passwd_edit">Password:</label>
-    <input type="password" id="passwd_edit" name="passwd_edit" required>
-    <br>
-    <button type="button" onclick="updateUser()">Update User</button>
-</form>
+    <h1>CHANGE USER FORM</h1>
+    <form id="updateForm" action="/user" method="put">
+        <label for="userId_edit">User ID:</label>
+        <input type="text" id="userId_edit" name="userId_edit" required>
+        <h3>UPDATE DATA</h3>
+        <label for="username_edit">Username:</label>
+        <input type="text" id="username_edit" name="username_edit" required>
+        <br>
+        <label for="email_edit">Email:</label>
+        <input type="email" id="email_edit" name="email_edit" required>
+        <br>
+        <label for="passwd_edit">Password:</label>
+        <input type="password" id="passwd_edit" name="passwd_edit" required>
+        <br>
+        <button type="button" onclick="updateUser()">Update User</button>
+    </form>
+</div>
 
+<div>
+    <h1> CREATE CITY FORM</h1>
+    <form id="testForm" action="/city" method="post">
+        <label for="cityName">City Name:</label>
+        <input type="text" id="cityName" name="cityName" required>
+        <br>
+        <label for="latitude">Latitude:</label>
+        <input type="number" id="latitude" name="latitude" step="any" required>
+        <br>
+        <label for="longitude">Longitude:</label>
+        <input type="number" id="longitude" name="longitude" step="any" required>
+        <button type="button" onclick="createCity()">Submit</button>
+    </form>
 
-<h1> CREATE CITY FORM</h1>
-<form id="testForm" action="/city" method="post">
-    <label for="cityName">City Name:</label>
-    <input type="text" id="cityName" name="cityName" required>
-    <br>
-    <label for="latitude">Latitude:</label>
-    <input type="number" id="latitude" name="latitude" step="any" required>
-    <br>
-    <label for="longitude">Longitude:</label>
-    <input type="number" id="longitude" name="longitude" step="any" required>
-    <button type="button" onclick="createCity()">Submit</button>
-</form>
+    <h2>See all cities: <a href="http://localhost:1337/city">/city</a></h2>
+    <h2>See one city: <a href="http://localhost:1337/city/Stockholm">/city/{cityName/cityId}</a></h2>
 
-<h2>See all cities: <a href="http://localhost:1337/city">/city</a></h2>
-<h2>See one city: <a href="http://localhost:1337/city/Stockholm">/city/{cityName/cityId}</a></h2>
+    <h1>DELETE CITY FORM</h1>
+    <form id="deleteForm">
+        <label for="cityId">City ID or Name:</label>
+        <input type="text" id="cityId" name="cityId" required>
+        <button type="button" onclick="deleteCity()">Delete City</button>
+    </form>
 
-<h1>DELETE CITY FORM</h1>
-<form id="deleteForm">
-    <label for="cityId">City ID or Name:</label>
-    <input type="text" id="cityId" name="cityId" required>
-    <button type="button" onclick="deleteCity()">Delete City</button>
-</form>
+    <h1>CHANGE CITY FORM</h1>
+    <form id="updateForm" action="/city" method="put">
+        <label for="cityId_edit">City ID or Name:</label>
+        <input type="text" id="cityId_edit" name="cityId_edit" required>
+        <h3>UPDATE DATA</h3>
+        <label for="cityName_edit">City Name:</label>
+        <input type="text" id="cityName_edit" name="cityName_edit" required>
+        <br>
+        <label for="lat_edit">Latitude:</label>
+        <input type="number" id="lat_edit" name="lat_edit" step="any" required>
+        <br>
+        <label for="lon_edit">Longitude:</label>
+        <input type="number" id="lon_edit" name="lon_edit" step="any" required>
+        <br>
+        <button type="button" onclick="updateCity()">Update City</button>
+    </form>
+</div>
 
-<h1>CHANGE CITY FORM</h1>
-<form id="updateForm" action="/city" method="put">
-    <label for="cityId_edit">City ID or Name:</label>
-    <input type="text" id="cityId_edit" name="cityId_edit" required>
-    <h3>UPDATE DATA</h3>
-    <label for="cityName_edit">City Name:</label>
-    <input type="text" id="cityName_edit" name="cityName_edit" required>
-    <br>
-    <label for="lat_edit">Latitude:</label>
-    <input type="number" id="lat_edit" name="lat_edit" step="any" required>
-    <br>
-    <label for="lon_edit">Longitude:</label>
-    <input type="number" id="lon_edit" name="lon_edit" step="any" required>
-    <br>
-    <button type="button" onclick="updateCity()">Update City</button>
-</form>
+<div>
+    <h1>CREATE SCOOTER FORM</h1>
+    <form id="scooterForm" action="/scooter" method="post">
+        <label for="lon">Longitude:</label>
+        <input type="number" id="lon" name="lon" step="any" required>
+        <br>
+        <label for="city_cityid">City ID:</label>
+        <input type="number" id="city_cityid" name="city_cityid" required>
+        <button type="button" onclick="createScooter()">Submit</button>
+    </form>
 
-<h1>CREATE SCOOTER FORM</h1>
-<form id="scooterForm" action="/scooter" method="post">
-    <label for="lon">Longitude:</label>
-    <input type="number" id="lon" name="lon" step="any" required>
-    <br>
-    <label for="city_cityid">City ID:</label>
-    <input type="number" id="city_cityid" name="city_cityid" required>
-    <button type="button" onclick="createScooter()">Submit</button>
-</form>
+    <h2>See all scooters: <a href="http://localhost:1337/scooter">/scooter</a></h2>
+    <h2>See one scooter: <a href="http://localhost:1337/scooter/1">/scooter/{scooterId}</a></h2>
 
-<h2>See all scooters: <a href="http://localhost:1337/scooter">/scooter</a></h2>
-<h2>See one scooter: <a href="http://localhost:1337/scooter/1">/scooter/{scooterId}</a></h2>
+    <h1>DELETE SCOOTER FORM</h1>
+    <form id="deleteForm">
+        <label for="scooterId">Scooter ID:</label>
+        <input type="text" id="scooterId" name="scooterId" required>
+        <button type="button" onclick="deleteScooter()">Delete Scooter</button>
+    </form>
 
-<h1>DELETE SCOOTER FORM</h1>
-<form id="deleteForm">
-    <label for="scooterId">Scooter ID:</label>
-    <input type="text" id="scooterId" name="scooterId" required>
-    <button type="button" onclick="deleteScooter()">Delete Scooter</button>
-</form>
+    <h1>CHANGE SCOOTER FORM</h1>
+    <form id="updateForm" action="/scooter" method="put">
+        <label for="scooterId_edit">Scooter ID:</label>
+        <input type="text" id="scooterId_edit" name="scooterId_edit" required>
+        <h3>UPDATE DATA</h3>
+        <label for="lon_scooter_edit">Longitude:</label>
+        <input type="number" id="lon_scooter_edit" name="lon_scooter_edit" step="any" required>
+        <br>
+        <label for="city_cityid_edit">City ID:</label>
+        <input type="number" id="city_cityid_edit" name="city_cityid_edit" required>
+        <br>
+        <button type="button" onclick="updateScooter()">Update Scooter</button>
+    </form>
 
-<h1>CHANGE SCOOTER FORM</h1>
-<form id="updateForm" action="/scooter" method="put">
-    <label for="scooterId_edit">Scooter ID:</label>
-    <input type="text" id="scooterId_edit" name="scooterId_edit" required>
-    <h3>UPDATE DATA</h3>
-    <label for="lon_scooter_edit">Longitude:</label>
-    <input type="number" id="lon_scooter_edit" name="lon_scooter_edit" step="any" required>
-    <br>
-    <label for="city_cityid_edit">City ID:</label>
-    <input type="number" id="city_cityid_edit" name="city_cityid_edit" required>
-    <br>
-    <button type="button" onclick="updateScooter()">Update Scooter</button>
-</form>
+    <h1>Delete All Scooters</h1>
+        
+    <button id="deleteAllButton" onclick="confirmDelete()">Delete All Scooters</button>
+</div>
 
-<h1>Delete All Scooters</h1>
-    
-<button id="deleteAllButton" onclick="confirmDelete()">Delete All Scooters</button>
+<div>
+    <h1> CREATE ZONE FORM</h1>
+    <form id="zoneForm" action="/zone" method="post">
+        <label for="pointname">Point Name:</label>
+        <input type="text" id="pointname" name="pointname" required>
+        <br>
+        <label for="zoneId">Zone ID:</label>
+        <input type="number" id="zoneId" name="zoneId" required>
+        <br>
+        <label for="zone_cityid">City ID:</label>
+        <input type="number" id="zone_cityid" name="zone_cityid" required>
+        <br>
+        <label for="zonetype">Zone Type:</label>
+        <input type="text" id="zonetype" name="zonetype" required>
+        <br>
+        <button type="button" onclick="submitZoneForm()">Submit</button>
+    </form>
 
+    <h2>See all zone: <a href="http://localhost:1337/zone">/zone</a></h2>
+    <h2>See one zone: <a href="http://localhost:1337/zone/1">/zone/{zoneId}</a></h2>
+
+    <h1>UPDATE ZONE FORM</h1>
+    <form id="updateZoneForm" action="/zones" method="put">
+        <label for="zoneId_edit">Zone ID or name:</label>
+        <input type="text" id="zoneId_edit" name="zoneId_edit" required>
+        <h3>UPDATE DATA</h3>
+        <label for="pointname_edit">Point Name:</label>
+        <input type="text" id="pointname_edit" name="pointname_edit" required>
+        <br>
+        <label for="zoneid_edit">Zone ID:</label>
+        <input type="number" id="zoneid_edit" name="zoneid_edit" required>
+        <br>
+        <label for="zone_cityid_edit">City ID:</label>
+        <input type="number" id="zone_cityid_edit" name="zone_cityid_edit" required>
+        <br>
+        <label for="zonetype_edit">Zone Type:</label>
+        <input type="text" id="zonetype_edit" name="zonetype_edit" required>
+        <br>
+        <button type="button" onclick="updateZone()">Update Zone</button>
+    </form>
+
+    <h1>DELETE ZONE FORM</h1>
+    <form id="deleteZoneForm">
+        <label for="zoneIdToDelete">Zone ID:</label>
+        <input type="number" id="zoneIdToDelete" name="zoneIdToDelete" required>
+        <button type="button" onclick="deleteZone()">Delete Zone</button>
+    </form>
+</div>
 
 
 <script>
@@ -145,7 +198,7 @@ async function submitForm() {
     const jsonData = {
         username: username,
         email: email,
-        password: password
+        passwd: password
     };
 
     console.log(jsonData);
@@ -471,7 +524,114 @@ async function deleteAllScooters() {
     }
 }
 
+async function submitZoneForm() {
+    console.log("Button clicked");
+    // Get form data
+    var pointname = document.getElementById("pointname").value;
+    var zoneId = document.getElementById("zoneId").value;
+    var zone_cityid = document.getElementById("zone_cityid").value;
+    var zonetype = document.getElementById("zonetype").value;
 
+    // Create a FormData object
+    const jsonData = {
+        pointname: pointname,
+        zoneId: zoneId,
+        city_cityid: zone_cityid,
+        zonetype: zonetype
+    };
+
+    console.log(jsonData);
+
+    // Send a POST request to your API endpoint
+    await fetch('http://localhost:1337/zone', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'  // Set content type to JSON
+        },
+        body: JSON.stringify(jsonData)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json(); // Assuming the API returns JSON
+    })
+    .then(data => {
+        console.log('Success:', data);
+        // Handle success, e.g., show a success message to the user
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        // Handle errors, e.g., show an error message to the user
+    });
+}
+
+function deleteZone() {
+    const zoneIdToDelete = document.getElementById("zoneIdToDelete").value;
+
+    // Make an asynchronous DELETE request using Fetch API or XMLHttpRequest
+    fetch(`/zone/${zoneIdToDelete}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Zone deleted successfully:', data);
+        // Add any additional logic or UI updates as needed
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        // Handle errors or display error messages as needed
+    });
+}
+
+async function updateZone() {
+    console.log("Update");
+    const zoneId = document.getElementById("zoneId_edit").value;
+    const pointname = document.getElementById("pointname_edit").value;
+    const zoneId_edit = document.getElementById("zoneid_edit").value;
+    const zone_cityid = document.getElementById("zone_cityid_edit").value;
+    const zonetype = document.getElementById("zonetype_edit").value;
+
+    console.log(pointname);
+
+    const zone = {
+        pointname: pointname,
+        zoneId: zoneId_edit,
+        city_cityid: zone_cityid,
+        zonetype: zonetype
+    };
+
+    // Make an asynchronous UPDATE request using Fetch API or XMLHttpRequest
+    await fetch(`http://localhost:1337/zone/${zoneId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(zone)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Zone updated successfully:', data);
+        // Add any additional logic or UI updates as needed
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        // Handle errors or display error messages as needed
+    });
+}
 
 
 
@@ -484,6 +644,7 @@ async function deleteAllScooters() {
     body {
         background-color: #666;
         color: #111;
+        display: flex;
     }
 
     a {
@@ -492,5 +653,11 @@ async function deleteAllScooters() {
     }
     a:hover {
         color: white;
+    }
+
+    div {
+        margin: 10px;
+        padding: 10px;
+        border: 1px solid #222;
     }
 </style>
