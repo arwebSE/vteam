@@ -2,7 +2,10 @@ CREATE TABLE Users (
     userId INTEGER PRIMARY KEY,
     username VARCHAR(45) NOT NULL,
     email VARCHAR(45),
-    passwd VARCHAR(45)
+    passwd VARCHAR(45),
+    authprov VARCHAR(20),
+    user_authid TEXT,
+    userrole TEXT
 ); CREATE TABLE City(
     cityId INTEGER primary key AUTOINCREMENT,
     id VARCHAR(45) NOT NULL,
@@ -28,9 +31,4 @@ CREATE TABLE Users (
     price FLOAT,
     FOREIGN KEY(user_userid) REFERENCES users(userId),
     FOREIGN KEY(scooterId) REFERENCES scooter(scooterId)
-); CREATE TABLE credentials(
-    user_id INT NOT NULL, 
-    authprov VARCHAR(20) NOT NULL,
-    user_subject TEXT NOT NULL,
-    PRIMARY KEY (authprov, user_subject)
-)
+);

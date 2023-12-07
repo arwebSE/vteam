@@ -33,49 +33,43 @@ function enableAuth() {
     passport.use(new GoogleAuth({
         clientID: '123314154390-dbgte1hjv7a79ugi5v6vvdp4qu3itvru.apps.googleusercontent.com',
         clientSecret: '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',
-        callbackURL: '/oauth2/redir/google',
+        callbackURL: 'http://localhost:1337/oauth2/redir/google',
         scope: [ 'profile' ],
         state: true
         },
         function verify(acessToken, refreshToken, profile, callback) {
-            database.get('SELECT * FROM Credentials WHERE authprov = ? AND user_subject = ?', [
+
+            database.get('SELECT * FROM Users WHERE authprov = ? AND user_authid = ?', [
                 'google',
                 profile.id
             ], function(err, cred) {
                 if (err) {return callback(err); }
 
                 if (!cred) {
+                    var id = this.lastid
                     // First time logging in with google on the site.
-                    database.run('INSERT INTO Users (username) VALUES (?)', [
-                        profile.displayName
+                    database.run('INSERT INTO Users (username, authprov, user_authid) VALUES (?, ?, ?)', [
+                        profile.displayName,
+                        'google',
+                        profile.id
                     ], function (err) {
-                        if (err) { return callback(err); }
-                        
-                        var id = this.lastID;
-                        database.run('INSERT INTO Credentials (user_id, authprov, user_subject) VALUES (?, ?, ?)', [
-                            id,
-                            'google',
-                            profile.id
-                        ], function(err) {
-                            if (err) {return callback(err); }
+                        if (err) {return callback(err); }
 
-                            var user = {
-                                id: id,
-                                name: profile.displayName
-                            };
-                            callback(null, user);
-                        });
+                        var user = {
+                            id: id,
+                            name: profile.displayName,
+
+                        };
+                        callback(null, user);
                     });
                     } else {
                         // User has logged in with google before.
-                        database.get('SELECT * FROM Users WHERE userID = ?', 
-                        [cred.userId], function(err, user) {
+                        database.get('SELECT * FROM Users WHERE user_authid = ?', 
+                        [cred.user_authid], function(err, user) {
                             if (err) { return callback(err); }
                             if (!err) { return callback(null, false); }
                             callback(null, user);
-
-
-
+                            
                         });
 
                     }

@@ -28,7 +28,7 @@ app.get('/', (req, res) => {
 
 // process.env.ENV = 'simulation';
 
-app.use("/auth", authRoute);
+app.use("/oauth2", authRoute);
 app.use("/user", userRoute);
 app.use("/city", cityRoute);
 app.use("/scooter", scooterRoute);
