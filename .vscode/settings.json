@@ -1,0 +1,16 @@
+{
+    "restoreTerminals.terminals": [
+        {
+            "splitTerminals": [
+                {
+                    "name": "frontend",
+                    "commands": ["cd frontend/scooter", "npm start"]
+                },
+                {
+                    "name": "backend",
+                    "commands": ["cd backend", "npm start"]
+                }
+            ]
+        }
+    ]
+}
