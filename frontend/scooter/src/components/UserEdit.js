@@ -45,44 +45,48 @@ const UserEdit = () => {
     return (
         <form
             onSubmit={handleSubmit}
-            className="w-11/12 m-1 p-5 bg-slate-300 rounded flex flex-col items-center justify-center gap-5"
+            className="flex flex-col bg-gray-100 rounded-lg shadow-xl p-12"
         >
-            <label className="text-lg font-bold">Username:</label>
+            <h1 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+                Edit User
+            </h1>
+
+            <label className="text-lg font-semibold mb-2">Username:</label>
             <input
-                className="rounded ml-2 w-4/5 p-2 font-extralight"
+                className="rounded p-3 mb-4 shadow focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 ease-in-out"
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
             />
 
-            <label className="text-lg font-bold">Email:</label>
+            <label className="text-lg font-semibold mb-2">Email:</label>
             <input
-                className="rounded w-4/5 ml-2 p-2 font-extralight"
+                className="rounded p-3 mb-4 shadow focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 ease-in-out"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
             />
 
-            <label className="text-lg font-bold">Password:</label>
+            <label className="text-lg font-semibold mb-2">Password:</label>
             <input
-                className="rounded ml-2 w-4/5 p-2 font-extralight"
+                className="rounded p-3 mb-4 shadow focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 ease-in-out"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
             />
 
-            <label className="text-lg font-bold">User Role:</label>
+            <label className="text-lg font-semibold mb-2">User Role:</label>
             <select
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
-                className="rounded ml-2 p-2 font-extralight"
+                className="rounded p-3 mb-6 shadow focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 ease-in-out"
             >
                 <option value="admin">Admin</option>
                 <option value="user">User</option>
             </select>
 
             <button
-                className="w-20 rounded text-lg bg-black p-2 text-white"
+                className="w-full rounded bg-blue-600 hover:bg-blue-700 text-white text-lg p-3 shadow-lg hover:shadow-xl transition duration-300 ease-in-out"
                 type="submit"
             >
                 Save
