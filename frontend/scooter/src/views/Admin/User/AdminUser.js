@@ -4,19 +4,44 @@ import "./style.css";
 import logo from "../../../logo.png";
 
 function AdminUser() {
+    const users = [
+        { id: 1, name: "User One", email: "user1@example.com", role: "Admin" },
+        { id: 2, name: "User Two", email: "user2@example.com", role: "User" },
+    ];
 
     return (
-        <div className="flex items-center justify-center h-screen bg-gray-100">
-            <div className="w-3/4 h-3/4 p-10 bg-violet-100">
-                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-indigo-600 mb-8 font-sans">ADMIN</h1>
-                <div className="flex flex-col justify-center gap-5">
-                    <a className="hover:bg-sky-700 text-xl text-center p-5 bg-slate-400 text-white rounded" href="/admin/user">Manage Users</a>
-                    <a className="hover:bg-sky-700 text-xl text-center p-5 bg-slate-400 text-white rounded" href="/admin/bike">Manage Bikes</a>
-                    <a className="hover:bg-sky-700 text-xl text-center p-5 bg-slate-400 text-white rounded" href="/admin/zone">Manage Zones</a>
-                </div>
-            </div>
+        <div className="admin-user-container">
+            <h1 className="text-2xl font-bold text-gray-800 mb-4">
+                Manage Users
+            </h1>
+            <table className="min-w-full">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {users.map((user) => (
+                        <tr key={user.id}>
+                            <td>{user.name}</td>
+                            <td>{user.email}</td>
+                            <td>{user.role}</td>
+                            <td>
+                                <button className="edit-button">Edit</button>
+                                <button className="delete-button">
+                                    Delete
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+            <button className="add-user-button">Add New User</button>
         </div>
     );
 }
 
-export default AdminUser;
+export default withAuth(AdminUser);
