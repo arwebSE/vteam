@@ -86,7 +86,7 @@ const UserEdit = () => {
             </select>
 
             <button
-                className="w-full rounded bg-blue-600 hover:bg-blue-700 text-white text-lg p-3 shadow-lg hover:shadow-xl transition duration-300 ease-in-out"
+                className="w-full rounded bg-indigo-600 hover:bg-indigo-700 text-white text-lg p-3 shadow-lg hover:shadow-xl transition duration-300 ease-in-out"
                 type="submit"
             >
                 Save
