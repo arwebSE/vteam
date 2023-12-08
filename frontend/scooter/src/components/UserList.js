@@ -1,37 +1,49 @@
-import React from 'react';
-import userModel from '../models/userModel.js';
+import React, { useEffect, useState } from "react";
+import userModel from "../models/userModel.js";
 import { useNavigate } from "react-router-dom";
-
-let users = await userModel.getUsers();
-
 
 const UserList = () => {
     const navigate = useNavigate();
+    const [users, setUsers] = useState([]);
 
-    function clickHandler(userid) {
-        navigate(`/admin/user/${userid}`);
+    useEffect(() => {
+        async function fetchUsers() {
+            const usersData = await userModel.getUsers();
+            setUsers(usersData);
+        }
+        fetchUsers();
+    }, []);
+
+    function clickHandler(userId) {
+        navigate(`/admin/user/${userId}`);
     }
 
     return (
-        <div className='flex flex-col'>
-
-            <div className='flex flex-row justify-between text-lg'>
-                <h1>Users</h1>
-                <h1>ID</h1>
-            </div>
-
-            <div className='flex flex-col gap-1'>
-                {users.map(user => (
-                    <div onClick={() => clickHandler(user.userId)} className='cursor-pointer rounded hover:bg-slate-100 flex flex-row bg-slate-200 justify-between items-center pr-6'>
-                        <div key={user.id} className='flex flex-col margin-1 h-fit p-1'>
-                            <h2 className='text-lg font-semibold' >{user.username}</h2>
-                            <p>{user.email}</p>
-                        </div>
-                        <h1 className='text-lg font-semibold'>{user.userId}</h1>
-                    </div>
-                ))}
-            </div>
-
+        <div className="flex flex-col">
+            <table className="min-w-full">
+                <thead>
+                    <tr className="bg-indigo-600 text-white">
+                        <th className="py-2 px-4 text-left">Username</th>
+                        <th className="py-2 px-4 text-left">Email</th>
+                        <th className="py-2 px-4 text-right">UserID</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {users.map((user) => (
+                        <tr
+                            key={user.userId}
+                            onClick={() => clickHandler(user.userId)}
+                            className="cursor-pointer hover:bg-indigo-100"
+                        >
+                            <td className="py-2 px-4">{user.username}</td>
+                            <td className="py-2 px-4">{user.email}</td>
+                            <td className="py-2 px-4 text-right">
+                                {user.userId}
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </div>
     );
 };

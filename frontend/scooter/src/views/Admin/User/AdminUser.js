@@ -13,7 +13,7 @@ function AdminUser() {
     return (
         <div>
             <div className="m-10 h-1.6 pt-16">
-                <h1>Manage Users</h1>
+                <h1 className="text-3xl font-semibold mb-4">User Management</h1>
                 <UserList />
             </div>
         </div>
