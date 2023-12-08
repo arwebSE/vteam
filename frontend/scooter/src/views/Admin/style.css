@@ -1,0 +1,15 @@
+.map-container {
+    height: 50vh;
+    width: 100%;
+}
+
+.leaflet-container {
+    height: 50vh;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.leaflet-container * {
+    box-sizing: border-box;
+}
