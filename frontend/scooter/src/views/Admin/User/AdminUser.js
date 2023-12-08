@@ -2,6 +2,7 @@ import withAuth from "../../../util/withAuth";
 
 import "./style.css";
 import logo from "../../../logo.png";
+import UserList from "../../../components/UserList";
 
 function AdminUser() {
     const users = [
@@ -10,36 +11,11 @@ function AdminUser() {
     ];
 
     return (
-        <div className="admin-user-container">
-            <h1 className="text-2xl font-bold text-gray-800 mb-4">
-                Manage Users
-            </h1>
-            <table className="min-w-full">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Role</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {users.map((user) => (
-                        <tr key={user.id}>
-                            <td>{user.name}</td>
-                            <td>{user.email}</td>
-                            <td>{user.role}</td>
-                            <td>
-                                <button className="edit-button">Edit</button>
-                                <button className="delete-button">
-                                    Delete
-                                </button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-            <button className="add-user-button">Add New User</button>
+        <div>
+            <div className="m-10 h-1.6 pt-16">
+                <h1>Manage Users</h1>
+                <UserList />
+            </div>
         </div>
     );
 }
