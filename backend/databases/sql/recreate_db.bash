@@ -1,1 +1,1 @@
-sqlite3 create_basedbs.sql < backenddata.db
+sqlite3 backenddata.db < create_basedbs.sql
