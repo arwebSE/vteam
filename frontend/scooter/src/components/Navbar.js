@@ -14,7 +14,7 @@ function Navbar() {
     if (location.pathname === "/") return null; // hide on Login page
 
     return (
-        <nav className="bg-white bg-opacity-75 backdrop-blur-lg p-4 text-gray-800 fixed w-full top-0 z-50 shadow-md">
+        <nav className="mb-2 bg-white bg-opacity-75 backdrop-blur-lg p-4 text-gray-800 fixed w-full top-0 z-50 shadow-md">
             <div className="container mx-auto flex justify-between items-center">
                 <div className="flex gap-10">
                     <a href="/home" className="text-xl font-bold text-gray-800">boi</a>

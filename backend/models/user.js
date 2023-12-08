@@ -27,29 +27,32 @@ const userModel = {
             res.status(201).json({ message: 'User created successfully', userId: this.lastID });
         });
     },
-    update: function (userId, user, res) {
+    update: function (userId, req, res) {
         // Build the SQL query and parameters based on the provided or existing data
         const sql = 'UPDATE Users SET ' +
             'username = COALESCE(?, username), ' +
             'email = COALESCE(?, email), ' +
-            'passwd = COALESCE(?, passwd) ' +
+            'passwd = COALESCE(?, passwd), ' +
+            'userrole = COALESCE(?, userrole) ' +
             'WHERE userId = ?';
 
         // Ensure that undefined values are replaced with null
         const params = [
-            user.username || null,
-            user.email || null,
-            user.passwd || null,
+            req.username || null,
+            req.email || null,
+            req.passwd || null,
+            req.userrole || null,
             userId
         ];
-
+        console.log(params);
+        console.log(params);
         db.run(sql, params, function (error, results) {
             if (error) {
                 console.error('Error:', error);
-                res.status(500).json({ error: 'Internal Server Error' });
-                return;
+                // You need to handle the error here, for example by calling a callback with the error
+                return error;
             }
-            res.status(201).json({ message: 'User updated successfully' });
+            // You need to handle the success case here, for example by calling a callback with the results
             console.log('User updated successfully.');
         });
     },

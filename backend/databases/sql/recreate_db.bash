@@ -1,0 +1,1 @@
+sqlite3 create_basedbs.sql < backenddata.db
