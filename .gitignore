@@ -44,3 +44,4 @@ simulation/sim/yarn-error.log*
 
 # macOS
 .DS_Store
+docker-compose.yaml
