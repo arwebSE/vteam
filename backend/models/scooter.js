@@ -23,9 +23,9 @@ const scooterModel = {
         Create a new Scooter in the database with (lon, city_cityid)
     */
     create: function (scooter, res) {
-        const sql = 'INSERT INTO Scooter (lon, city_cityid) VALUES (?, ?)';
-        const params = [scooter.lon, scooter.city_cityid];
-
+        const sql = 'INSERT INTO Scooter (lon, lat, battery, status, city_cityid) VALUES (?, ?, ?, ?, ?)';
+        const params = [scooter.lon, scooter.lat, scooter.battery, scooter.status, scooter.city_cityid];
+        console.log(params);
         db.run(sql, params, function (error) {
             if (error) {
                 console.error('Error:', error);
