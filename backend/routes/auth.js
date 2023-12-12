@@ -12,11 +12,11 @@ router.get('/login/google', (req, res) => {
   });
 // Processing the auth response and redirects to start
 router.get('/redir/google',
-passport.authenticate('google', {failureRedirect: 'http://localhost:1337/', failureMessage: true}),
+passport.authenticate('google', {failureRedirect: 'http://localhost:3000/', failureMessage: true}),
 function(req, res) {
     
     console.log("User is now logged in!");
-    res.redirect('http://localhost:1337/');
+    res.redirect('http://localhost:3000/home');
 });
 
 
