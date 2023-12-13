@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import L from "leaflet";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { renderToString } from "react-dom/server";
+import BikeMarker from "./bikeMarker";
 
 import "leaflet/dist/leaflet.css";
 
@@ -53,6 +54,7 @@ export default function Map() {
             <Marker position={currentLocation} icon={userIcon}>
                 <Popup>You are here</Popup>
             </Marker>
+            <BikeMarker />
             <SetViewOnClick coords={currentLocation} />
         </MapContainer>
     );

@@ -2,29 +2,21 @@ import React from "react";
 import { MapContainer, TileLayer, useMap, Marker, Popup } from "react-leaflet";
 import { useState, useEffect } from "react";
 import L, { map } from "leaflet";
+
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { renderToString } from "react-dom/server";
 import { FaCircleDot } from "react-icons/fa6";
 import { BsScooter } from "react-icons/bs";
+
 import bikeModel from "../models/bikeModel";
 import cityModel from "../models/cityModel";
-
+import MoveToUser from "./MoveToUser";
+import BikeMarker from "./bikeMarker";
 
 import "leaflet/dist/leaflet.css";
-//get bikes from backend
 
-//add bikes to variable
 const bikeLocation = {};
 let city = "";
-
-
-const userIcon = L.divIcon({
-    html: renderToString(
-        <FaCircleDot style={{ fontSize: "20px", color: "red" }} />
-    ),
-    className: "my-custom-icon",
-    popupAnchor: [0, -40],
-});
 
 const createIcon = L.divIcon({
     html: renderToString(
@@ -34,22 +26,6 @@ const createIcon = L.divIcon({
     iconAnchor: [20, 40],
     popupAnchor: [0, -40],
 });
-
-const bikeIcon = L.divIcon({
-    html: renderToString(
-        <BsScooter style={{ fontSize: "40px", color: "green" }} />
-    ),
-    className: "my-custom-icon",
-    iconAnchor: [20, 40],
-    popupAnchor: [0, -40],
-});
-
-function SetViewOnClick({ coords }) {
-    const map = useMap();
-    map.setView(coords, map.getZoom());
-
-    return null;
-}
 
 const createBike = async () => {
     let id = await cityModel.getCity(city)
@@ -64,12 +40,10 @@ const createBike = async () => {
 
         const response = await bikeModel.createBike(bike);
         console.log(response);
-
+        document.getElementById("map")
     }
 }
 
-let bikes = await bikeModel.getBikes();
-console.log(bikes);
 
 export default function MarkLocationMap() {
 
@@ -79,7 +53,6 @@ export default function MarkLocationMap() {
 
 
         useEffect(() => {
-
             const handleClick = async (e) => {
                 const { lat, lng } = e.latlng;
                 if (marker) {
@@ -130,16 +103,9 @@ export default function MarkLocationMap() {
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
-                    <Marker position={currentLocation} icon={userIcon}>
-                        <Popup>You are here</Popup>
-                    </Marker>
-                    {bikes.map((bike) => (
-                        <Marker position={[bike.lat, bike.lon]} icon={bikeIcon}>
-                            <Popup>Bike</Popup>
-                        </Marker>
-                    ))}
+                    <BikeMarker />
                     <ClickHandler />
-                    <SetViewOnClick coords={currentLocation} />
+                    <MoveToUser />
                 </MapContainer>
             </div>
             <button className="w-11/12 rounded bg-indigo-600 hover:bg-indigo-700 text-white text-lg p-3 shadow-lg hover:shadow-xl transition duration-300 ease-in-out" onClick={() => createBike()}>Add bike</button>

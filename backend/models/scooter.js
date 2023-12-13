@@ -42,11 +42,17 @@ const scooterModel = {
     update: function (scooterId, scooter, res) {
         const sql = 'UPDATE Scooter SET ' +
             'lon = COALESCE(?, lon), ' +
+            'lat = COALESCE(?, lat), ' +
+            'battery = COALESCE(?, battery), ' +
+            'status = COALESCE(?, status), ' +
             'city_cityid = COALESCE(?, city_cityid) ' +
             'WHERE scooterId = ?';
 
         const params = [
             scooter.lon || null,
+            scooter.lat || null,
+            scooter.battery || null,
+            scooter.status || null,
             scooter.city_cityid || null,
             scooterId
         ];
