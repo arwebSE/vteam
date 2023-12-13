@@ -51,6 +51,28 @@ const bikeModel = {
         } catch (error) {
             console.error(error);
         }
+    },
+    editUser: async function (scooterId, lon, lat, battery, status, city) {
+
+        try {
+            const response = await fetch(`http://localhost:1337/scooter/${scooterId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    lon: lon,
+                    lat: lat,
+                    battery: battery,
+                    status: status,
+                    city_cityid: city
+                })
+            });
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error(error);
+        }
     }
 
 }

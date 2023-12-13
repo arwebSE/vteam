@@ -2,6 +2,7 @@ import React from "react";
 import { useMap } from "react-leaflet";
 import { useState, useEffect } from "react";
 import L from "leaflet";
+import { Marker, Popup } from "react-leaflet";
 import { renderToString } from "react-dom/server";
 import { FaCircleDot } from "react-icons/fa6";
 
@@ -20,7 +21,7 @@ function SetViewOnClick({ coords }) {
     return null;
 }
 
-export default function MyLocation() {
+export default function MoveToUser() {
     const [currentLocation, setCurrentLocation] = useState({
         lat: 59,
         lng: 16,
@@ -42,6 +43,11 @@ export default function MyLocation() {
     }, []);
 
     return (
-        <SetViewOnClick coords={currentLocation} />
+        <>
+            <Marker position={currentLocation} icon={userIcon}>
+                <Popup>You are here</Popup>
+            </Marker>
+            <SetViewOnClick coords={currentLocation} />
+        </>
     );
 }
