@@ -27,12 +27,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                     <Route path="/admin/zone" element={<AdminZone />} />
 
                     <Route path="/admin/user/:userid" element={<EditUser />} />
-                    <Route path="/admin/bike/edit/:id" element={<EditBike />} />
-
-                    <Route path="/admin/user" element={<AdminUser />} />
-                    <Route path="/admin/user/:userid" element={<AdminUser />} />
-                </Routes >
-            </Router >
-        </AuthProvider >
-    </React.StrictMode >
+                </Routes>
+            </Router>
+        </AuthProvider>
+    </React.StrictMode>
 );
