@@ -20,7 +20,25 @@ const scooterModel = {
         });
     },
     /*
-        Create a new Scooter in the database with (lon, city_cityid)
+        Get all information about all Scooters in the database with status = available. Also get the cityName of the city the scooter is at, if any.
+    */
+    getAllAvailable: function (res) {
+        const sql = 'SELECT Scooter.*, IFNULL(City.id, "-") AS cityName ' +
+            'FROM Scooter ' +
+            'LEFT JOIN City ON Scooter.city_cityid = City.cityId ' +
+            'WHERE LOWER(Scooter.status) = "available"';
+
+        db.all(sql, function (error, results) {
+            if (error) {
+                console.error('Error:', error);
+                res.status(500).json({ error: 'Internal Server Error' });
+                return;
+            }
+            res.json(results);
+        });
+    },
+    /*
+        Create a new Scooter in the database with (lon, lat, battery, status, city_cityid)
     */
     create: function (scooter, res) {
         const sql = 'INSERT INTO Scooter (lon, lat, battery, status, city_cityid) VALUES (?, ?, ?, ?, ?)';
@@ -37,7 +55,7 @@ const scooterModel = {
         });
     },
     /*
-        Update a specific Scooter in the database with data you want to change (lon, city_cityid) using the ScooterId
+        Update a specific Scooter in the database with data you want to change (lon, lat, battery, status, city_cityid) using the ScooterId
     */
     update: function (scooterId, scooter, res) {
         const sql = 'UPDATE Scooter SET ' +
@@ -47,7 +65,7 @@ const scooterModel = {
             'status = COALESCE(?, status), ' +
             'city_cityid = COALESCE(?, city_cityid) ' +
             'WHERE scooterId = ?';
-
+    
         const params = [
             scooter.lon || null,
             scooter.lat || null,
@@ -56,7 +74,7 @@ const scooterModel = {
             scooter.city_cityid || null,
             scooterId
         ];
-
+    
         db.run(sql, params, function (error, results) {
             if (error) {
                 console.error('Error:', error);
@@ -67,6 +85,7 @@ const scooterModel = {
             console.log('Scooter updated successfully.');
         });
     },
+        
     /*
         Delete ALL Scooters in the database, from ALL cities
     */
