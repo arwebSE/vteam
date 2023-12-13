@@ -5,6 +5,7 @@ const scooterModel = require('../models/scooter');
 require('dotenv').config();
 
 router.get("/", (req, res) => scooterModel.getAll(res));
+router.get("/available", (req, res) => scooterModel.getAllAvailable(res));
 router.get("/:scooterId", (req, res) => scooterModel.getOne(req.params.scooterId, res));
 router.post("/", (req, res) => scooterModel.create(req.body, res));
 router.put("/:scooterId", (req, res) => scooterModel.update(req.params.scooterId, req.body, res));

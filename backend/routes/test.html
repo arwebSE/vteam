@@ -101,12 +101,22 @@
         <label for="lon">Longitude:</label>
         <input type="number" id="lon" name="lon" step="any" required>
         <br>
+        <label for="lat_scooter">Latitude:</label>
+        <input type="number" id="lat_scooter" name="lat_scooter" step="any" required>
+        <br>
+        <label for="battery_scooter">Battery:</label>
+        <input type="number" id="battery_scooter" name="battery_scooter" step="any" required>
+        <br>
+        <label for="status_scooter">Battery:</label>
+        <input type="text" id="status_scooter" name="status_scooter" step="any" required>
+        <br>
         <label for="city_cityid">City ID:</label>
         <input type="number" id="city_cityid" name="city_cityid" required>
         <button type="button" onclick="createScooter()">Submit</button>
     </form>
 
     <h2>See all scooters: <a href="http://localhost:1337/scooter">/scooter</a></h2>
+    <h2>See all available scooters: <a href="http://localhost:1337/scooter/available">/scooter/available</a></h2>
     <h2>See one scooter: <a href="http://localhost:1337/scooter/1">/scooter/{scooterId}</a></h2>
 
     <h1>DELETE SCOOTER FORM</h1>
@@ -123,6 +133,15 @@
         <h3>UPDATE DATA</h3>
         <label for="lon_scooter_edit">Longitude:</label>
         <input type="number" id="lon_scooter_edit" name="lon_scooter_edit" step="any" required>
+        <br>
+        <label for="lat_scooter_edit">Latitude:</label>
+        <input type="number" id="lat_scooter_edit" name="lat_scooter_edit" step="any" required>
+        <br>
+        <label for="battery_scooter_edit">Battery:</label>
+        <input type="number" id="battery_scooter_edit" name="battery_scooter_edit" step="any" required>
+        <br>
+        <label for="status_scooter_edit">Status:</label>
+        <input type="text" id="status_scooter_edit" name="status_scooter_edit" step="any" required>
         <br>
         <label for="city_cityid_edit">City ID:</label>
         <input type="number" id="city_cityid_edit" name="city_cityid_edit" required>
@@ -399,11 +418,17 @@ async function createScooter() {
 
     // Get form data
     var lon = document.getElementById("lon").value;
+    var lat = document.getElementById("lat_scooter").value;
+    var battery = document.getElementById("battery_scooter").value;
+    var status = document.getElementById("status_scooter").value;
     var city_cityid = document.getElementById("city_cityid").value;
 
     // Create a FormData object
     const jsonData = {
         lon: parseFloat(lon),
+        lat: parseFloat(lat),
+        battery: parseFloat(battery),
+        status: status,
         city_cityid: parseInt(city_cityid)
     };
 
@@ -462,10 +487,16 @@ function deleteScooter() {
 async function updateScooter() {
     const scooterId = document.getElementById("scooterId_edit").value;
     const lon = document.getElementById("lon_scooter_edit").value;
+    const lat = document.getElementById("lat_scooter_edit").value;
+    const battery = document.getElementById("battery_scooter_edit").value;
+    const status = document.getElementById("status_scooter_edit").value;
     const city_cityid = document.getElementById("city_cityid_edit").value;
 
     const scooter = {
         lon: parseFloat(lon),
+        lat: parseFloat(lat),
+        battery: parseFloat(battery),
+        status: status,
         city_cityid: parseInt(city_cityid)
     };
 
