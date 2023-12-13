@@ -14,7 +14,6 @@ import AdminZone from "./views/Admin/Zone/AdminZone";
 import EditUser from "./views/Admin/EditUser/EditUser";
 import EditBike from "./views/Admin/EditBike/EditBike";
 
-
 ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
         <AuthProvider>
