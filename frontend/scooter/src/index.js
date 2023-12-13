@@ -14,6 +14,7 @@ import AdminZone from "./views/Admin/Zone/AdminZone";
 import EditUser from "./views/Admin/EditUser/EditUser";
 import EditBike from "./views/Admin/EditBike/EditBike";
 
+
 ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
         <AuthProvider>
@@ -23,13 +24,16 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                     <Route path="/" element={<Login />} />
                     <Route path="/home" element={<Home />} />
                     <Route path="/admin" element={<Admin />} />
-                    <Route path="/admin/user" element={<AdminUser />} />
                     <Route path="/admin/bike" element={<AdminBike />} />
                     <Route path="/admin/zone" element={<AdminZone />} />
+
                     <Route path="/admin/user/:userid" element={<EditUser />} />
                     <Route path="/admin/bike/edit/:id" element={<EditBike />} />
-                </Routes>
-            </Router>
-        </AuthProvider>
-    </React.StrictMode>
+
+                    <Route path="/admin/user" element={<AdminUser />} />
+                    <Route path="/admin/user/:userid" element={<AdminUser />} />
+                </Routes >
+            </Router >
+        </AuthProvider >
+    </React.StrictMode >
 );
