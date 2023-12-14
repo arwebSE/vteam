@@ -2,9 +2,9 @@ import React from "react";
 import { useState, useEffect } from "react";
 import bikeModel from "../../models/bikeModel";
 import { Marker, Popup } from "react-leaflet";
-import L from "leaflet";
-import { renderToString } from "react-dom/server";
-import { BsScooter } from "react-icons/bs";
+//import L from "leaflet";
+//import { renderToString } from "react-dom/server";
+//import { BsScooter } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import icons from "../MapIcons";
 

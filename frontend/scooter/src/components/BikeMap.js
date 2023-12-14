@@ -1,7 +1,7 @@
 import React from "react";
 import { MapContainer, TileLayer, useMap, Marker, Popup } from "react-leaflet";
 import { useState, useEffect } from "react";
-import L from "leaflet";
+//import L from "leaflet";
 import BikeMarker from "./Bike/bikeMarker";
 import icons from "./MapIcons";
 

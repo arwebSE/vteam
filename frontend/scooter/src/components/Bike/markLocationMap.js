@@ -5,8 +5,8 @@ import L from "leaflet";
 //import { FaMapMarkerAlt } from "react-icons/fa";
 //import { FaCircleDot } from "react-icons/fa6";
 
-import { renderToString } from "react-dom/server";
-import { BsScooter } from "react-icons/bs";
+//import { renderToString } from "react-dom/server";
+//import { BsScooter } from "react-icons/bs";
 
 import bikeModel from "../../models/bikeModel";
 import cityModel from "../../models/cityModel";
@@ -49,7 +49,7 @@ export default function MarkLocationMap() {
                     marker.current.remove();
                 }
                 marker.current = L.marker([lat, lng], {
-                    icon: createIcon,
+                    icon: icons.createIcon,
                 }).addTo(map);
                 bikeLocation.lat = lat;
                 bikeLocation.lng = lng;
