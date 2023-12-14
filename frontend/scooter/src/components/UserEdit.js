@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { MdArrowBack } from "react-icons/md";
 import { SpinnerDotted } from "spinners-react";
@@ -16,7 +16,7 @@ const UserEdit = () => {
 
     const userId = location.pathname.split("/").pop();
 
-    const fetchUser = async () => {
+    const fetchUser = useCallback(async () => {
         setLoading(true);
         try {
             const user = await userModel.getUser(userId);
@@ -30,19 +30,19 @@ const UserEdit = () => {
         } finally {
             setLoading(false);
         }
-    };
+    }, [userId]);
 
     useEffect(() => {
         fetchUser();
 
+        // component unmount cleanup
         return () => {
-            // component unmount cleanup
             setUsername("");
             setEmail("");
             setPassword("");
             setRole("user");
         };
-    }, [userId]);
+    }, [fetchUser]);
 
     const handleSubmit = async (event) => {
         event.preventDefault();

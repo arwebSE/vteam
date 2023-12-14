@@ -35,7 +35,7 @@ const UserList = () => {
             <div className="flex flex-col gap-2">
                 {users.map((user) => (
                     <div
-                        key={user.id}
+                        key={user.userId}
                         onClick={() => clickHandler(user.userId)}
                         className="cursor-pointer rounded-lg hover:bg-slate-200 flex flex-row bg-white justify-between items-center p-4 shadow-sm transition hover:shadow-md transition duration-300 ease-in-out"
                     >

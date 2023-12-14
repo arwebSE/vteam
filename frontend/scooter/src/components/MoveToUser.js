@@ -1,12 +1,11 @@
 import React from "react";
 import { useMap } from "react-leaflet";
 import { useState, useEffect } from "react";
-import L from "leaflet";
+//import L from "leaflet";
 import { Marker, Popup } from "react-leaflet";
-import { renderToString } from "react-dom/server";
-import { FaCircleDot } from "react-icons/fa6";
+//import { renderToString } from "react-dom/server";
+//import { FaCircleDot } from "react-icons/fa6";
 import icons from "./MapIcons";
-
 
 function SetViewOnClick({ coords }) {
     const map = useMap();

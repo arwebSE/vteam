@@ -1,10 +1,9 @@
 import withAuth from "../../../util/withAuth";
 import { Link } from "react-router-dom";
 import "./style.css";
-import logo from "../../../logo.png";
 import MarkMap from "../../../components/Bike/markLocationMap";
+//import logo from "../../../logo.png";
 function AdminBike() {
-
     return (
         <div className="flex flex-col w-full mt-12 pt-10">
             <Link
@@ -18,4 +17,4 @@ function AdminBike() {
     );
 }
 
-export default AdminBike;
+export default withAuth(AdminBike);
