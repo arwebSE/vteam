@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate, Link } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import bikeModel from "../models/bikeModel";
 
@@ -28,12 +28,19 @@ const BikeEdit = () => {
         };
 
         fetchBike();
-    }, []);
+    });
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            await bikeModel.editUser(scooterId, lon, lat, battery, status, city);
+            await bikeModel.editUser(
+                scooterId,
+                lon,
+                lat,
+                battery,
+                status,
+                city
+            );
             console.log("Bike updated successfully.");
             navigate("/admin/bike");
         } catch (error) {

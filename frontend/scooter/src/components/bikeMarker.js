@@ -7,7 +7,6 @@ import { renderToString } from "react-dom/server";
 import { BsScooter } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 
-
 const bikeIcon = L.divIcon({
     html: renderToString(
         <BsScooter style={{ fontSize: "40px", color: "green" }} />
@@ -29,20 +28,22 @@ export default function MarkLocationMap() {
     useEffect(() => {
         const updateBikes = async () => {
             setBikes(await bikeModel.getBikes());
-        }
+        };
         updateBikes();
     });
     return (
         <>
             {bikes.map((bike) => (
                 <Marker
+                    key={bike.scooterId}
                     position={[bike.lat, bike.lon]}
                     icon={bikeIcon}
                     eventHandlers={{
                         dblclick: (e) => {
                             manageBike(bike.scooterId);
                         },
-                    }}>
+                    }}
+                >
                     <Popup>Scooter: {bike.scooterId}</Popup>
                 </Marker>
             ))}
