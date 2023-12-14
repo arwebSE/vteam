@@ -13,19 +13,19 @@ CREATE TABLE Users (
     user_authid TEXT,
     userrole TEXT
 ); CREATE TABLE City(
-    cityId INTEGER primary key AUTOINCREMENT,
+    cityId INTEGER PRIMARY KEY,
     id VARCHAR(45) NOT NULL,
     lat FLOAT NOT NULL,
     lon FLOAT NOT NULL
 ); CREATE TABLE Scooter(
-    scooterId INTEGER PRIMARY KEY AUTOINCREMENT,
+    scooterId INTEGER PRIMARY KEY,
     lon FLOAT,
     city_cityid INT,
     FOREIGN KEY(city_cityid) REFERENCES city(cityId)
 ); CREATE TABLE Zones(
     pointname VARCHAR(45),
-    zoneId INT primary key,
-    city_cityid INT NOT NULL,
+    zoneId INTEGER PRIMARY KEY,
+    city_cityid INT NULL,
     zonetype VARCHAR(20) NOT NULL,
     FOREIGN KEY(city_cityid) REFERENCES city(cityId)
 ); CREATE TABLE UsertoBike(
