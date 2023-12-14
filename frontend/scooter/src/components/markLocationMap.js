@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { MapContainer, TileLayer, useMap } from "react-leaflet";
-import { useState, useEffect } from "react";
 import L from "leaflet";
 
 //import { FaMapMarkerAlt } from "react-icons/fa";
@@ -48,15 +47,17 @@ const createBike = async () => {
 export default function MarkLocationMap() {
     function ClickHandler() {
         const map = useMap();
-        let marker = null;
+        const marker = useRef(null);
 
         useEffect(() => {
             const handleClick = async (e) => {
                 const { lat, lng } = e.latlng;
-                if (marker) {
-                    marker.remove();
+                if (marker.current) {
+                    marker.current.remove();
                 }
-                marker = L.marker([lat, lng], { icon: createIcon }).addTo(map);
+                marker.current = L.marker([lat, lng], {
+                    icon: createIcon,
+                }).addTo(map);
                 bikeLocation.lat = lat;
                 bikeLocation.lng = lng;
                 city = await bikeModel.getBikeCity(lat, lng);
@@ -67,7 +68,7 @@ export default function MarkLocationMap() {
             return () => {
                 map.off("click", handleClick);
             };
-        }, []);
+        }, [map]);
 
         return null;
     }
