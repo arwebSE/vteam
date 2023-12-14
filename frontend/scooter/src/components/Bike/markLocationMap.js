@@ -8,24 +8,17 @@ import { renderToString } from "react-dom/server";
 import { FaCircleDot } from "react-icons/fa6";
 import { BsScooter } from "react-icons/bs";
 
-import bikeModel from "../models/bikeModel";
-import cityModel from "../models/cityModel";
-import MoveToUser from "./MoveToUser";
+import bikeModel from "../../models/bikeModel";
+import cityModel from "../../models/cityModel";
+import MoveToUser from "../MoveToUser";
 import BikeMarker from "./bikeMarker";
+
+import icons from "../MapIcons";
 
 import "leaflet/dist/leaflet.css";
 
 const bikeLocation = {};
 let city = "";
-
-const createIcon = L.divIcon({
-    html: renderToString(
-        <BsScooter style={{ fontSize: "40px", color: "purple" }} />
-    ),
-    className: "my-custom-icon",
-    iconAnchor: [20, 40],
-    popupAnchor: [0, -40],
-});
 
 const createBike = async () => {
     let id = await cityModel.getCity(city)
@@ -58,7 +51,7 @@ export default function MarkLocationMap() {
                 if (marker) {
                     marker.remove();
                 }
-                marker = L.marker([lat, lng], { icon: createIcon }).addTo(map);
+                marker = L.marker([lat, lng], { icon: icons.createIcon }).addTo(map);
                 bikeLocation.lat = lat;
                 bikeLocation.lng = lng;
                 city = await bikeModel.getBikeCity(lat, lng);

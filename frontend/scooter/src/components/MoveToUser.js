@@ -5,14 +5,8 @@ import L from "leaflet";
 import { Marker, Popup } from "react-leaflet";
 import { renderToString } from "react-dom/server";
 import { FaCircleDot } from "react-icons/fa6";
+import icons from "./MapIcons";
 
-const userIcon = L.divIcon({
-    html: renderToString(
-        <FaCircleDot style={{ fontSize: "20px", color: "red" }} />
-    ),
-    className: "my-custom-icon",
-    popupAnchor: [0, -40],
-});
 
 function SetViewOnClick({ coords }) {
     const map = useMap();
@@ -44,7 +38,7 @@ export default function MoveToUser() {
 
     return (
         <>
-            <Marker position={currentLocation} icon={userIcon}>
+            <Marker position={currentLocation} icon={icons.userIcon}>
                 <Popup>You are here</Popup>
             </Marker>
             <SetViewOnClick coords={currentLocation} />
