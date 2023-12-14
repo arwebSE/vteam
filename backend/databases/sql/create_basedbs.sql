@@ -20,6 +20,9 @@ CREATE TABLE Users (
 ); CREATE TABLE Scooter(
     scooterId INTEGER PRIMARY KEY,
     lon FLOAT,
+    lat FLOAT,
+    battery FLOAT,
+    status VARCHAR(45),
     city_cityid INT,
     FOREIGN KEY(city_cityid) REFERENCES city(cityId)
 ); CREATE TABLE Zones(
@@ -29,7 +32,7 @@ CREATE TABLE Users (
     zonetype VARCHAR(20) NOT NULL,
     FOREIGN KEY(city_cityid) REFERENCES city(cityId)
 ); CREATE TABLE UsertoBike(
-    idUsertobike INT primary key,
+    idUsertobike INTEGER PRIMARY KEY AUTOINCREMENT,
     user_userid INT,
     scooterId INT,
     startTime TIMESTAMP NOT NULL,

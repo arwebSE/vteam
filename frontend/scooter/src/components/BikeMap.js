@@ -1,9 +1,9 @@
 import React from "react";
 import { MapContainer, TileLayer, useMap, Marker, Popup } from "react-leaflet";
 import { useState, useEffect } from "react";
-import L from "leaflet";
-import { FaMapMarkerAlt } from "react-icons/fa";
-import { renderToString } from "react-dom/server";
+//import L from "leaflet";
+import BikeMarker from "./Bike/bikeMarker";
+import icons from "./MapIcons";
 
 import "leaflet/dist/leaflet.css";
 
@@ -14,19 +14,10 @@ function SetViewOnClick({ coords }) {
     return null;
 }
 
-export default function Map() {
+export default function BikeMap() {
     const [currentLocation, setCurrentLocation] = useState({
         lat: 59,
         lng: 16,
-    });
-
-    const userIcon = L.divIcon({
-        html: renderToString(
-            <FaMapMarkerAlt style={{ fontSize: "40px", color: "red" }} />
-        ),
-        className: "my-custom-icon",
-        iconAnchor: [20, 40],
-        popupAnchor: [0, -40],
     });
 
     useEffect(() => {
@@ -50,9 +41,10 @@ export default function Map() {
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            <Marker position={currentLocation} icon={userIcon}>
+            <Marker position={currentLocation} icon={icons.userIcon}>
                 <Popup>You are here</Popup>
             </Marker>
+            <BikeMarker />
             <SetViewOnClick coords={currentLocation} />
         </MapContainer>
     );

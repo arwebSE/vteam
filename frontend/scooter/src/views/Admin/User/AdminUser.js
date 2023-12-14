@@ -1,23 +1,32 @@
+import React, { useState, useEffect } from "react";
+import { useParams, useLocation } from "react-router-dom";
 import withAuth from "../../../util/withAuth";
 
 import "./style.css";
-import logo from "../../../logo.png";
 import UserList from "../../../components/UserList";
+import UserEdit from "../../../components/UserEdit";
 
-function AdminUser() {
-    const users = [
-        { id: 1, name: "User One", email: "user1@example.com", role: "Admin" },
-        { id: 2, name: "User Two", email: "user2@example.com", role: "User" },
-    ];
+const AdminUser = () => {
+    const [refreshList, setRefreshList] = useState(false);
+    const { userid } = useParams();
+    const location = useLocation();
+
+    useEffect(() => {
+        if (!userid) {
+            // Triggered when navigating back to user list
+            setRefreshList((prev) => !prev);
+        }
+    }, [userid, location.pathname]); // Depend on userid and pathname
 
     return (
-        <div>
-            <div className="m-10 h-1.6 pt-16">
-                <h1 className="text-3xl font-semibold mb-4">User Management</h1>
-                <UserList />
-            </div>
+        <div className="mt-20">
+            {userid ? (
+                <UserEdit key={userid} userId={userid} />
+            ) : (
+                <UserList refresh={refreshList} setRefresh={setRefreshList} />
+            )}
         </div>
     );
-}
+};
 
 export default withAuth(AdminUser);

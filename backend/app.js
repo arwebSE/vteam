@@ -13,6 +13,7 @@ const authRoute = require('./routes/auth')
 const cityRoute = require('./routes/city');
 const scooterRoute = require('./routes/scooter');
 const zoneRoute = require('./routes/zone');
+const userToBikeRoute = require('./routes/userToBike');
 
 //Middleware
 app.use(cors())
@@ -33,6 +34,7 @@ app.use("/user", userRoute);
 app.use("/city", cityRoute);
 app.use("/scooter", scooterRoute);
 app.use("/zone", zoneRoute);
+app.use("/userToBike", userToBikeRoute);
 // Serve the form at the '/form' route
 /*app.get('/form', (req, res) => {
     
