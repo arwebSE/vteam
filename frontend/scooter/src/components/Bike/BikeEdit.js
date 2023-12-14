@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import bikeModel from "../models/bikeModel";
+import bikeModel from "../../models/bikeModel";
 
 const BikeEdit = () => {
     const location = useLocation();
