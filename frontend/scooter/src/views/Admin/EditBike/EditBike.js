@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import withAuth from "../../../util/withAuth";
 import "./style.css";
-import BikeEdit from "../../../components/BikeEdit";
+import BikeEdit from "../../../components/Bike/BikeEdit";
 
 function EditBike() {
     return (

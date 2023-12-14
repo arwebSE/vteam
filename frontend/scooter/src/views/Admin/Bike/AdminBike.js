@@ -2,7 +2,7 @@ import withAuth from "../../../util/withAuth";
 import { Link } from "react-router-dom";
 import "./style.css";
 import logo from "../../../logo.png";
-import MarkMap from "../../../components/markLocationMap";
+import MarkMap from "../../../components/Bike/markLocationMap";
 function AdminBike() {
 
     return (

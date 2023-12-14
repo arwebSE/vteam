@@ -1,5 +1,5 @@
 import withAuth from "../../util/withAuth";
-import Map from "../../components/Map";
+import BikeMap from "../../components/BikeMap";
 
 import "./style.css";
 import logo from "../../logo.png";
@@ -36,7 +36,7 @@ function Admin() {
             {/* Main */}
             <div className="w-5/6 p-3 flex flex-col items-center bg-stone-100">
                 <div className="map-container">
-                    <Map />
+                    <BikeMap />
                 </div>
             </div>
         </div>
