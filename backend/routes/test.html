@@ -101,12 +101,22 @@
         <label for="lon">Longitude:</label>
         <input type="number" id="lon" name="lon" step="any" required>
         <br>
+        <label for="lat_scooter">Latitude:</label>
+        <input type="number" id="lat_scooter" name="lat_scooter" step="any" required>
+        <br>
+        <label for="battery_scooter">Battery:</label>
+        <input type="number" id="battery_scooter" name="battery_scooter" step="any" required>
+        <br>
+        <label for="status_scooter">Status:</label>
+        <input type="text" id="status_scooter" name="status_scooter" step="any" required>
+        <br>
         <label for="city_cityid">City ID:</label>
         <input type="number" id="city_cityid" name="city_cityid" required>
         <button type="button" onclick="createScooter()">Submit</button>
     </form>
 
     <h2>See all scooters: <a href="http://localhost:1337/scooter">/scooter</a></h2>
+    <h2>See all available scooters: <a href="http://localhost:1337/scooter/available">/scooter/available</a></h2>
     <h2>See one scooter: <a href="http://localhost:1337/scooter/1">/scooter/{scooterId}</a></h2>
 
     <h1>DELETE SCOOTER FORM</h1>
@@ -124,6 +134,15 @@
         <label for="lon_scooter_edit">Longitude:</label>
         <input type="number" id="lon_scooter_edit" name="lon_scooter_edit" step="any" required>
         <br>
+        <label for="lat_scooter_edit">Latitude:</label>
+        <input type="number" id="lat_scooter_edit" name="lat_scooter_edit" step="any" required>
+        <br>
+        <label for="battery_scooter_edit">Battery:</label>
+        <input type="number" id="battery_scooter_edit" name="battery_scooter_edit" step="any" required>
+        <br>
+        <label for="status_scooter_edit">Status:</label>
+        <input type="text" id="status_scooter_edit" name="status_scooter_edit" step="any" required>
+        <br>
         <label for="city_cityid_edit">City ID:</label>
         <input type="number" id="city_cityid_edit" name="city_cityid_edit" required>
         <br>
@@ -139,7 +158,7 @@
     <h1> CREATE ZONE FORM</h1>
     <form id="zoneForm" action="/zone" method="post">
         <label for="pointname">Point Name:</label>
-        <input type="text" id="pointname" name="pointname" required>
+        <input type="text" id="pointname" name="pointname" required pattern="\S+">
         <br>
         <label for="zoneId">Zone ID:</label>
         <input type="number" id="zoneId" name="zoneId" required>
@@ -159,7 +178,7 @@
     <h1>UPDATE ZONE FORM</h1>
     <form id="updateZoneForm" action="/zones" method="put">
         <label for="zoneId_edit">Zone ID or name:</label>
-        <input type="text" id="zoneId_edit" name="zoneId_edit" required>
+        <input type="text" id="zoneId_edit" name="zoneId_edit" required pattern="\S+">
         <h3>UPDATE DATA</h3>
         <label for="pointname_edit">Point Name:</label>
         <input type="text" id="pointname_edit" name="pointname_edit" required>
@@ -181,6 +200,44 @@
         <label for="zoneIdToDelete">Zone ID:</label>
         <input type="number" id="zoneIdToDelete" name="zoneIdToDelete" required>
         <button type="button" onclick="deleteZone()">Delete Zone</button>
+    </form>
+</div>
+
+<div>
+    <h1>CREATE USERTOBIKE FORM</h1>
+    <form id="usertoBikeForm" action="/userToBike" method="post">
+        <label for="user_userid_create_userToBike">User ID:</label>
+        <input type="text" id="user_userid_create_userToBike" name="user_userid_create_userToBike" required>
+        <br>
+        <label for="scooterId_create_userToBike">Scooter ID:</label>
+        <input type="text" id="scooterId_create_userToBike" name="scooterId_create_userToBike" required>
+        <br>
+        <label for="stopTime">Stop Time:</label>
+        <input type="datetime-local" id="stopTime" name="stopTime" required>
+        <br>
+        <button type="button" onclick="createUserToBike()">Submit</button>
+    </form>
+
+    <h2>See all userToBikes: <a href="http://localhost:1337/userToBike">/userToBike </a></h2>
+    <h2>See one userToBike: <a href="http://localhost:1337/userToBike/1">/userToBike/{IdUsertobike}</a></h2>
+
+    <h1>UPDATE USER TO BIKE FORM</h1>
+    <form id="updateUserToBikeForm" action="/userToBike" method="put">
+        <label for="idUsertobike_edit">UserToBike ID:</label>
+        <input type="text" id="idUsertobike_edit" name="idUsertobike_edit" required>
+        <h3>UPDATE DATA</h3>
+        <label for="user_userid_edit">User ID:</label>
+        <input type="text" id="user_userid_edit" name="user_userid_edit" required>
+        <br>
+        <label for="scooterId_edit_usertobike">Scooter ID:</label>
+        <input type="text" id="scooterId_edit_usertobike" name="scooterId_edit_usertobike" required>
+        <br>
+        <label for="stopTime_edit">Stop Time:</label>
+        <input type="datetime-local" id="stopTime_edit" name="stopTime_edit" required>
+        <br>
+        <label for="price_edit">Price:</label>
+        <input type="number" id="price_edit" name="price_edit" required>
+        <button type="button" onclick="updateUserToBike()">Update UserToBike</button>
     </form>
 </div>
 
@@ -395,15 +452,20 @@ async function updateCity() {
 }
 
 async function createScooter() {
-    console.log("Button clicked");
 
     // Get form data
     var lon = document.getElementById("lon").value;
+    var lat = document.getElementById("lat_scooter").value;
+    var battery = document.getElementById("battery_scooter").value;
+    var status = document.getElementById("status_scooter").value;
     var city_cityid = document.getElementById("city_cityid").value;
 
     // Create a FormData object
     const jsonData = {
         lon: parseFloat(lon),
+        lat: parseFloat(lat),
+        battery: parseFloat(battery),
+        status: status,
         city_cityid: parseInt(city_cityid)
     };
 
@@ -462,10 +524,16 @@ function deleteScooter() {
 async function updateScooter() {
     const scooterId = document.getElementById("scooterId_edit").value;
     const lon = document.getElementById("lon_scooter_edit").value;
+    const lat = document.getElementById("lat_scooter_edit").value;
+    const battery = document.getElementById("battery_scooter_edit").value;
+    const status = document.getElementById("status_scooter_edit").value;
     const city_cityid = document.getElementById("city_cityid_edit").value;
 
     const scooter = {
         lon: parseFloat(lon),
+        lat: parseFloat(lat),
+        battery: parseFloat(battery),
+        status: status,
         city_cityid: parseInt(city_cityid)
     };
 
@@ -525,7 +593,6 @@ async function deleteAllScooters() {
 }
 
 async function submitZoneForm() {
-    console.log("Button clicked");
     // Get form data
     var pointname = document.getElementById("pointname").value;
     var zoneId = document.getElementById("zoneId").value;
@@ -539,8 +606,6 @@ async function submitZoneForm() {
         city_cityid: zone_cityid,
         zonetype: zonetype
     };
-
-    console.log(jsonData);
 
     // Send a POST request to your API endpoint
     await fetch('http://localhost:1337/zone', {
@@ -593,14 +658,11 @@ function deleteZone() {
 }
 
 async function updateZone() {
-    console.log("Update");
     const zoneId = document.getElementById("zoneId_edit").value;
     const pointname = document.getElementById("pointname_edit").value;
     const zoneId_edit = document.getElementById("zoneid_edit").value;
     const zone_cityid = document.getElementById("zone_cityid_edit").value;
     const zonetype = document.getElementById("zonetype_edit").value;
-
-    console.log(pointname);
 
     const zone = {
         pointname: pointname,
@@ -625,6 +687,82 @@ async function updateZone() {
     })
     .then(data => {
         console.log('Zone updated successfully:', data);
+        // Add any additional logic or UI updates as needed
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        // Handle errors or display error messages as needed
+    });
+}
+
+
+async function createUserToBike() {
+    // Get form data
+    var user_userid = document.getElementById("user_userid_create_userToBike").value;
+    var scooterId = document.getElementById("scooterId_create_userToBike").value;
+    var stopTime = document.getElementById("stopTime").value;
+
+    // Create a FormData object
+    const jsonData = {
+        user_userid: user_userid,
+        scooterId: scooterId,
+        stopTime: stopTime
+    };
+
+    // Send a POST request to your API endpoint
+    await fetch('http://localhost:1337/userToBike', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'  // Set content type to JSON
+        },
+        body: JSON.stringify(jsonData)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json(); // Assuming the API returns JSON
+    })
+    .then(data => {
+        console.log('Success:', data);
+        // Handle success, e.g., show a success message to the user
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        // Handle errors, e.g., show an error message to the user
+    });
+}
+
+async function updateUserToBike() {
+    const idUsertobike = document.getElementById("idUsertobike_edit").value;
+    const user_userid = document.getElementById("user_userid_edit").value;
+    const scooterId = document.getElementById("scooterId_edit").value;
+    const stopTime = document.getElementById("stopTime_edit").value;
+    const price = document.getElementById("price_edit").value;
+
+    const userToBike = {
+        user_userid: user_userid,
+        scooterId: scooterId,
+        stopTime: stopTime,
+        price: price
+    };
+
+    // Make an asynchronous UPDATE request using Fetch API or XMLHttpRequest
+    await fetch(`http://localhost:1337/userToBike/${idUsertobike}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userToBike)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('UserToBike updated successfully:', data);
         // Add any additional logic or UI updates as needed
     })
     .catch(error => {
