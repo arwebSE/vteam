@@ -1,11 +1,12 @@
 import React from "react";
-import { MapContainer, TileLayer, useMap, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, useMap } from "react-leaflet";
 import { useState, useEffect } from "react";
-import L, { map } from "leaflet";
+import L from "leaflet";
 
-import { FaMapMarkerAlt } from "react-icons/fa";
+//import { FaMapMarkerAlt } from "react-icons/fa";
+//import { FaCircleDot } from "react-icons/fa6";
+
 import { renderToString } from "react-dom/server";
-import { FaCircleDot } from "react-icons/fa6";
 import { BsScooter } from "react-icons/bs";
 
 import bikeModel from "../models/bikeModel";
@@ -28,29 +29,26 @@ const createIcon = L.divIcon({
 });
 
 const createBike = async () => {
-    let id = await cityModel.getCity(city)
+    let id = await cityModel.getCity(city);
     if (id) {
         const bike = {
             lon: bikeLocation.lng,
             lat: bikeLocation.lat,
             battery: 100,
             status: "available",
-            city_cityid: id.cityId
-        }
+            city_cityid: id.cityId,
+        };
 
         const response = await bikeModel.createBike(bike);
         console.log(response);
-        document.getElementById("map")
+        document.getElementById("map");
     }
-}
-
+};
 
 export default function MarkLocationMap() {
-
     function ClickHandler() {
         const map = useMap();
         let marker = null;
-
 
         useEffect(() => {
             const handleClick = async (e) => {
@@ -62,13 +60,12 @@ export default function MarkLocationMap() {
                 bikeLocation.lat = lat;
                 bikeLocation.lng = lng;
                 city = await bikeModel.getBikeCity(lat, lng);
-
             };
 
-            map.on('click', handleClick);
+            map.on("click", handleClick);
 
             return () => {
-                map.off('click', handleClick);
+                map.off("click", handleClick);
             };
         }, []);
 
@@ -80,7 +77,6 @@ export default function MarkLocationMap() {
     });
 
     useEffect(() => {
-
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 const newPos = {
@@ -98,7 +94,11 @@ export default function MarkLocationMap() {
     return (
         <div className="flex flex-col items-center gap-5">
             <div className="w-full">
-                <MapContainer center={currentLocation} zoom={13} scrollWheelZoom={true}>
+                <MapContainer
+                    center={currentLocation}
+                    zoom={13}
+                    scrollWheelZoom={true}
+                >
                     <TileLayer
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -108,7 +108,12 @@ export default function MarkLocationMap() {
                     <MoveToUser />
                 </MapContainer>
             </div>
-            <button className="w-11/12 rounded bg-indigo-600 hover:bg-indigo-700 text-white text-lg p-3 shadow-lg hover:shadow-xl transition duration-300 ease-in-out" onClick={() => createBike()}>Add bike</button>
+            <button
+                className="w-11/12 rounded bg-indigo-600 hover:bg-indigo-700 text-white text-lg p-3 shadow-lg hover:shadow-xl transition duration-300 ease-in-out"
+                onClick={() => createBike()}
+            >
+                Add bike
+            </button>
         </div>
     );
 }
