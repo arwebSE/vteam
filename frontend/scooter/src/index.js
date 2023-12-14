@@ -12,6 +12,7 @@ import AdminUser from "./views/Admin/User/AdminUser";
 import AdminBike from "./views/Admin/Bike/AdminBike";
 import AdminZone from "./views/Admin/Zone/AdminZone";
 import EditUser from "./views/Admin/EditUser/EditUser";
+import Signup from "./views/Signup/Signup";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
@@ -19,6 +20,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             <Router>
                 <Navbar />
                 <Routes>
+                    <Route path="/signup" element={<Signup />} />
                     <Route path="/" element={<Login />} />
                     <Route path="/home" element={<Home />} />
                     <Route path="/admin" element={<Admin />} />

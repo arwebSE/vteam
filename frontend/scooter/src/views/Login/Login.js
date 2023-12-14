@@ -69,14 +69,14 @@ function Login() {
 
                 <a
                     className="w-full mt-6 flex justify-center py-3 px-6 border border-transparent rounded-md shadow-sm text-base md:text-lg font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 space-y-6"
-                    href="länk till sign up view"
+                    href="/signup"
                 >
                     Sign Up
                 </a>
 
                 <a
                     className="w-full mt-6 flex items-baseline justify-center  border border-transparent rounded-md shadow-sm text-base md:text-lg font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    href="länk till google oauth"
+                    href="http://localhost:1337/oauth2/login/google"
                 >  
                     <div className="googleIcon pt-1">
                         <FcGoogle/>
