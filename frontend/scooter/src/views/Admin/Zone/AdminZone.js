@@ -1,5 +1,5 @@
 import React from "react";
-import AddZone from "../../../components/Zone/AddZone";
+//import AddZone from "../../../components/Zone/AddZone";
 import ZoneMap from "../../../components/Zone/ZoneMap";
 import withAuth from "../../../util/withAuth";
 

@@ -2,7 +2,7 @@ import withAuth from "../../util/withAuth";
 import BikeMap from "../../components/BikeMap";
 
 import "./style.css";
-import logo from "../../logo.png";
+//import logo from "../../logo.png";
 
 function Admin() {
     return (

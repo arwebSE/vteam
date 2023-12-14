@@ -1,9 +1,9 @@
-import react from 'react';
+import React from "react";
 import L from "leaflet";
 import { useMap } from "react-leaflet";
 import { useState } from "react";
 import { useEffect } from "react";
-import icons from "../MapIcons";
+//import icons from "../MapIcons";
 import bikeModel from "../../models/bikeModel";
 
 function AddZone({ onMapClick, color, radius }) {
@@ -12,7 +12,6 @@ function AddZone({ onMapClick, color, radius }) {
 
     function ClickHandler() {
         const map = useMap();
-
 
         useEffect(() => {
             const handleClick = async (e) => {
@@ -27,27 +26,27 @@ function AddZone({ onMapClick, color, radius }) {
                     color: color,
                     fillColor: color,
                     fillOpacity: 0.5,
-                    radius: radius
+                    radius: radius,
                 }).addTo(map);
                 setCircle(newCircle);
                 const newCity = await bikeModel.getBikeCity(lat, lng);
                 setCity(newCity);
+                console.log("City:", city, ", set to:", newCity);
             };
 
-            map.on('click', handleClick);
+            map.on("click", handleClick);
 
             return () => {
-                map.off('click', handleClick);
+                map.off("click", handleClick);
             };
-        }, [circle, onMapClick, color, radius]);
-
+        }, [map]);
         return null;
     }
+
     return (
         <div className="flex items-center justify-center h-screen bg-gray-100">
             <ClickHandler />
         </div>
-
     );
 }
 
