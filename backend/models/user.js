@@ -1,18 +1,33 @@
 const db = require("../databases/sql/database.js");
 
 const userModel = {
+    /**
+     * Retrieves all users from the database and returns them in a JSON format.
+     * @param {Object} res - The response object used to send the JSON data.
+     * @returns {Object} An array of user objects.
+     */
     getAll: function (res) {
         db.all('SELECT * FROM Users', function (error, results, fields) {
             if (error) throw error;
             return res.json(results);
         });
     },
+<<<<<<<<<<<<<  ✨ Codeium AI Suggestion  >>>>>>>>>>>>>>
++    /**
++     * Retrieves a single record from the Users table based on the provided ID and sends it as a JSON response.
++     *
++     * @param {number} id - The ID of the record to retrieve.
++     * @param {object} res - The response object to send the JSON response to.
++     * @return {undefined} This function does not return a value.
++     */
+<<<<<  bot-65554f2a-5a9e-4a9f-89c1-8de96071e39f  >>>>>
     getOne: function (id, res) {
         db.get('SELECT * FROM Users WHERE userId = ?', id, function (error, results, fields) {
             if (error) throw error;
-            res.json(results);
+             return res.json(results);
         });
     },
+    
     create: function (user, res) {
         const sql = 'INSERT INTO Users (username, email, passwd) VALUES (?, ?, ?)';
         const params = [user.body.username, user.body.email, user.body.passwd];
