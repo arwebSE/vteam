@@ -24,6 +24,20 @@ const userModel = {
              return res.json(results);
         });
     },
+
+    /**
+     * A function that verifies the password.
+     * @param {string} passwd - The password to be verified.
+     * @param {object} res - The response object.
+     * @returns {object} The JSON representation of the results.
+     */
+    passVerif: function (passwd, res) {
+        db.get('SELECT * FROM Users WHERE passwd = ?', passwd, function (error, results, fields) {
+            if (error) throw error;
+             return res.json(results);
+        });
+
+    },
     
     /**
      * Creates a new user in the database.
