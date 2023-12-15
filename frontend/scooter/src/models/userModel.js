@@ -29,6 +29,22 @@ const userModel = {
     },
 
     /**
+     * Asynchronously verifies the given ID and password by making a request to the server.
+     * @param {string} id - The ID to be verified.
+     * @param {string} passwd - The password to be verified.
+     * @returns {Promise<any>} - A Promise that resolves to the data received from the server.
+     */
+    passverif: async function (id, passwd) {
+        try {
+            const response = await fetch(`http://localhost:1337/user/${id}/${passwd}`);
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error(error);
+        }
+    },
+
+    /**
      * Creates a new user in the API
      * @param {string} username - The username of the new user
      * @param {string} email - The email of the new user
