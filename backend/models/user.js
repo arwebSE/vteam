@@ -32,8 +32,8 @@ const userModel = {
      * @param {object} res - The response object.
      * @returns {object} The JSON representation of the results.
      */
-    passVerif: function (id, passwd, res) {
-        db.get('SELECT * FROM Users WHERE passwd = ? AND userID = ?	', [passwd, id], function (error, results, fields) {
+    passVerif: function (username, passwd, res) {
+        db.get('SELECT * FROM Users WHERE passwd = ? AND username = ?	', [passwd, username], function (error, results, fields) {
             if (error) throw error;
              return res.json(results);
         });
