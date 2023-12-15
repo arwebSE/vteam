@@ -34,7 +34,7 @@ const userModel = {
      * @param {string} passwd - The password to be verified.
      * @returns {Promise<any>} - A Promise that resolves to the data received from the server.
      */
-    passverif: async function (username, passwd) {
+    passVerif: async function (username, passwd) {
         try {
             const response = await fetch(`http://localhost:1337/user/${username}/${passwd}`);
             const data = await response.json();
