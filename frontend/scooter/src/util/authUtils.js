@@ -1,11 +1,17 @@
+import userModel from '../models/userModel';
 // Function for handling login
-export const handleLogin = (setIsLoggedIn, navigate) => {
-    setIsLoggedIn(true);
-    // todo: OAuth login logic here
-    localStorage.setItem('isLoggedIn', 'true'); // save login state
-    navigate('/home');
+export const handleLogin = async (setIsLoggedIn, navigate, username, passwd) => {
+     const passdata = await userModel.passVerif(username, passwd);
+    
+    if (passdata) {
+        setIsLoggedIn(true);
+        localStorage.setItem('isLoggedIn', 'true'); // save login state
+        navigate('/home');
+    }
+    else {
+        alert("Wrong username or password");
+    } 
 };
-
 // Function for handling logout
 export const handleLogout = (setIsLoggedIn, navigate) => {
     setIsLoggedIn(false);

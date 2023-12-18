@@ -36,7 +36,7 @@ const userModel = {
      */
     passVerif: async function (username, passwd) {
         try {
-            const response = await fetch(`http://localhost:1337/user/${username}/${passwd}`);
+            const response = await fetch(`http://localhost:1337/user/ver/${username}/${passwd}`);
             const data = await response.json();
             return data;
         } catch (error) {
