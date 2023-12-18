@@ -28,14 +28,14 @@ const userModel = {
     /**
      * A function that verifies the password.
      * @param {string} passwd - The password to be verified.
-     * @param {number} id - The ID of the user.
+     * @param {string} username - The username of the user.
      * @param {object} res - The response object.
      * @returns {object} The JSON representation of the results.
      */
     passVerif: function (username, passwd, res) {
-        db.get('SELECT * FROM Users WHERE passwd = ? AND username = ?	', [passwd, username], function (error, results, fields) {
+        db.get('SELECT * FROM Users WHERE username = ?	',  username, function (error, results, fields) {
             if (error) throw error;
-             return res.json(results);
+            return res.json(results);
         });
 
     },
