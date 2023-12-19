@@ -3,7 +3,7 @@ import React from "react";
 import * as turf from '@turf/turf';
 
 import L from 'leaflet';
-import { Marker, Popup } from "react-leaflet";
+// import { Marker, Popup } from "react-leaflet";
 import { useState, useEffect } from "react";
 import { useMap } from "react-leaflet";
 

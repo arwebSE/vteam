@@ -5,10 +5,8 @@ import { useState } from "react";
 import { useEffect } from "react";
 //import icons from "../MapIcons";
 import bikeModel from "../../models/bikeModel";
-import cityModel from "../../models/cityModel";
 
 function AddZone({ onMapClick, color, setCity }) {
-    const [circle, setCircle] = useState(null);
 
     function ClickHandler() {
         const map = useMap();

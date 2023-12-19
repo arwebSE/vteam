@@ -12,7 +12,7 @@ function SetViewToUser({ coords }) {
     const map = useMap();
     useEffect(() => {
         map.setView(coords, map.getZoom());
-    }, [coords]); // Empty dependency array means this effect will only run once
+    }, [coords, map]); // Empty dependency array means this effect will only run once
     return null;
 }
 
