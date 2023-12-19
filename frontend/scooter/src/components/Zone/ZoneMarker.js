@@ -28,7 +28,7 @@ export default function ZoneMarker() {
     useEffect(() => {
         const colors = { "No Go Zone": 'red', "City": 'blue', "Parking Spot": 'green', "Restricted Speed": 'orange' }
         if (zone) {
-            zone.map(z => {
+            zone.forEach(z => {
                 if (z.coordinates !== "POLYGON(())") {
                     let geojson = wellknown.parse(z.coordinates);
                     let reversedCoordinates = geojson.coordinates[0].map(coord => coord.reverse());

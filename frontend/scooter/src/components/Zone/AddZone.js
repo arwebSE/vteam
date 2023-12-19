@@ -1,7 +1,6 @@
 import React from "react";
 import L from "leaflet";
 import { useMap } from "react-leaflet";
-import { useState } from "react";
 import { useEffect } from "react";
 //import icons from "../MapIcons";
 import bikeModel from "../../models/bikeModel";
@@ -17,13 +16,12 @@ function AddZone({ onMapClick, color, setCity }) {
                 if (onMapClick) {
                     onMapClick(lat + " " + lng);
                 }
-                const newCircle = L.circle([lat, lng], {
+                L.circle([lat, lng], {
                     color: color,
                     fillColor: color,
                     fillOpacity: 0.5,
                     radius: 3,
                 }).addTo(map);
-                setCircle(newCircle);
                 const newCity = await bikeModel.getBikeCity(lat, lng);
                 setCity(newCity);
                 // console.log("City:", city, ", set to:", newCity);

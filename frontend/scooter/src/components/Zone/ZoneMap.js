@@ -22,7 +22,6 @@ export default function ZoneMap() {
     const [zoneType, setZoneType] = useState("Parking Spot");
     const [points, setPoints] = useState([]);
     const [city, setCity] = useState(null);
-    const [clickedLocation, setClickedLocation] = useState(null);
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -38,7 +37,6 @@ export default function ZoneMap() {
 
     const handleMapClick = async (coords) => {
         setPoints([...points, coords]);
-        setClickedLocation(coords);
     };
 
     function colorManager(e) {
