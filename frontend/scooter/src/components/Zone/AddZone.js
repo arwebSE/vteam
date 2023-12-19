@@ -5,9 +5,9 @@ import { useState } from "react";
 import { useEffect } from "react";
 //import icons from "../MapIcons";
 import bikeModel from "../../models/bikeModel";
+import cityModel from "../../models/cityModel";
 
-function AddZone({ onMapClick, color, radius }) {
-    const [city, setCity] = useState(null);
+function AddZone({ onMapClick, color, setCity }) {
     const [circle, setCircle] = useState(null);
 
     function ClickHandler() {
@@ -17,21 +17,18 @@ function AddZone({ onMapClick, color, radius }) {
             const handleClick = async (e) => {
                 const { lat, lng } = e.latlng;
                 if (onMapClick) {
-                    onMapClick({ lat, lng });
-                }
-                if (circle) {
-                    circle.remove();
+                    onMapClick(lat + " " + lng);
                 }
                 const newCircle = L.circle([lat, lng], {
                     color: color,
                     fillColor: color,
                     fillOpacity: 0.5,
-                    radius: radius,
+                    radius: 3,
                 }).addTo(map);
                 setCircle(newCircle);
                 const newCity = await bikeModel.getBikeCity(lat, lng);
                 setCity(newCity);
-                console.log("City:", city, ", set to:", newCity);
+                // console.log("City:", city, ", set to:", newCity);
             };
 
             map.on("click", handleClick);

@@ -6,48 +6,46 @@ import icons from "../MapIcons";
 import zoneModel from "../../models/zoneModel";
 
 import "leaflet/dist/leaflet.css";
-
-
-
+import ZoneMarker from "./ZoneMarker";
 
 function SetViewToUser({ coords }) {
     const map = useMap();
-    map.setView(coords, map.getZoom());
+    useEffect(() => {
+        map.setView(coords, map.getZoom());
+    }, [coords]); // Empty dependency array means this effect will only run once
     return null;
 }
 
 
 export default function ZoneMap() {
     const [color, setColor] = useState("blue");
-    const [radius, setRadius] = useState(10);
     const [zoneType, setZoneType] = useState("Parking Spot");
-
+    const [points, setPoints] = useState([]);
+    const [city, setCity] = useState(null);
     const [clickedLocation, setClickedLocation] = useState(null);
 
     async function handleSubmit(e) {
         e.preventDefault();
-
+        let turfPoints = points;
+        turfPoints.push(points[0]);
         const zone = {
-            zoneType: zoneType,
-            radius: radius,
-            lat: clickedLocation.lat,
-            lng: clickedLocation.lng,
+            zonetype: zoneType,
+            coordinates: `POLYGON((${points.join(', ')}))`,
+            city_name: city
         };
-        console.log(zone);
         await zoneModel.createZone(zone)
     }
 
-    const handleMapClick = (coords) => {
+    const handleMapClick = async (coords) => {
+        setPoints([...points, coords]);
         setClickedLocation(coords);
     };
 
     function colorManager(e) {
         setColor(e.target.value);
-        setZoneType(e.target.name);
+        setZoneType(e.target.options[e.target.selectedIndex].text);
     }
-    function radiusManager(e) {
-        setRadius(e.target.value);
-    }
+
     const [currentLocation, setCurrentLocation] = useState({ lat: 59, lng: 16, });
 
     useEffect(() => {
@@ -75,23 +73,25 @@ export default function ZoneMap() {
                 <Marker position={currentLocation} icon={icons.userIcon}>
                     <Popup>You are here</Popup>
                 </Marker>
-                <AddZone color={color} radius={radius} onMapClick={handleMapClick} />
+                <ZoneMarker />
+                <AddZone color={color} setCity={setCity} onMapClick={handleMapClick} />
                 <SetViewToUser coords={currentLocation} />
             </MapContainer>
             <form
                 onSubmit={handleSubmit}
                 className="flex flex-col w-11/12">
+
                 <label htmlFor="zoneType">Zone Name</label>
                 <select onChange={colorManager}>
-                    <option value="green" name="Parking Spot">Parking Spot</option>
+                    <option value={{ color: "green", type: "Parking Spot" }} name="Parking Spot">Parking Spot</option>
                     <option value="red" name="No Go Zone">No Go Zone</option>
                     <option value="orange" name="Restricted Speed">Restricted Speed</option>
                     <option value="blue" name="City">City</option>
                 </select>
-                <input type="range" min="1" max="6000" value={radius} onChange={radiusManager} />
-                <label htmlFor="radius">Radius</label>
-                <p>{radius} m</p>
-                <input type="submit" value="Create Zone" />
+
+                {points.length > 2 && (
+                    <input type="submit" value="Create Zone" />
+                )}
             </form>
         </div>
     );
