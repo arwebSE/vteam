@@ -1,0 +1,1 @@
+sqlite3 backenddata.db < create_experimental_db.sql

@@ -1,3 +1,5 @@
+SELECT load_extension('mod_spatialite');
+
 DROP TABLE IF EXISTS UsertoBike;
 DROP TABLE IF EXISTS Zones;
 DROP TABLE IF EXISTS Scooter;
@@ -26,11 +28,11 @@ CREATE TABLE Users (
     city_cityid INT,
     FOREIGN KEY(city_cityid) REFERENCES city(cityId)
 ); CREATE TABLE Zones(
-    pointname VARCHAR(45),
     zoneId INTEGER PRIMARY KEY,
-    city_cityid INT NULL,
-    zonetype VARCHAR(20) NOT NULL,
-    FOREIGN KEY(city_cityid) REFERENCES city(cityId)
+    city_name VARCHAR(45),
+    zonetype VARCHAR(45),
+    coordinates GEOMETRY,
+    FOREIGN KEY(city_name) REFERENCES city(id)
 );
 CREATE TABLE UsertoBike(
     idUsertobike INTEGER PRIMARY KEY AUTOINCREMENT,
