@@ -1,9 +1,10 @@
 import userModel from '../models/userModel';
+import  { logAuth } from '../util/oAuthcheck';
 // Function for handling login
-export const handleLogin = async (setIsLoggedIn, navigate, username, passwd) => {
+export const handleLogin = async (setIsLoggedIn, navigate, username=null, passwd=null) => {
      const passdata = await userModel.passVerif(username, passwd);
-    
-    if (passdata) {
+     const oauth = logAuth();
+    if ( passdata || oauth ) {
         setIsLoggedIn(true);
         localStorage.setItem('isLoggedIn', 'true'); // save login state
         navigate('/home');
