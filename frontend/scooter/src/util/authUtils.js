@@ -28,7 +28,6 @@ export const handleOauthlogin = async (setIsLoggedIn, navigate, state) => {
         alert("Wrong username or password");
     } 
 };
-
 // Function for handling logout
 export const handleLogout = (setIsLoggedIn, navigate) => {
     setIsLoggedIn(false);
