@@ -14,6 +14,7 @@ import AdminZone from "./views/Admin/Zone/AdminZone";
 import EditUser from "./views/Admin/EditUser/EditUser";
 import Signup from "./views/Signup/Signup";
 import EditBike from "./views/Admin/EditBike/EditBike";
+import LoginAuth from "./views/Oauthlogin/Oauth";
 
 
 ReactDOM.createRoot(document.getElementById("root")).render(
@@ -24,11 +25,11 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                 <Routes>
                     <Route path="/signup" element={<Signup />} />
                     <Route path="/" element={<Login />} />
+                    <Route path="/oauthlogin" element={<LoginAuth />} />
                     <Route path="/home" element={<Home />} />
                     <Route path="/admin" element={<Admin />} />
                     <Route path="/admin/bike" element={<AdminBike />} />
                     <Route path="/admin/zone" element={<AdminZone />} />
-
                     <Route path="/admin/user/:userid" element={<EditUser />} />
                     <Route path="/admin/bike/edit/:id" element={<EditBike />} />
 
