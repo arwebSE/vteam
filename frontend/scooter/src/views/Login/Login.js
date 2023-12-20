@@ -12,7 +12,9 @@ import boi from "../../boi.png";
 function Login() {
     const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
     const navigate = useNavigate();
-    const login = () => handleLogin(setIsLoggedIn, navigate, username, passwd );
+    const login = (e) => {
+        e.preventDefault();
+        handleLogin(setIsLoggedIn, navigate, username, passwd)};
     const [username, setUsername] = useState('');
     const [passwd, setPasswd] = useState('');
     if (isLoggedIn) {
