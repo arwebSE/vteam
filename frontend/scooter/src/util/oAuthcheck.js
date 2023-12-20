@@ -1,4 +1,4 @@
-
+import { navigate } from 'react-router-dom'; 
 
 /**
  * Logs the authentication status.
@@ -10,6 +10,7 @@ export const logAuth = async () => {
     if (localStorage.getItem('auth_id')) {
         // Set the 'isLoggedin' flag to true in local storage
         localStorage.setItem('isLoggedIn', 'true');
+        navigate('/home');
     }
     return localStorage.getItem('isLoggedIn');
 }
