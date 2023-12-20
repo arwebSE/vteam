@@ -27,19 +27,6 @@ export const handleOauthlogin = async (setIsLoggedIn, navigate, state) => {
     } 
 };
 
-export const handleOauthlogin = async (setIsLoggedIn, navigate, state) => {
-    
-    if (state) {
-        setIsLoggedIn(true);
-        localStorage.setItem('isLoggedIn', 'true'); // save login state
-        localStorage.setItem('userName', username);
-        localStorage.setItem('userId', passdata.userId);
-        navigate('/home');
-    }
-    else {
-        alert("Wrong username or password");
-    } 
-};
 // Function for handling logout
 export const handleLogout = (setIsLoggedIn, navigate) => {
     setIsLoggedIn(false);
