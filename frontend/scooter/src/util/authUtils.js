@@ -6,6 +6,8 @@ export const handleLogin = async (setIsLoggedIn, navigate, username, passwd) => 
     if (passdata) {
         setIsLoggedIn(true);
         localStorage.setItem('isLoggedIn', 'true'); // save login state
+        localStorage.setItem('userName', username);
+        localStorage.setItem('userId', passdata.userId);
         navigate('/home');
     }
     else {
