@@ -13,7 +13,7 @@ services:
     stdin_open: true
     tty: true
   backend:
-    container_name: boi_backend
+    container_name: boi_backendblah
     build:
       context: .
       dockerfile: ./backend/Dockerfile
