@@ -1,54 +1,62 @@
 // database.js
 const fs = require('fs');
 const sqlite3 = require('sqlite3').verbose();
+const Spatialite = require('spatialite');
 let db;
-const sqlCommands = `CREATE TABLE Users (
+
+const sqlCommands = `
+  CREATE TABLE Users (
     userId INTEGER PRIMARY KEY,
     username VARCHAR(45) NOT NULL,
     email VARCHAR(45),
     passwd VARCHAR(45)
-); CREATE TABLE City(
+  );
+  CREATE TABLE City (
     cityId INTEGER PRIMARY KEY AUTOINCREMENT,
     id VARCHAR(45) NOT NULL,
     lat FLOAT NOT NULL,
     lon FLOAT NOT NULL
-); CREATE TABLE Scooter(
+  );
+  CREATE TABLE Scooter (
     scooterId INTEGER PRIMARY KEY AUTOINCREMENT,
     lon FLOAT,
     city_cityid INT,
-    FOREIGN KEY(city_cityid) REFERENCES city(cityId)
-); CREATE TABLE Zones(
+    FOREIGN KEY(city_cityid) REFERENCES City(cityId)
+  );
+  CREATE TABLE Zones (
     pointname VARCHAR(45),
-    zoneId INT primary key,
+    zoneId INT PRIMARY KEY,
     city_cityid INT NOT NULL,
     zonetype VARCHAR(20) NOT NULL,
-    FOREIGN KEY(city_cityid) REFERENCES city(cityId)
-); CREATE TABLE UsertoBike(
-    idUsertobike INT primary key,
+    FOREIGN KEY(city_cityid) REFERENCES City(cityId)
+  );
+  CREATE TABLE UsertoBike (
+    idUsertobike INT PRIMARY KEY,
     user_userid INT,
     scooterId INT,
     startTime TIMESTAMP NOT NULL,
     stopTime TIMESTAMP NOT NULL,
     price FLOAT,
-    FOREIGN KEY(user_userid) REFERENCES users(userId),
-    FOREIGN KEY(scooterId) REFERENCES scooter(scooterId)
-); CREATE TABLE credentials(
+    FOREIGN KEY(user_userid) REFERENCES Users(userId),
+    FOREIGN KEY(scooterId) REFERENCES Scooter(scooterId)
+  );
+  CREATE TABLE credentials (
     user_id INT NOT NULL, 
     authprov VARCHAR(20) NOT NULL,
     user_subject TEXT NOT NULL,
     PRIMARY KEY (authprov, user_subject)
-)`
+  );
+`;
 
 console.log(process.env.ENV);
-if (process.env.ENV === 'simulation') {
 
+if (process.env.ENV === 'simulation') {
   db = new sqlite3.Database(':memory:');
   db.exec(sqlCommands, function (err) {
     if (err) {
       console.error(err);
     }
   });
-
 } else {
   db = new sqlite3.Database(__dirname + '/backenddata.db', (err) => {
     if (err) {
@@ -57,6 +65,7 @@ if (process.env.ENV === 'simulation') {
       console.log('Connected to the SQLite database.');
     }
   });
+  db.spatialite(); // This line should be here for SQLite to support SpatiaLite
 }
 
 module.exports = db;

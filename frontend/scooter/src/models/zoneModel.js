@@ -1,8 +1,8 @@
 const zoneModel = {
     // Get zone fetch request
-    getZones: async function getZones(zoneId) {
+    getZones: async function getZones() {
         try {
-            const response = await fetch(`/zone`);
+            const response = await fetch(`http://localhost:1337/zone`);
             const data = await response.json();
             return data;
         } catch (error) {
@@ -24,8 +24,8 @@ const zoneModel = {
     // Put zone fetch request
     createZone: async function createZone(zoneData) {
         try {
-            const response = await fetch(`/zone`, {
-                method: 'PUT',
+            const response = await fetch(`http://localhost:1337/zone`, {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
