@@ -35,18 +35,20 @@ export default function MarkLocationMap() {
     return (
         <>
             {bikes.map((bike) => (
-                <Marker
-                    key={bike.scooterId}
-                    position={[bike.lat, bike.lon]}
-                    icon={icons.bikeIcon}
-                    eventHandlers={{
-                        dblclick: (e) => {
-                            manageBike(bike.scooterId);
-                        },
-                    }}
-                >
-                    <Popup>Scooter: {bike.scooterId}</Popup>
-                </Marker>
+                bike.lat && bike.lng(
+                    <Marker
+                        key={bike.scooterId}
+                        position={[bike.lat, bike.lon]}
+                        icon={icons.bikeIcon}
+                        eventHandlers={{
+                            dblclick: (e) => {
+                                manageBike(bike.scooterId);
+                            },
+                        }}
+                    >
+                        <Popup>Scooter: {bike.scooterId}</Popup>
+                    </Marker>
+                )
             ))}
         </>
     );
