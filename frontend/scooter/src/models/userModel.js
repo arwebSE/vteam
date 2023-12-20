@@ -44,6 +44,7 @@ const userModel = {
         }
     },
 
+
     /**
      * Creates a new user in the API
      * @param {string} username - The username of the new user
