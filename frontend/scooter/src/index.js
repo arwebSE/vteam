@@ -18,9 +18,6 @@ import User from "./views/User/User";
 import UserRent from "./views/User/Rent/UserRent";
 import UserProfile from "./views/User/Profile/UserProfile";
 import LoginAuth from "./views/Oauthlogin/Oauth";
-import User from "./views/User/User";
-import UserRent from "./views/User/Rent/UserRent";
-import UserProfile from "./views/User/Profile/UserProfile";
 
 
 ReactDOM.createRoot(document.getElementById("root")).render(
