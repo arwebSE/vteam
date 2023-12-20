@@ -16,12 +16,10 @@ export const handleLogin = async (setIsLoggedIn, navigate, username, passwd) => 
 };
 
 export const handleOauthlogin = async (setIsLoggedIn, navigate, state) => {
-    
+    console.log(state);
     if (state) {
         setIsLoggedIn(true);
         localStorage.setItem('isLoggedIn', 'true'); // save login state
-        localStorage.setItem('userName', username);
-        localStorage.setItem('userId', passdata.userId);
         navigate('/home');
     }
     else {
