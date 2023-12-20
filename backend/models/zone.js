@@ -5,9 +5,7 @@ const zoneModel = {
         Get all data about all Zones in the database. Also get the cityName of the city the scooter is at, if any
     */
     getAll: function (res) {
-        const sql = 'SELECT Zones.*, IFNULL(City.id, "-") AS cityName ' +
-                    'FROM Zones ' +
-                    'LEFT JOIN City ON Zones.city_cityid = City.cityId';
+        const sql = 'SELECT zoneId, city_name, zonetype, coordinates FROM Zones';
 
         database.all(sql, function (error, results, fields) {
             if (error) throw error;
@@ -17,11 +15,12 @@ const zoneModel = {
     /*
         Get all data about one specific Zone in the database depending on the zoneId or pointname. Also get the cityName of the city the scooter is at, if any
     */
+    //    Funkar inte ändrat zones så att city_cityid heter city_name och har namnet på staden istället för id
     getOne: function (identifier, res) {
         const sql = 'SELECT Zones.*, IFNULL(City.id, "-") AS cityName ' +
-                    'FROM Zones ' +
-                    'LEFT JOIN City ON Zones.city_cityid = City.cityId ' +
-                    'WHERE Zones.zoneId = ? OR Zones.pointname = ?';
+            'FROM Zones ' +
+            'LEFT JOIN City ON Zones.city_cityid = City.cityId ' +
+            'WHERE Zones.zoneId = ? OR Zones.pointname = ?';
 
         database.get(sql, [identifier, identifier], function (error, results, fields) {
             if (error) throw error;
@@ -33,9 +32,9 @@ const zoneModel = {
         Example: (Stortorget, 5, 1, Torg) or (Industriområde, 2, 3, Gul)
     */
     create: function (zone, res) {
-        const sql = 'INSERT INTO Zones (pointname, zoneId, city_cityid, zonetype) VALUES (?, ?, ?, ?)';
-        const params = [zone.body.pointname, zone.body.zoneId, zone.body.city_cityid, zone.body.zonetype];
-
+        const sql = 'INSERT INTO Zones (city_name, coordinates, zonetype) VALUES (?, ?, ?)';
+        const params = [zone.body.city_name, zone.body.coordinates, zone.body.zonetype];
+        console.log(params);
         database.run(sql, params, function (error) {
             if (error) {
                 console.error('Error:', error);
@@ -50,33 +49,33 @@ const zoneModel = {
         Update the data about one specific zone by its zoneId or pointname. You can update one or all parameters.
         Example: (-, -, 2, Grön) or (Stortorget, 3, 2, Torg), or (Hamnen, -, -, Röd)
     */
-        update: function (identifier, zone, res) {
-            const sql = 'UPDATE Zones SET ' +
-                'pointname = COALESCE(?, pointname), ' +
-                'zoneId = COALESCE(?, zoneId), ' +
-                'city_cityid = COALESCE(?, city_cityid), ' +
-                'zonetype = COALESCE(?, zonetype) ' +
-                'WHERE zoneId = ? OR pointname = ?';
-        
-            const params = [
-                zone.pointname || null,
-                zone.zoneId || null,
-                zone.city_cityid || null,
-                zone.zonetype || null,
-                identifier,
-                identifier
-            ];
-        
-            database.run(sql, params, function (error, results) {
-                if (error) {
-                    console.error('Error:', error);
-                    res.status(500).json({ error: 'Internal Server Error' });
-                    return;
-                }
-                res.status(201).json({ message: 'Zone updated successfully' });
-                console.log('Zone updated successfully.');
-            });
-        },
+    update: function (identifier, zone, res) {
+        const sql = 'UPDATE Zones SET ' +
+            'pointname = COALESCE(?, pointname), ' +
+            'zoneId = COALESCE(?, zoneId), ' +
+            'city_cityid = COALESCE(?, city_cityid), ' +
+            'zonetype = COALESCE(?, zonetype) ' +
+            'WHERE zoneId = ? OR pointname = ?';
+
+        const params = [
+            zone.pointname || null,
+            zone.zoneId || null,
+            zone.city_cityid || null,
+            zone.zonetype || null,
+            identifier,
+            identifier
+        ];
+
+        database.run(sql, params, function (error, results) {
+            if (error) {
+                console.error('Error:', error);
+                res.status(500).json({ error: 'Internal Server Error' });
+                return;
+            }
+            res.status(201).json({ message: 'Zone updated successfully' });
+            console.log('Zone updated successfully.');
+        });
+    },
     /*
         Delete one Zone from the database by its zoneId
     */
