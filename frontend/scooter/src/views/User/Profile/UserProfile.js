@@ -14,9 +14,11 @@ function UserProfile() {
         <div className="flex mt-20">
         {/* Side Panel*/}
             <div className="w-1/6 p-4 bg-white h-screen">
+                {userData && (
                 <h1 className="text-3xl font-bold text-indigo-600 mb-8">
-                    User profile - '{localStorage.userName}'!
+                    User profile - '{userData.username}'!
                 </h1>
+                )}
                 <div className="flex flex-col gap-5">
                     <a
                     className="hover:bg-indigo-700 text-center p-5 bg-indigo-600 text-white rounded"
@@ -26,7 +28,7 @@ function UserProfile() {
                     </a>
                     <a
                     className="hover:bg-indigo-700 text-center p-5 bg-indigo-600 text-white rounded"
-                    href="/user"
+                    href="/user/profile/edit"
                     >
                     Edit profile
                     </a>
@@ -34,9 +36,11 @@ function UserProfile() {
             </div>
             {/* Main panel */}
             <div className="w-5/6 p-3 flex flex-col items-center bg-stone-100">
+            {userData && (
                 <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-indigo-600 mb-8 font-sans">
-                    Profile page - '{ localStorage.userName }'!
+                    Profile page - '{ userData.username }'!
                 </h1>
+            )}
             {/* Display user data */}
                 {userData && (
                 <div>
@@ -45,6 +49,12 @@ function UserProfile() {
                     <p>Money: -need to add money to database-</p>
                 </div>
                 )}
+                <a
+                    className="hover:bg-green-700 text-center mt-8 p-4 bg-green-600 text-white rounded"
+                    href="/user/profile/bank"
+                    >
+                    Add money
+                </a>
             </div>
         </div>
     );
