@@ -2,15 +2,15 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom"
 
-import Signup from "../views/Signup/Signup";
+import Home from "../views/Home/Home";
 
 
 
-describe("Signup Component", () => {
+describe("Frontend: Home Component", () => {
     test("renders without crashing", () => {
         render(
             <BrowserRouter>
-                <Signup />
+                <Home />
             </BrowserRouter>
         );
     });

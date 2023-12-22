@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^13.5.0",
     "@turf/turf": "^6.5.0",
     "axios": "^1.6.2",
+    "axios-mock-adapter": "^1.22.0",
     "leaflet": "^1.9.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -23,7 +24,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --transformIgnorePatterns 'node_modules/(?!axios)/'",
+    "test": "react-scripts test --transformIgnorePatterns 'node_modules/(?!leaflet)/'",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
