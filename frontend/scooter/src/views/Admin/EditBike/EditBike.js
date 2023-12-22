@@ -22,14 +22,17 @@ function EditBike() {
                             Edit Users
                         </h1>
                     </div>
+                    <div>
+                    <BikeEdit />
                     <p className="rounded p-3 w-3/4 text-center text-sm md:text-base lg:text-lg text-gray-700 mb-4 shadow">
                         Fill in the info that you want to save and press save
                         when done
                     </p>
+                    </div>
+                    <BikeEdit />
                 </div>
-                <BikeEdit />
-            </div>
         </div>
+    </div>
     );
 }
 
