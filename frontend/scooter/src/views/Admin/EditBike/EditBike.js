@@ -4,7 +4,7 @@ import "./style.css";
 import BikeEdit from "../../../components/Bike/BikeEdit";
 
 // Test WithAuth import
-import withAuthMock from "../../test/Auth.mock";
+import withAuthMock from "../../../test/Auth.mock";
 
 function EditBike() {
     return (
