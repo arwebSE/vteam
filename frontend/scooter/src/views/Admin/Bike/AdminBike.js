@@ -2,7 +2,7 @@ import withAuth from "../../../util/withAuth";
 import { Link } from "react-router-dom";
 import "./style.css";
 import MarkMap from "../../../components/Bike/markLocationMap";
-import { FaEdit } from "react-icons/fa";
+
 // Mock imports
 import withAuthMock from "../../../test/Auth.mock";
 import MockMarkMap from "../../../test/markLocationMap.mock";
