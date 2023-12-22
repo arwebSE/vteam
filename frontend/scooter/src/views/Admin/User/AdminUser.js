@@ -6,6 +6,8 @@ import "./style.css";
 import UserList from "../../../components/UserList";
 import UserEdit from "../../../components/UserEdit";
 
+// Mock imports
+import withAuthMock from "../../../test/Auth.mock";
 const AdminUser = () => {
     const [refreshList, setRefreshList] = useState(false);
     const { userid } = useParams();
@@ -29,4 +31,6 @@ const AdminUser = () => {
     );
 };
 
-export default withAuth(AdminUser);
+
+const exportedComponent = process.env.NODE_ENV === "test" ? withAuthMock(AdminUser) : withAuth(AdminUser);
+export default exportedComponent

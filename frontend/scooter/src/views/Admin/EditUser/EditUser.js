@@ -2,6 +2,9 @@ import withAuth from "../../../util/withAuth";
 import "./style.css";
 import UserEdit from "../../../components/UserEdit";
 
+// Mock WithAuth inport
+import withAuthMock from "../../../test/Auth.mock";
+
 function EditUser() {
     return (
         <div className="flex justify-center items-center w-full h-screen">
@@ -15,4 +18,5 @@ function EditUser() {
     );
 }
 
-export default withAuth(EditUser);
+const exportedComponent = process.env.NODE_ENV === "test" ? withAuthMock(EditUser) : withAuth(EditUser);
+export default exportedComponent

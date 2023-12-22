@@ -3,6 +3,9 @@ import withAuth from "../../util/withAuth";
 import "./style.css";
 import logo from "../../logo.png";
 
+// Mock WithAuth inport
+import withAuthMock from "../../test/Auth.mock";
+
 function Home() {
 
     return (
@@ -16,4 +19,6 @@ function Home() {
     );
 }
 
-export default withAuth(Home);
+
+const exportedComponent = process.env.NODE_ENV === "test" ? withAuthMock(Home) : withAuth(Home);
+export default exportedComponent
