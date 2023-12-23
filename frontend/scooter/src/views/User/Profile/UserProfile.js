@@ -46,7 +46,7 @@ function UserProfile() {
                 <div>
                     <p>Username: {userData.username}</p>
                     <p>Email: {userData.email}</p>
-                    <p>Money: -need to add money to database-</p>
+                    <p>Money: {userData.user_balance}</p>
                 </div>
                 )}
                 <a

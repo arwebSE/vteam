@@ -112,6 +112,31 @@ const userModel = {
         } catch (error) {
             console.error(error);
         }
+    },
+
+    /**
+     * Adds money to the user's balance in the database.
+     * @param {number} id - The ID of the user to whom money will be added.
+     * @param {number} amount - The amount of money to be added to the user's balance.
+     * @param {object} res - The Express response object to send the result back to the client.
+     */
+    addMoney: async function (id, amount) {
+        try {
+            const response = await fetch(`http://localhost:1337/user/${id}/addMoney`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    amount: amount
+                })
+            });
+
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error(error);
+        }
     }
 }
 
