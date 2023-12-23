@@ -112,7 +112,29 @@ const userModel = {
             }
             res.json({ message: 'User deleted successfully' });
         });
-    }
+    },
+
+    /**
+     * Adds money to the user's balance in the database.
+     * @param {number} userId - The ID of the user to whom money will be added.
+     * @param {number} amount - The amount of money to be added to the user's balance.
+     * @param {object} res - The Express response object to send the result back to the client.
+     */
+    addMoney: function (userId, amount, res) {
+        const sql = 'UPDATE Users SET user_balance = COALESCE(user_balance, 0) + ? WHERE userId = ?';
+        const params = [amount, userId];
+
+        db.run(sql, params, function (error) {
+            if (error) {
+                console.error('Error:', error);
+                res.status(500).json({ error: 'Internal Server Error' });
+                return;
+            }
+            console.log('Money added successfully.');
+            res.json({ message: 'Money added successfully' });
+        });
+    },
+
 };
 
 module.exports = userModel;

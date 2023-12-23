@@ -11,7 +11,8 @@ CREATE TABLE Users (
     passwd VARCHAR(45),
     authprov VARCHAR(20),
     user_authid TEXT,
-    userrole TEXT
+    userrole TEXT,
+    user_balance DECIMAL(10, 2) DEFAULT 0.00
 ); CREATE TABLE City(
     cityId INTEGER PRIMARY KEY,
     id VARCHAR(45) NOT NULL,
