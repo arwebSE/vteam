@@ -57,7 +57,18 @@ if (process.env.ENV === 'simulation') {
       console.error(err);
     }
   });
-} else {
+} else if (process.env.ENV === 'test') {
+    // If 
+    db = new sqlite3.Database(__dirname + '/backenddata.db', (err) => {
+    if (err) {
+      console.error('Database connection error:', err.message);
+    } else {
+      console.log('Connected to the SQLite database.');
+    }
+    });
+    db.spatialite();
+}
+else {
   db = new sqlite3.Database(__dirname + '/backenddata.db', (err) => {
     if (err) {
       console.error('Database connection error:', err.message);
