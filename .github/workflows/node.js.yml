@@ -34,7 +34,7 @@ jobs:
       run: |
         cd frontend/scooter
         npm test
-    -name: Install backend Dependencies
+    - name: Install backend Dependencies
       run: |
         cd backend
         npm ci
