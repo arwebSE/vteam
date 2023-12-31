@@ -14,7 +14,7 @@ import AdminZone from "./views/Admin/Zone/AdminZone";
 import EditUser from "./views/Admin/EditUser/EditUser";
 import Signup from "./views/Signup/Signup";
 import EditBike from "./views/Admin/EditBike/EditBike";
-
+import Sim from "./views/Sim/Sim";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
@@ -34,6 +34,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 
                     <Route path="/admin/user" element={<AdminUser />} />
                     <Route path="/admin/user/:userid" element={<AdminUser />} />
+                    <Route path="/admin/simulation" element={<Sim />} />
                 </Routes >
             </Router >
         </AuthProvider >

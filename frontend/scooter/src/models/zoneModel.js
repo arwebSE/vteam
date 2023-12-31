@@ -37,6 +37,26 @@ const zoneModel = {
             console.error('Error updating zone:', error);
             throw error;
         }
+    },
+    getNogoFromCity: async function getNogoFromCity(city) {
+        try {
+            const response = await fetch(`http://localhost:1337/zone/nogo/${city}`);
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error('Error fetching nogo:', error);
+            throw error;
+        }
+    },
+    getCityZoneFromCity: async function getCityZoneFromCity(city) {
+        try {
+            const response = await fetch(`http://localhost:1337/zone/city/${city}`);
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error('Error fetching cityzone:', error);
+            throw error;
+        }
     }
 };
 export default zoneModel;

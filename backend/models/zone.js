@@ -27,6 +27,21 @@ const zoneModel = {
             res.json(results);
         });
     },
+    getCityZones: function (res, city) {
+        const sql = "SELECT * FROM Zones WHERE zonetype = 'City' AND city_name = ?";
+        database.all(sql, [city], function (error, results) {
+            if (error) throw error;
+            res.json(results);
+        });
+    },
+    getNoGoZones: function (res, city) {
+        console.log(city);
+        const sql = "SELECT * FROM Zones WHERE zonetype = 'No Go Zone' AND city_name = ?";
+        database.all(sql, [city], function (error, results) {
+            if (error) throw error;
+            res.json(results);
+        });
+    },
     /*
         Create a new Zone in the database by (pointname, zoneId, cityId, zonetype)
         Example: (Stortorget, 5, 1, Torg) or (Industriområde, 2, 3, Gul)
