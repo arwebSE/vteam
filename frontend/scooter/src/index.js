@@ -20,7 +20,7 @@ import UserProfile from "./views/User/Profile/UserProfile";
 import LoginAuth from "./views/Oauthlogin/Oauth";
 import EditProfile from "./views/User/Profile/EditProfile/EditProfile";
 import ProfileAddMoney from "./views/User/Profile/ProfileAddMoney/ProfileAddMoney";
-
+import Sim from "./views/Sim/Sim";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
@@ -40,6 +40,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 
                     <Route path="/admin/user" element={<AdminUser />} />
                     <Route path="/admin/user/:userid" element={<AdminUser />} />
+                    <Route path="/admin/simulation" element={<Sim />} />
 
                     <Route path="/user" element={<User />} />
                     <Route path="/user/rent" element={<UserRent />} />

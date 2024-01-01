@@ -1,46 +1,41 @@
-import React from "react";
-import { useMap } from "react-leaflet";
-import { useState, useEffect } from "react";
-//import L from "leaflet";
-import { Marker, Popup } from "react-leaflet";
-//import { renderToString } from "react-dom/server";
-//import { FaCircleDot } from "react-icons/fa6";
+import { useEffect, useRef } from 'react';
+import L from 'leaflet';
+import { useMap } from 'react-leaflet';
 import icons from "./MapIcons";
 
-function SetViewOnClick({ coords }) {
-    const map = useMap();
-    map.setView(coords, map.getZoom());
-
-    return null;
-}
-
 export default function MoveToUser() {
-    const [currentLocation, setCurrentLocation] = useState({
-        lat: 59,
-        lng: 16,
-    });
+    const map = useMap();
+    const markerRef = useRef(null);
 
     useEffect(() => {
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
+        const getGeolocation = () => {
+            return new Promise((resolve, reject) => {
+                navigator.geolocation.getCurrentPosition(resolve, reject);
+            });
+        };
+
+        const setGeolocation = async () => {
+            try {
+                const position = await getGeolocation();
                 const newPos = {
                     lat: position.coords.latitude,
                     lng: position.coords.longitude,
                 };
-                setCurrentLocation(newPos);
-            },
-            (error) => {
+                if (markerRef.current) {
+                    markerRef.current.setLatLng(newPos);
+                } else {
+                    markerRef.current = L.marker([newPos.lat, newPos.lng], {
+                        icon: icons.userIcon,
+                    }).addTo(map);
+                }
+                map.setView(newPos, map.getZoom());
+            } catch (error) {
                 console.log(error);
             }
-        );
-    }, []);
+        };
 
-    return (
-        <>
-            <Marker position={currentLocation} icon={icons.userIcon}>
-                <Popup>You are here</Popup>
-            </Marker>
-            <SetViewOnClick coords={currentLocation} />
-        </>
-    );
+        setGeolocation();
+    }, [map]);
+
+    return null;
 }
