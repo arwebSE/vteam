@@ -1,6 +1,5 @@
 import "./style.css";
 import boi from "../../boi.png";
-import User from "../../components/Simulation/User";
 import Bikes from "../../components/Simulation/Bikes";
 import BikeMap from "../../components/BikeMap";
 import simModel from '../../models/simulation';
@@ -8,14 +7,12 @@ import bikeModel from "../../models/bikeModel";
 import cityModel from "../../models/cityModel";
 import zoneModel from "../../models/zoneModel";
 import wellknown from 'wellknown';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import * as turf from '@turf/turf';
-import turfRandom from '@turf/random';
-import L from 'leaflet';
 const names = require('../../data/names.json');
 
 
-let sliderValue = 1;
+// let sliderValue = 1;
 
 
 function Sim() {

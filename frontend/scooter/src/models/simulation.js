@@ -1,12 +1,12 @@
 const userSimulationModel = {
-    getUsers: async function () {
-        try {
-            const response = await fetch('http://localhost:1337/user');
-            const data = await response.json();
-        } catch (error) {
-            console.error(error);
-        }
-    },
+    // getUsers: async function () {
+    //     try {
+    //         const response = await fetch('http://localhost:1337/user');
+    //         const data = await response.json();
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
+    // },
     createUser: async function (userName, email, passwd) {
         fetch('http://localhost:1337/user', {
             method: 'POST',
@@ -21,9 +21,5 @@ const userSimulationModel = {
             .catch(error => console.error(error));
     }
 };
-
-const bikeSimulationModel = {
-
-}
 
 module.exports = userSimulationModel;

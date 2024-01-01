@@ -1,27 +1,25 @@
 import React, { useState } from "react";
-import ReactSlider from "react-slider";
 import simModel from '../../models/simulation';
 const names = require('../../data/names.json');
 
 function User() {
-    const [sliderValue, setSliderValue] = useState(1);
 
-    async function addUsers(e) {
-        e.preventDefault();
-        const startTime = new Date();
+    // async function addUsers(e) {
+    //     e.preventDefault();
+    //     const startTime = new Date();
 
-        for (let i = 0; i < sliderValue; i++) {
-            let randomFirst = Math.random() * (names.firstName.length - 1) + 1;
-            let randomLast = Math.random() * (names.lastName.length - 1) + 1;
-            let userName = names.firstName[parseInt(randomFirst)] + "." + names.lastName[parseInt(randomLast)];
-            let email = names.firstName[parseInt(randomFirst)] + "." + names.lastName[parseInt(randomLast)] + "@example.com";
-            await simModel.createUser(userName, email, "password");
-        }
+    //     for (let i = 0; i < sliderValue; i++) {
+    //         let randomFirst = Math.random() * (names.firstName.length - 1) + 1;
+    //         let randomLast = Math.random() * (names.lastName.length - 1) + 1;
+    //         let userName = names.firstName[parseInt(randomFirst)] + "." + names.lastName[parseInt(randomLast)];
+    //         let email = names.firstName[parseInt(randomFirst)] + "." + names.lastName[parseInt(randomLast)] + "@example.com";
+    //         await simModel.createUser(userName, email, "password");
+    //     }
 
-        const endTime = new Date();
-        const duration = (endTime - startTime) / 1000;
-        console.log(`Execution time: ${duration} seconds`);
-    }
+    //     const endTime = new Date();
+    //     const duration = (endTime - startTime) / 1000;
+    //     console.log(`Execution time: ${duration} seconds`);
+    // }
 
     return (
         <div className="flex-row h-100">
