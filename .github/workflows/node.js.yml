@@ -34,3 +34,10 @@ jobs:
       run: |
         cd frontend/scooter
         npm test
+    - name: Install backend Dependencies
+      run: |
+        cd backend
+        npm ci
+    - name: Start Backend server for testing
+      run: |
+        docker compose up -d backend

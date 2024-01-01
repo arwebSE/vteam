@@ -3,6 +3,9 @@ import withAuth from "../../../util/withAuth";
 import "./style.css";
 import BikeEdit from "../../../components/Bike/BikeEdit";
 
+// Test WithAuth import
+import withAuthMock from "../../../test/Auth.mock";
+
 function EditBike() {
     return (
         <div className="flex justify-center items-center w-full h-screen mt-10">
@@ -30,4 +33,5 @@ function EditBike() {
     );
 }
 
-export default withAuth(EditBike);
+const exportedComponent = process.env.NODE_ENV === "test" ? withAuthMock(EditBike) : withAuth(EditBike);
+export default exportedComponent

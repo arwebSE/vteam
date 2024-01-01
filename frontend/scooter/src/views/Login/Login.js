@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc"
 
@@ -12,8 +12,11 @@ import boi from "../../boi.png";
 function Login() {
     const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
     const navigate = useNavigate();
-    const login = () => handleLogin(setIsLoggedIn, navigate);
-
+    const login = (e) => {
+        e.preventDefault();
+        handleLogin(setIsLoggedIn, navigate, username, passwd)};
+    const [username, setUsername] = useState('');
+    const [passwd, setPasswd] = useState('');
     if (isLoggedIn) {
         navigate("/home");
         return null;
@@ -42,6 +45,8 @@ function Login() {
                         <input
                             type="text"
                             id="username"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
                             className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                         />
                     </div>
@@ -55,6 +60,8 @@ function Login() {
                         <input
                             type="password"
                             id="password"
+                            value={passwd}
+                            onChange={(e) => setPasswd(e.target.value)}
                             className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                         />
                     </div>

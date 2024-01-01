@@ -1,0 +1,1 @@
+sqlite3 testingdb.db < create_experimental_db.sql
