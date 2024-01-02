@@ -41,3 +41,7 @@ jobs:
     - name: Start Backend server for testing
       run: |
         docker compose up -d backend
+    - name: Run backend tests
+      run: |
+        cd backend
+        npm test
