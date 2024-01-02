@@ -24,6 +24,7 @@ import RentBike from "./views/User/Rent/RentBike";
 import UserReturn from "./views/User/Return/UserReturn"
 import ReturnBike from "./views/User/Return/ReturnBike"
 
+import Sim from "./views/Sim/Sim";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
@@ -43,6 +44,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 
                     <Route path="/admin/user" element={<AdminUser />} />
                     <Route path="/admin/user/:userid" element={<AdminUser />} />
+                    <Route path="/admin/simulation" element={<Sim />} />
 
                     <Route path="/user" element={<User />} />
                     <Route path="/user/rent" element={<UserRent />} />
