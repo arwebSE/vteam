@@ -2,9 +2,9 @@ import React from "react";
 import { MapContainer, TileLayer, useMap, Marker, Popup } from "react-leaflet";
 import { useState, useEffect } from "react";
 //import L from "leaflet";
-import BikeMarker from "./Bike/bikeMarker";
 import icons from "./MapIcons";
-
+import BikeMarker from "./Bike/bikeMarker";
+import ZoneMarker from "./Zone/ZoneMarker";
 import "leaflet/dist/leaflet.css";
 
 function SetViewOnClick({ coords }) {
@@ -44,6 +44,7 @@ export default function BikeMap() {
             <Marker position={currentLocation} icon={icons.userIcon}>
                 <Popup>You are here</Popup>
             </Marker>
+            <ZoneMarker />
             <BikeMarker />
             <SetViewOnClick coords={currentLocation} />
         </MapContainer>

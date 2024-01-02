@@ -5,7 +5,7 @@ const zoneModel = {
         Get all data about all Zones in the database. Also get the cityName of the city the scooter is at, if any
     */
     getAll: function (res) {
-        const sql = 'SELECT zoneId, city_name, zonetype, coordinates FROM Zones';
+        const sql = 'SELECT * FROM Zones';
 
         database.all(sql, function (error, results, fields) {
             if (error) throw error;
@@ -23,6 +23,21 @@ const zoneModel = {
             'WHERE Zones.zoneId = ? OR Zones.pointname = ?';
 
         database.get(sql, [identifier, identifier], function (error, results, fields) {
+            if (error) throw error;
+            res.json(results);
+        });
+    },
+    getCityZones: function (res, city) {
+        const sql = "SELECT * FROM Zones WHERE zonetype = 'City' AND city_name = ?";
+        database.all(sql, [city], function (error, results) {
+            if (error) throw error;
+            res.json(results);
+        });
+    },
+    getNoGoZones: function (res, city) {
+        console.log(city);
+        const sql = "SELECT * FROM Zones WHERE zonetype = 'No Go Zone' AND city_name = ?";
+        database.all(sql, [city], function (error, results) {
             if (error) throw error;
             res.json(results);
         });

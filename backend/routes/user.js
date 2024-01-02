@@ -7,6 +7,8 @@ router.get("/ver/:username/:passwd", (req, res) => userModel.passVerif(req.param
 router.post("/", (req, res) => userModel.create(req, res));
 router.put("/:userId", (req, res) => userModel.update(req.params.userId, req.body, res));
 router.delete("/:userId", (req, res) => userModel.delete(req.params.userId, res));
+router.put("/:userId/addMoney", (req, res) => userModel.addMoney(req.params.userId, req.body.amount, res));
+router.put("/:userId/removeMoney", (req, res) => userModel.removeMoney(req.params.userId, req.body.amount, res));
 router.get("/")
 
 module.exports = router;
