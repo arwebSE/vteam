@@ -10,7 +10,6 @@ const ProfileEdit = () => {
   const updateUser = () => {
     userModel.editUser(userId, username, email, password);
     console.log('Updating user...');
-    console.log(userId);
   };
 
   return (
