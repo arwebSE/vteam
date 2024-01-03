@@ -3,6 +3,7 @@ import { renderToString } from "react-dom/server";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { BsScooter } from "react-icons/bs";
 import { FaCircleDot } from "react-icons/fa6";
+import { FaFlagCheckered } from "react-icons/fa";
 
 const icons = {
     userIcon: L.divIcon({
@@ -36,7 +37,15 @@ const icons = {
         className: "my-custom-icon",
         iconAnchor: [20, 40],
         popupAnchor: [0, -40],
-    })
+    }),
+    goalIcon: L.divIcon({
+        html: renderToString(
+            <FaFlagCheckered style={{ fontSize: "20px" }} />
+        ),
+        className: "my-custom-icon",
+        iconAnchor: [20, 20],
+        popupAnchor: [0, -40],
+    }),
 };
 
 export default icons;

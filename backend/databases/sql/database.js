@@ -4,8 +4,6 @@ const sqlite3 = require('sqlite3').verbose();
 const Spatialite = require('spatialite');
 let db;
 
-
-
 console.log(process.env.ENV);
 let path = __dirname;
 

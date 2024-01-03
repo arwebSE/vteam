@@ -5,7 +5,7 @@ import { useMap } from "react-leaflet";
 import { useNavigate } from "react-router-dom";
 import icons from "../MapIcons";
 
-export default function MarkLocationMap({ createBike }) {
+export default function BikeMarker({ update }) {
     const navigate = useNavigate();
     const map = useMap();
 
@@ -17,11 +17,13 @@ export default function MarkLocationMap({ createBike }) {
     const [bikes, setBikes] = useState([]);
 
     useEffect(() => {
+
+
         const updateBikes = async () => {
             setBikes(await bikeModel.getBikes());
         };
         updateBikes();
-    }, [createBike]);
+    }, [update]);
 
     useEffect(() => {
         if (bikes) {
@@ -38,7 +40,7 @@ export default function MarkLocationMap({ createBike }) {
                 }
             });
         }
-    }, [bikes, map, manageBike]);
+    }, [bikes, map, manageBike, update]);
 
     function Markers() {
         return <></>;

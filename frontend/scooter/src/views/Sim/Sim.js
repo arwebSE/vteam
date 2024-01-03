@@ -1,6 +1,5 @@
 import "./style.css";
 import boi from "../../boi.png";
-import Bikes from "../../components/Simulation/Bikes";
 import BikeMap from "../../components/BikeMap";
 import simModel from '../../models/simulation';
 import bikeModel from "../../models/bikeModel";
@@ -9,14 +8,25 @@ import zoneModel from "../../models/zoneModel";
 import wellknown from 'wellknown';
 import { useState } from "react";
 import * as turf from '@turf/turf';
+
 const names = require('../../data/names.json');
 
 
-// let sliderValue = 1;
+export const useForceUpdate = () => {
+    const [, setForceUpdate] = useState(0);
+
+    const forceUpdate = () => {
+        setForceUpdate((prev) => prev + 1);
+    };
+
+    return forceUpdate;
+};
 
 
 function Sim() {
+    const [goals, setGoals] = useState({}); // [city, [lat, lon]
     const [sliderValue, setSliderValue] = useState(1);
+    const forceUpdate = useForceUpdate();
 
     async function createUsers() {
         const startTime = new Date();
@@ -79,74 +89,83 @@ function Sim() {
     }
 
 
-    async function createBikes() {
-        let cities = await cityModel.getCities();
-        let zones = await getSpawnZones(cities);
-        let noGoZones = await getNogoZones(cities);
-        console.log(noGoZones);
-        console.log(zones);
-
-        let bikesEach = 50;
+    async function createBikes(cities, zones, noGoZones) {
+        // Used to store endpoints for the bikes 
+        let goals = {};
+        cities.forEach(cities => {
+            goals[cities.id] = [];
+        });
+        let updatedGoals = { ...goals }; // Create a shallow copy
+        // Making sure the number of bikes is divisible by the number of cities
+        let bikesEach = sliderValue;
 
         for (let key in zones) {
             for (let k = 0; k < bikesEach; k++) {
-                for (let z = 0; z < zones[key].length; z++) {
-                    let cityZonePolygon = zones[key][z];
-                    let noGoPolygons = noGoZones[key]; // Assuming there can be multiple no-go polygons
+                for (let y = 0; y < 2; y++) {
+                    for (let z = 0; z < zones[key].length; z++) {
+                        let cityZonePolygon = zones[key][z];
+                        let noGoPolygons = noGoZones[key]; // Assuming there can be multiple no-go polygons
 
-                    let bounds = turf.bbox(cityZonePolygon);
-                    let east = bounds[2];
-                    let west = bounds[0];
-                    let north = bounds[3];
-                    let south = bounds[1];
+                        let bounds = turf.bbox(cityZonePolygon);
+                        let east = bounds[2];
+                        let west = bounds[0];
+                        let north = bounds[3];
+                        let south = bounds[1];
 
-                    let lat, lon, point, insideCity, insideNoGo;
+                        let lat, lon, point, insideCity, insideNoGo;
 
-                    do {
-                        lon = Math.random() * (east - west) + west;
-                        lat = Math.random() * (north - south) + south;
+                        do {
+                            lon = Math.random() * (east - west) + west;
+                            lat = Math.random() * (north - south) + south;
 
-                        point = turf.point([lon, lat]);
-                        insideCity = turf.booleanPointInPolygon(point, cityZonePolygon);
-                        insideNoGo = false;
+                            point = turf.point([lon, lat]);
+                            insideCity = turf.booleanPointInPolygon(point, cityZonePolygon);
+                            insideNoGo = false;
 
-                        // Check if the point is inside any no-go zone
-                        for (let i = 0; i < noGoPolygons.length; i++) {
-                            if (turf.booleanPointInPolygon(point, noGoPolygons[i])) {
-                                insideNoGo = true;
-                                break;
+                            // Check if the point is inside any no-go zone
+                            for (let i = 0; i < noGoPolygons.length; i++) {
+                                if (turf.booleanPointInPolygon(point, noGoPolygons[i])) {
+                                    insideNoGo = true;
+                                    break;
+                                }
                             }
+
+                        } while (insideNoGo || !insideCity);
+                        if (y === 1) {
+                            updatedGoals[key].push([lon, lat]);
+                        } else {
+                            let bikeData = {
+                                "lat": lat,
+                                "lon": lon,
+                                "status": "Available",
+                                "battery": 100,
+                                "city_cityid": key
+                            };
+                            await bikeModel.createBike(bikeData);
                         }
 
-                    } while (insideNoGo || !insideCity);
-
-                    console.log(lat, lon);
-                    let bikeData = {
-                        "lat": lat,
-                        "lon": lon,
-                        "status": "Available",
-                        "battery": 100,
-                        "city_cityid": key
-                    };
-
-                    // Uncomment the following line when you're ready to create bikes
-                    await bikeModel.createBike(bikeData);
+                    }
                 }
             }
         }
+        setGoals(updatedGoals);
     }
 
 
 
-
-
-
     async function handleSubmit(e) {
+
         e.preventDefault();
+        let cities = await cityModel.getCities();
+        let zones = await getSpawnZones(cities);
+        let noGoZones = await getNogoZones(cities);
         createUsers();
-        createBikes();
-        console.log(sliderValue);
+        createBikes(cities, zones, noGoZones);
+        forceUpdate();
     };
+
+
+
     return (
         <div className="p-9 m-9">
             <div className="flex flex-row items-center justify-center">
@@ -154,13 +173,20 @@ function Sim() {
                 <img src={boi} alt="boi" className="scooter mx-auto h-16 md:h-20 lg:h-24 w-auto mb-6" />
             </div>
             <div className="flex p-3 flex-col items-center justify-center bg-stone-100">
-                <BikeMap />
-                <Bikes />
                 {/* <User /> */}
+                <BikeMap goals={goals} />
                 <form className="flex flex-col items-center" onSubmit={handleSubmit}>
-                    <label htmlFor="quantity">Number of Bikes: {sliderValue}</label>
-                    <input type="range" id="quantity" name="quantity" min="1" max="1000" defaultValue="1" onChange={(e) => setSliderValue(e.target.value)}></input>
-                    <button className="p-1.5 rounded bg-gray-800 text-white text-center" onClick={handleSubmit}>Create Users</button>
+                    <label htmlFor="quantity">Number of Bikes in each city: {sliderValue}</label>
+                    <input
+                        type="range"
+                        id="quantity"
+                        name="quantity"
+                        min="1"
+                        max="1000"
+                        defaultValue="1"
+                        onChange={(e) => setSliderValue(e.target.value)}>
+                    </input>
+                    <button className="p-1.5 rounded bg-gray-800 text-white text-center">Create Users</button>
                 </form>
             </div>
         </div>

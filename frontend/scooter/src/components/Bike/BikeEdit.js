@@ -63,6 +63,7 @@ const BikeEdit = () => {
                 className="rounded p-3 mb-4 shadow focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 ease-in-out"
                 type="text"
                 defaultValue={"Scooter Id"}
+                value={scooterId}
             />
 
             <label className="text-lg font-semibold mb-2">Lon:</label>
