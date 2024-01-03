@@ -16,7 +16,7 @@ test("Adding a user", async () => {
 
     
     // Send a POST request to your API endpoint
-    const response = await fetch('http://localhost:1337/user', {
+    const response = await fetch('http://localhost:1337/v1/user', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json' // Set content type to JSON
@@ -31,13 +31,13 @@ test("Adding a user", async () => {
 
 
 test("Getting all users", async () => {
-    const response = await axios.get('http://localhost:1337/user');
+    const response = await axios.get('http://localhost:1337/v1/user');
     expect(response.status).toBe(200);
     console.log(response.data);
 })
 
 test("Getting one user", async () => {
-    const response = await axios.get('http://localhost:1337/user/1');
+    const response = await axios.get('http://localhost:1337/v1/user/1');
     expect(response.status).toBe(200);
     console.log(response.data);
 })
@@ -46,7 +46,7 @@ test("Deleting a user", async () => {
  
 
        // Send a POST request to your API endpoint
-       const response = await fetch('http://localhost:1337/user/1', {
+       const response = await fetch('http://localhost:1337/v1/user/1', {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json' // Set content type to JSON
