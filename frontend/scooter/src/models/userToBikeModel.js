@@ -1,7 +1,7 @@
 const userToBikeModel = {
     getAll: async function () {
         try {
-          const response = await fetch('http://localhost:1337/userToBike');
+          const response = await fetch('http://localhost:1337/v1/userToBike');
           const data = await response.json();
           return data;
         } catch (error) {
@@ -12,7 +12,7 @@ const userToBikeModel = {
     create: async function (usertoBike) {
         try {
             console.log(usertoBike);
-            const response = await fetch('http://localhost:1337/userToBike', {
+            const response = await fetch('http://localhost:1337/v1/userToBike', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -35,7 +35,7 @@ const userToBikeModel = {
 
     delete: async function (idUsertobike) {
         try {
-            const response = await fetch(`http://localhost:1337/userToBike/${idUsertobike}`, {
+            const response = await fetch(`http://localhost:1337/v1/userToBike/${idUsertobike}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',

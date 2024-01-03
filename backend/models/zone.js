@@ -1,9 +1,16 @@
 const database = require('../databases/sql/database.js');
 
+/**
+ * A model representing operations related to the Zones table in the database.
+ * @namespace
+ */
 const zoneModel = {
-    /*
-        Get all data about all Zones in the database. Also get the cityName of the city the scooter is at, if any
-    */
+
+    /**
+     * Get all information in the Zones table in the database (All entries).
+     * @param {Object} res - The Express response object.
+     * @returns {void}
+     */
     getAll: function (res) {
         const sql = 'SELECT * FROM Zones';
 
@@ -12,21 +19,30 @@ const zoneModel = {
             res.json(results);
         });
     },
-    /*
-        Get all data about one specific Zone in the database depending on the zoneId or pointname. Also get the cityName of the city the scooter is at, if any
-    */
-    //    Funkar inte ändrat zones så att city_cityid heter city_name och har namnet på staden istället för id
+
+    /**
+     * Get information about a specific Zone by its zoneId or pointname.
+     * @param {string|number} identifier - The zoneId or pointname of the Zone to retrieve.
+     * @param {Object} res - The Express response object.
+     * @returns {void}
+     */
     getOne: function (identifier, res) {
-        const sql = 'SELECT Zones.*, IFNULL(City.id, "-") AS cityName ' +
+        const sql = 'SELECT zoneId, city_name, zonetype, coordinates ' +
             'FROM Zones ' +
-            'LEFT JOIN City ON Zones.city_cityid = City.cityId ' +
-            'WHERE Zones.zoneId = ? OR Zones.pointname = ?';
+            'WHERE zoneId = ? OR city_name = ?';
 
         database.get(sql, [identifier, identifier], function (error, results, fields) {
             if (error) throw error;
             res.json(results);
         });
     },
+
+    /**
+     * Get all City Zones in a specific city.
+     * @param {Object} res - The Express response object.
+     * @param {string} city - The name of the city.
+     * @returns {void}
+     */
     getCityZones: function (res, city) {
         const sql = "SELECT * FROM Zones WHERE zonetype = 'City' AND city_name = ?";
         database.all(sql, [city], function (error, results) {
@@ -34,6 +50,13 @@ const zoneModel = {
             res.json(results);
         });
     },
+
+    /**
+     * Get all No Go Zones in a specific city.
+     * @param {Object} res - The Express response object.
+     * @param {string} city - The name of the city.
+     * @returns {void}
+     */
     getNoGoZones: function (res, city) {
         console.log(city);
         const sql = "SELECT * FROM Zones WHERE zonetype = 'No Go Zone' AND city_name = ?";
@@ -42,10 +65,13 @@ const zoneModel = {
             res.json(results);
         });
     },
-    /*
-        Create a new Zone in the database by (pointname, zoneId, cityId, zonetype)
-        Example: (Stortorget, 5, 1, Torg) or (Industriområde, 2, 3, Gul)
-    */
+
+    /**
+     * Create a new Zone entry in the database with the specified values (city_name, coordinates, zonetype).
+     * @param {Object} zone - The Zone object containing city_name, coordinates, and zonetype.
+     * @param {Object} res - The Express response object.
+     * @returns {void}
+     */
     create: function (zone, res) {
         const sql = 'INSERT INTO Zones (city_name, coordinates, zonetype) VALUES (?, ?, ?)';
         const params = [zone.body.city_name, zone.body.coordinates, zone.body.zonetype];
@@ -60,10 +86,14 @@ const zoneModel = {
             console.log('Zone created successfully. Last inserted ID:', this.lastID);
         });
     },
-    /*
-        Update the data about one specific zone by its zoneId or pointname. You can update one or all parameters.
-        Example: (-, -, 2, Grön) or (Stortorget, 3, 2, Torg), or (Hamnen, -, -, Röd)
-    */
+
+    /**
+     * Update an existing Zone entry with the specified values.
+     * @param {string|number} identifier - The zoneId or pointname of the Zone to update.
+     * @param {Object} zone - The updated Zone object containing pointname, zoneId, city_cityid, and zonetype.
+     * @param {Object} res - The Express response object.
+     * @returns {void}
+     */
     update: function (identifier, zone, res) {
         const sql = 'UPDATE Zones SET ' +
             'pointname = COALESCE(?, pointname), ' +
@@ -91,9 +121,12 @@ const zoneModel = {
             console.log('Zone updated successfully.');
         });
     },
-    /*
-        Delete one Zone from the database by its zoneId
-    */
+    /**
+     * Delete one Zone from the database by its zoneId.
+     * @param {number} zoneId - The zoneId of the Zone to delete.
+     * @param {Object} res - The Express response object.
+     * @returns {void}
+     */
     delete: function (zoneId, res) {
         const sql = 'DELETE FROM Zones WHERE zoneId = ?';
         database.run(sql, [zoneId], function (error, results) {

@@ -2,7 +2,7 @@ const zoneModel = {
     // Get zone fetch request
     getZones: async function getZones() {
         try {
-            const response = await fetch(`http://localhost:1337/zone`);
+            const response = await fetch(`http://localhost:1337/v1/zone`);
             const data = await response.json();
             return data;
         } catch (error) {
@@ -24,7 +24,7 @@ const zoneModel = {
     // Put zone fetch request
     createZone: async function createZone(zoneData) {
         try {
-            const response = await fetch(`http://localhost:1337/zone`, {
+            const response = await fetch(`http://localhost:1337/v1/zone`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -40,7 +40,7 @@ const zoneModel = {
     },
     getNogoFromCity: async function getNogoFromCity(city) {
         try {
-            const response = await fetch(`http://localhost:1337/zone/nogo/${city}`);
+            const response = await fetch(`http://localhost:1337/v1/zone/nogo/${city}`);
             const data = await response.json();
             return data;
         } catch (error) {
@@ -50,7 +50,7 @@ const zoneModel = {
     },
     getCityZoneFromCity: async function getCityZoneFromCity(city) {
         try {
-            const response = await fetch(`http://localhost:1337/zone/city/${city}`);
+            const response = await fetch(`http://localhost:1337/v1/zone/city/${city}`);
             const data = await response.json();
             return data;
         } catch (error) {

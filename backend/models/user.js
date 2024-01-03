@@ -1,5 +1,9 @@
 const db = require("../databases/sql/database.js");
 
+/**
+ * A model representing user-related operations with the database.
+ * @namespace
+ */
 const userModel = {
     /**
      * Retrieves all users from the database and returns them in a JSON format.

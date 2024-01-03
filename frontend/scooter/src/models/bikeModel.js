@@ -1,7 +1,7 @@
 const bikeModel = {
     getBikes: async function () {
         try {
-            const response = await fetch('http://localhost:1337/scooter');
+            const response = await fetch('http://localhost:1337/v1/scooter');
             const data = await response.json();
             return data;
         } catch (error) {
@@ -11,7 +11,7 @@ const bikeModel = {
 
     getAllAvailable: async function () {
         try {
-            const response = await fetch('http://localhost:1337/scooter/available');
+            const response = await fetch('http://localhost:1337/v1/scooter/available');
             const data = await response.json();
             return data;
         } catch (error) {
@@ -21,7 +21,7 @@ const bikeModel = {
 
     getBike: async function (id) {
         try {
-            const response = await fetch(`http://localhost:1337/scooter/${id}`);
+            const response = await fetch(`http://localhost:1337/v1/scooter/${id}`);
             const data = await response.json();
             return data;
         } catch (error) {
@@ -43,7 +43,7 @@ const bikeModel = {
     },
     createBike: async function (bike) {
         try {
-            const response = await fetch('http://localhost:1337/scooter', {
+            const response = await fetch('http://localhost:1337/v1/scooter', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -65,7 +65,7 @@ const bikeModel = {
     editUser: async function (scooterId, lon, lat, battery, status, city) {
 
         try {
-            const response = await fetch(`http://localhost:1337/scooter/${scooterId}`, {
+            const response = await fetch(`http://localhost:1337/v1/scooter/${scooterId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -86,7 +86,7 @@ const bikeModel = {
     },
     rentBike: async function (scooterId) {
         try {
-            const response = await fetch(`http://localhost:1337/scooter/${scooterId}`, {
+            const response = await fetch(`http://localhost:1337/v1/scooter/${scooterId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -103,7 +103,7 @@ const bikeModel = {
     },
     returnBike: async function (bike) {
         try {
-            const response = await fetch(`http://localhost:1337/scooter/${bike.scooterId}` , {
+            const response = await fetch(`http://localhost:1337/v1/scooter/${bike.scooterId}` , {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'

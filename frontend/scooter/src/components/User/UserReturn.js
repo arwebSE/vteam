@@ -18,7 +18,7 @@ const RentedBikeList = () => {
             setUserData(userData);
             
             // Filter bikes based on user_userid
-            const userBikes = allBikes.filter(bike => bike.user_userid === localStorage.userId);
+            const userBikes = allBikes.filter(bike => bike.user_userid === parseInt(localStorage.userId));
     
             setBikes(userBikes);
           } catch (error) {

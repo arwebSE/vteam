@@ -5,7 +5,7 @@ const userModel = {
      */
     getUsers: async function () {
         try {
-            const response = await fetch('http://localhost:1337/user');
+            const response = await fetch('http://localhost:1337/v1/user');
             const data = await response.json();
             return data;
         } catch (error) {
@@ -20,7 +20,7 @@ const userModel = {
      */
     getUser: async function (id) {
         try {
-            const response = await fetch(`http://localhost:1337/user/${id}`);
+            const response = await fetch(`http://localhost:1337/v1/user/${id}`);
             const data = await response.json();
             return data;
         } catch (error) {
@@ -36,7 +36,7 @@ const userModel = {
      */
     passVerif: async function (username, passwd) {
         try {
-            const response = await fetch(`http://localhost:1337/user/ver/${username}/${passwd}`);
+            const response = await fetch(`http://localhost:1337/v1/user/ver/${username}/${passwd}`);
             const data = await response.json();
             return data;
         } catch (error) {
@@ -61,7 +61,7 @@ const userModel = {
         };
     
         // Send a POST request to the API endpoint
-        await fetch('http://localhost:1337/user', {
+        await fetch('http://localhost:1337/v1/user', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'  // Set content type to JSON
@@ -95,7 +95,7 @@ const userModel = {
      */
     editUser: async function (id, username, email, passwd, userRole) {
         try {
-            const response = await fetch(`http://localhost:1337/user/${id}`, {
+            const response = await fetch(`http://localhost:1337/v1/user/${id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -122,7 +122,7 @@ const userModel = {
      */
     addMoney: async function (id, amount) {
         try {
-            const response = await fetch(`http://localhost:1337/user/${id}/addMoney`, {
+            const response = await fetch(`http://localhost:1337/v1/user/${id}/addMoney`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -146,7 +146,7 @@ const userModel = {
      */
     removeMoney: async function (id, amount) {
         try {
-            const response = await fetch(`http://localhost:1337/user/${id}/removeMoney`, {
+            const response = await fetch(`http://localhost:1337/v1/user/${id}/removeMoney`, {
                 method: 'PUT',
                 headers: {
                 'Content-Type': 'application/json'

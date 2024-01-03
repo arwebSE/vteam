@@ -30,11 +30,11 @@ app.get('/', (req, res) => {
 // process.env.ENV = 'simulation';
 
 app.use("/oauth2", authRoute);
-app.use("/user", userRoute);
-app.use("/city", cityRoute);
-app.use("/scooter", scooterRoute);
-app.use("/zone", zoneRoute);
-app.use("/userToBike", userToBikeRoute);
+app.use("/v1/user", userRoute);
+app.use("/v1/city", cityRoute);
+app.use("/v1/scooter", scooterRoute);
+app.use("/v1/zone", zoneRoute);
+app.use("/v1/userToBike", userToBikeRoute);
 // Serve the form at the '/form' route
 /*app.get('/form', (req, res) => {
     

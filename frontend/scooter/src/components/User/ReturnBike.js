@@ -27,7 +27,7 @@ const MarkLocationMap = () => {
         const allBikes = await userToBikeModel.getAll();
 
         // Filter bikes based on user_userid
-        const userBike = allBikes.filter(bike => bike.scooterId === scooterId);
+        const userBike = allBikes.filter(bike => bike.scooterId === parseInt(scooterId));
         console.log(userBike);
 
         const timeNow = new Date();
@@ -124,7 +124,6 @@ const MarkLocationMap = () => {
 
     return (
         <div className="flex flex-col items-center gap-5">
-            <div className="w-full">
                 <MapContainer
                     center={currentLocation}
                     zoom={13}
@@ -138,9 +137,8 @@ const MarkLocationMap = () => {
                     <ClickHandler />
                     <MoveToUser />
                 </MapContainer>
-            </div>
             <button
-                className="w-11/12 rounded bg-indigo-600 hover:bg-indigo-700 text-white text-lg p-3 shadow-lg hover:shadow-xl transition duration-300 ease-in-out"
+                className="w-4/6 rounded bg-indigo-600 hover:bg-indigo-700 text-white text-lg p-3 shadow-lg hover:shadow-xl transition duration-300 ease-in-out"
                 onClick={() => returnBike()}
             >
                 Return bike
