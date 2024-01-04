@@ -29,6 +29,30 @@ describe("User tests", () => {
 
     })
 
+    test("Updating a user", async() => {
+
+
+        var username = "newusername"
+        var email = "newemail@example.com"
+
+        const jsonData = {
+            username: username,
+            email: email,
+        };
+
+
+        // Post
+        const response = await fetch('http://localhost:1337/user/1', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(jsonData)
+        });
+
+        expect(response.status).toBe(201);
+    })
+
 
     test("Getting all users", async() => {
         const response = await axios.get('http://localhost:1337/user');
@@ -156,6 +180,38 @@ describe("Scooter tests", () => {
 
 
     })
+
+    test("Updating a scooter", async() => {
+
+        var lat = "59.26387"
+        var long = "17.5548"
+        var battery = "27.4"
+        var status = "free"
+        var city_cityid = "1"
+
+        const updateData = {
+            lon: parseFloat(long),
+            lat: parseFloat(lat),
+            battery: parseFloat(battery),
+            status: status,
+            city_cityid: parseInt(city_cityid)
+        };
+
+        // Post request
+        const updateResponse = await fetch('http://localhost:1337/scooter', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json' // Set content type to JSON
+            },
+            body: JSON.stringify(updateData)
+        });
+        expect(updateResponse.status).toBe(201);
+
+
+
+
+    })
+
 
 
     test("Getting all scooters", async() => {
