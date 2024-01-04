@@ -15,11 +15,11 @@ describe("User tests", () => {
         };
 
 
-        // Send a POST request to your API endpoint
+        // Post
         const response = await fetch('http://localhost:1337/user', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json' // Set content type to JSON
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(jsonData)
         });
@@ -36,7 +36,7 @@ describe("User tests", () => {
         console.log(response.data);
     })
 
-    test("Getting one user", async() => {
+    test("Getting a user", async() => {
         const response = await axios.get('http://localhost:1337/user/1');
         expect(response.status).toBe(200);
         console.log(response.data);
@@ -49,7 +49,7 @@ describe("User tests", () => {
         const response = await fetch('http://localhost:1337/user/1', {
             method: 'DELETE',
             headers: {
-                'Content-Type': 'application/json' // Set content type to JSON
+                'Content-Type': 'application/json'
             },
         });
         expect(response.status).toBe(200);
@@ -75,8 +75,7 @@ describe("City tests", () => {
             lon: parseFloat(long)
         };
 
-
-        // Send a POST request to your API endpoint
+        // Post request
         const response = await fetch('http://localhost:1337/city', {
             method: 'POST',
             headers: {
@@ -107,7 +106,7 @@ describe("City tests", () => {
     test("Deleting a city", async() => {
 
 
-        // Send a POST request to your API endpoint
+        // Delete request
         const response = await fetch('http://localhost:1337/city/Sollentuna', {
             method: 'DELETE',
             headers: {
@@ -115,6 +114,124 @@ describe("City tests", () => {
             },
         });
         expect(response.status).toBe(200);
+
+
+    });
+
+
+})
+
+
+
+
+describe("Scooter tests", () => {
+
+    test("Adding a scooter", async() => {
+
+        var lat = "59.26387"
+        var long = "17.5537"
+        var battery = "34.4"
+        var status = "free"
+        var city_cityid = "1"
+
+        const jsonData = {
+            lon: parseFloat(long),
+            lat: parseFloat(lat),
+            battery: parseFloat(battery),
+            status: status,
+            city_cityid: parseInt(city_cityid)
+        };
+
+        // Post request
+        const response = await fetch('http://localhost:1337/scooter', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json' // Set content type to JSON
+            },
+            body: JSON.stringify(jsonData)
+        });
+        expect(response.status).toBe(201);
+
+
+
+
+    })
+
+
+    test("Getting all scooters", async() => {
+        const response = await axios.get('http://localhost:1337/scooter');
+        expect(response.status).toBe(200);
+        console.log(response.data);
+    })
+
+    test("Getting a scooter", async() => {
+        const response = await axios.get('http://localhost:1337/scooter/1');
+        expect(response.status).toBe(200);
+        console.log(response.data);
+    })
+
+    test("Deleting a scooter", async() => {
+
+
+        // Delete request
+        const response = await fetch('http://localhost:1337/scooter/1', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json' // Set content type to JSON
+            },
+        });
+        expect(response.status).toBe(200);
+
+
+    });
+
+    test("Deleting all scooters (after adding two scooters)", async() => {
+
+
+        const jsonDataone = {
+            lon: parseFloat('17.5537'),
+            lat: parseFloat('59.26387'),
+            battery: parseFloat('34.4'),
+            status: 'free',
+            city_cityid: parseInt('1')
+        };
+
+        // Post request
+        const responseone = await fetch('http://localhost:1337/scooter', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json' // Set content type to JSON
+            },
+            body: JSON.stringify(jsonDataone)
+        });
+
+        const jsonDatatwo = {
+            lon: parseFloat('17.5537'),
+            lat: parseFloat('55.26387'),
+            battery: parseFloat('54.4'),
+            status: 'free',
+            city_cityid: parseInt('1')
+        };
+
+        // Post request
+        const responsetwo = await fetch('http://localhost:1337/scooter', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json' // Set content type to JSON
+            },
+            body: JSON.stringify(jsonDatatwo)
+        });
+
+        await Promise.all([responseone, responsetwo]);
+
+        // Delete request
+        const delresponse = await fetch('http://localhost:1337/scooter', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json' // Set content type to JSON
+            },
+        });
+        expect(delresponse.status).toBe(200);
 
 
     });
