@@ -35,8 +35,14 @@ const zoneModel = {
         });
     },
     getNoGoZones: function (res, city) {
-        console.log(city);
         const sql = "SELECT * FROM Zones WHERE zonetype = 'No Go Zone' AND city_name = ?";
+        database.all(sql, [city], function (error, results) {
+            if (error) throw error;
+            res.json(results);
+        });
+    },
+    getRestrictedZones: function (res, city) {
+        const sql = "SELECT * FROM Zones WHERE zonetype = 'Restricted Speed' AND city_name = ?";
         database.all(sql, [city], function (error, results) {
             if (error) throw error;
             res.json(results);

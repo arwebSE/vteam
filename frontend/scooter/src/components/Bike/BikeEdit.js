@@ -28,7 +28,7 @@ const BikeEdit = () => {
         };
 
         fetchBike();
-    });
+    }, [scooterId]);
 
     const handleSubmit = async (event) => {
         event.preventDefault();

@@ -25,9 +25,10 @@ db.spatialite(); // This line should be here for SQLite to support SpatiaLite
 if (process.env.ENV === 'simulation') {
   db.exec(
     `
-  DELETE FROM Scooter;
-  DELETE FROM Users;
-  `
+    DELETE FROM Scooter;
+    DELETE FROM Users;
+    
+    `
     , function (err) {
       if (err) {
         console.error(err);

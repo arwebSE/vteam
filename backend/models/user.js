@@ -21,7 +21,7 @@ const userModel = {
     getOne: function (id, res) {
         db.get('SELECT * FROM Users WHERE userId = ?', id, function (error, results, fields) {
             if (error) throw error;
-             return res.json(results);
+            return res.json(results);
         });
     },
 
@@ -33,13 +33,13 @@ const userModel = {
      * @returns {object} The JSON representation of the results.
      */
     passVerif: function (username, passwd, res) {
-        db.get('SELECT * FROM Users WHERE username = ?	',  username, function (error, results, fields) {
+        db.get('SELECT * FROM Users WHERE username = ?	', username, function (error, results, fields) {
             if (error) throw error;
             return res.json(results);
         });
 
     },
-    
+
     /**
      * Creates a new user in the database.
      * @param {Object} user - The user object containing username, email, and passwd.
@@ -49,7 +49,6 @@ const userModel = {
     create: function (user, res) {
         const sql = 'INSERT INTO Users (username, email, passwd) VALUES (?, ?, ?)';
         const params = [user.body.username, user.body.email, user.body.passwd];
-        console.log(params);
 
         db.run(sql, params, function (error) {
             if (error) {

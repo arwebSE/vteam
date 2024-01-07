@@ -18,7 +18,6 @@ function AddGoalMarker({ goals }) {
     const map = useMap();
 
     useEffect(() => {
-        console.log("Goals in AddGoalMarker:", goals);
         if (goals && Object.keys(goals).length > 0) {
             for (let city in goals) {
                 goals[city].forEach((marker) => {

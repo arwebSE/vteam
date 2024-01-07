@@ -57,6 +57,16 @@ const zoneModel = {
             console.error('Error fetching cityzone:', error);
             throw error;
         }
+    },
+    getRestrictedFromCity: async function getRestrictedFromCity(city) {
+        try {
+            const response = await fetch(`http://localhost:1337/zone/restricted/${city}`);
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error('Error fetching restricted:', error);
+            throw error;
+        }
     }
 };
 export default zoneModel;

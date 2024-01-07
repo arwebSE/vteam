@@ -19,6 +19,15 @@ const userSimulationModel = {
         })
             .then(response => response.json())
             .catch(error => console.error(error));
+    },
+    updateMultipleBikes: async function (scooters) {
+        fetch('http://localhost:1337/scooter', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(scooters)
+        })
+            .then(response => response.json())
+            .catch(error => console.error(error));
     }
 };
 

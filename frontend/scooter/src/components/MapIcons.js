@@ -3,8 +3,7 @@ import { renderToString } from "react-dom/server";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { BsScooter } from "react-icons/bs";
 import { FaCircleDot } from "react-icons/fa6";
-import { FaFlagCheckered } from "react-icons/fa";
-
+import { LuFlagTriangleRight } from "react-icons/lu";
 const icons = {
     userIcon: L.divIcon({
         html: renderToString(
@@ -19,8 +18,8 @@ const icons = {
             <BsScooter style={{ fontSize: "40px", color: "green" }} />
         ),
         className: "my-custom-icon",
-        iconAnchor: [20, 40],
-        popupAnchor: [0, -40],
+        // iconAnchor: [20, 40],
+        // popupAnchor: [0, -40],
     }),
     zoneIcon: L.divIcon({
         html: renderToString(
@@ -40,11 +39,9 @@ const icons = {
     }),
     goalIcon: L.divIcon({
         html: renderToString(
-            <FaFlagCheckered style={{ fontSize: "20px" }} />
+            <LuFlagTriangleRight style={{ fontSize: "20px", color: "red" }} />
         ),
         className: "my-custom-icon",
-        iconAnchor: [20, 20],
-        popupAnchor: [0, -40],
     }),
 };
 

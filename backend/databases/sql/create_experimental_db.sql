@@ -27,6 +27,7 @@ CREATE TABLE Users (
     battery FLOAT,
     status VARCHAR(45),
     city_cityid INT,
+    speed FLOAT DEFAULT NULL,
     FOREIGN KEY(city_cityid) REFERENCES city(cityId)
 ); CREATE TABLE Zones(
     zoneId INTEGER PRIMARY KEY,

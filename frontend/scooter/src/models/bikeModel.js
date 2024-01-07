@@ -52,7 +52,16 @@ const bikeModel = {
             console.error(error);
         }
     },
-    editUser: async function (scooterId, lon, lat, battery, status, city) {
+    getBikeIdsFromCity: async function (city) {
+        try {
+            const response = await fetch(`http://localhost:1337/scooter/ids/${city}`);
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error(error);
+        }
+    },
+    editUser: async function (scooterId, lon, lat, battery, status, city, speed = 0) {
 
         try {
             const response = await fetch(`http://localhost:1337/scooter/${scooterId}`, {
@@ -65,8 +74,29 @@ const bikeModel = {
                     lat: lat,
                     battery: battery,
                     status: status,
-                    city_cityid: city
+                    city_cityid: city,
+                    speed: speed,
                 })
+            });
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error(error);
+        }
+    },
+    getBikesFromCity: async function (city) {
+        try {
+            const response = await fetch(`http://localhost:1337/scooter/city/${city}`);
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error(error);
+        }
+    },
+    deleteAllBikes: async function () {
+        try {
+            const response = await fetch('http://localhost:1337/scooter', {
+                method: 'DELETE'
             });
             const data = await response.json();
             return data;
