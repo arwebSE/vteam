@@ -57,13 +57,25 @@ describe("User tests", () => {
 
 
     test("Getting all users", async() => {
-        const response = await axios.get('http://localhost:1337/v1/user');
+        const config = {
+            headers: {
+                'API-KEY': 'BOI-API-KEY'
+            }
+        };
+
+        const response = await axios.get('http://localhost:1337/v1/user', config);
         expect(response.status).toBe(200);
         console.log(response.data);
     })
 
     test("Getting a user", async() => {
-        const response = await axios.get('http://localhost:1337/v1/user/1');
+        const config = {
+            headers: {
+                'API-KEY': 'BOI-API-KEY'
+            }
+        };
+
+        const response = await axios.get('http://localhost:1337/v1/user/1', config);
         expect(response.status).toBe(200);
         console.log(response.data);
     })
@@ -120,13 +132,25 @@ describe("City tests", () => {
 
 
     test("Getting all cities", async() => {
-        const response = await axios.get('http://localhost:1337/v1/city');
+        const config = {
+            headers: {
+                'API-KEY': 'BOI-API-KEY'
+            }
+        };
+
+        const response = await axios.get('http://localhost:1337/v1/city', config);
         expect(response.status).toBe(200);
         console.log(response.data);
     })
 
-    test("Getting a city", async() => {
-        const response = await axios.get('http://localhost:1337/v1/city/Sollentuna');
+    test("Getting a city", async () => {
+        const config = {
+            headers: {
+                'API-KEY': 'BOI-API-KEY'
+            }
+        };
+    
+        const response = await axios.get('http://localhost:1337/city/Sollentuna', config);
         expect(response.status).toBe(200);
         console.log(response.data);
     })
@@ -222,13 +246,25 @@ describe("Scooter tests", () => {
 
 
     test("Getting all scooters", async() => {
-        const response = await axios.get('http://localhost:1337/scooter');
+        const config = {
+            headers: {
+                'API-KEY': 'BOI-API-KEY'
+            }
+        };
+
+        const response = await axios.get('http://localhost:1337/scooter', config);
         expect(response.status).toBe(200);
         console.log(response.data);
     })
 
     test("Getting a scooter", async() => {
-        const response = await axios.get('http://localhost:1337/scooter/1');
+        const config = {
+            headers: {
+                'API-KEY': 'BOI-API-KEY'
+            }
+        };
+
+        const response = await axios.get('http://localhost:1337/scooter/1', config);
         expect(response.status).toBe(200);
         console.log(response.data);
     })
