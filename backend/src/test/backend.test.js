@@ -150,7 +150,7 @@ describe("City tests", () => {
             }
         };
     
-        const response = await axios.get('http://localhost:1337/city/Sollentuna', config);
+        const response = await axios.get('http://localhost:1337/v1/city/Sollentuna', config);
         expect(response.status).toBe(200);
         console.log(response.data);
     })
