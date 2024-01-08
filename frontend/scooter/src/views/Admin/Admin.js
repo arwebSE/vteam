@@ -19,9 +19,9 @@ function Admin() {
                 </h1>
 
                 <BikeMap />
-                <div className="flex gap-5 items-center justify-center">
+                <div className="flex gap-5 mt-5 items-center justify-center">
 
-                    <div className="flex gap-5 mt-2 flex-wrap justify-center">
+                    <div className="flex gap-5 flex-wrap justify-center">
                         <a
                             className="hover:bg-indigo-700 text-center p-5 bg-indigo-600 text-white rounded"
                             href="/admin/user"
@@ -35,7 +35,7 @@ function Admin() {
                         </a>
                     </div>
 
-                    <div className="flex gap-5 mt-2 flex-wrap justify-center">
+                    <div className="flex gap-5 flex-wrap justify-center">
                         <a
                             className="hover:bg-indigo-700 text-center p-5 bg-indigo-600 text-white rounded"
                             href="/admin/bike"
@@ -47,6 +47,12 @@ function Admin() {
                             href="/admin/zone"
                         >
                             Manage Zones
+                        </a>
+                        <a
+                            className="hover:bg-indigo-700 text-center p-5 bg-indigo-600 text-white rounded"
+                            href="/admin/lowbattery"
+                        >
+                            Low battery bikes
                         </a>
                     </div>
 

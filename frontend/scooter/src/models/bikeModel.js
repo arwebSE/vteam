@@ -26,6 +26,15 @@ const bikeModel = {
             console.error(error);
         }
     },
+    getLowBatteryBikes: async function () {
+        try {
+            const response = await fetch('http://localhost:1337/scooter/lowbattery');
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error(error);
+        }
+    },
 
     getBike: async function (id) {
         try {

@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./util/AuthContext";
-
+import "leaflet/dist/leaflet.css";
 import "./index.css";
 import Navbar from "./components/Navbar";
 import Login from "./views/Login/Login";
@@ -23,6 +23,7 @@ import ProfileAddMoney from "./views/User/Profile/ProfileAddMoney/ProfileAddMone
 import RentBike from "./views/User/Rent/RentBike";
 import UserReturn from "./views/User/Return/UserReturn"
 import ReturnBike from "./views/User/Return/ReturnBike"
+import LowBattery from "./views/LowBattery/LowBattery";
 import UserHistory from "./views/User/Profile/History/userHistory"
 
 import Sim from "./views/Sim/Sim";
@@ -46,6 +47,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                     <Route path="/admin/user" element={<AdminUser />} />
                     <Route path="/admin/user/:userid" element={<AdminUser />} />
                     <Route path="/admin/simulation" element={<Sim />} />
+                    <Route path="/admin/lowbattery" element={<LowBattery />} />
 
                     <Route path="/user" element={<User />} />
                     <Route path="/user/rent" element={<UserRent />} />
