@@ -294,3 +294,7 @@ describe("Scooter tests", () => {
 
 
 })
+
+describe('City tests', () => {
+    test('Adding a city')
+})

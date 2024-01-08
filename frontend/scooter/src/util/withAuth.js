@@ -9,11 +9,12 @@ const withAuth = (WrappedComponent) => {
 
         useEffect(() => {
             if (!isLoggedIn) {
-                navigate('/');
+                // navigate('/');
             }
         }, [isLoggedIn, navigate]);
 
-        return isLoggedIn ? <WrappedComponent {...props} /> : null;
+        return isLoggedIn ? < WrappedComponent {...props }
+        /> : null;
     };
 };
 

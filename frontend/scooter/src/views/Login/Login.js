@@ -4,7 +4,7 @@ import { FcGoogle } from "react-icons/fc"
 
 // auth imports
 import { AuthContext } from "../../util/AuthContext";
-import { handleLogin } from "../../util/authUtils";
+import { handleLogin, handleOauthlogin } from "../../util/authUtils";
 
 import "./style.css";
 import boi from "../../boi.png";
@@ -12,11 +12,23 @@ import boi from "../../boi.png";
 function Login() {
     const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
     const navigate = useNavigate();
+    const urlParams = new URLSearchParams(window.location.search);
+    const isLoggedInState = urlParams.get('state');
     const login = (e) => {
         e.preventDefault();
         handleLogin(setIsLoggedIn, navigate, username, passwd)};
+    if (isLoggedInState) {
+        const oauthlogin = (e) => {
+        e.preventDefault();
+        if (isLoggedInState === 'loginstate')
+        handleOauthlogin(setIsLoggedIn, navigate, isLoggedInState);
+
+    }
+    oauthlogin();
+}
     const [username, setUsername] = useState('');
     const [passwd, setPasswd] = useState('');
+
     if (isLoggedIn) {
         navigate("/home");
         return null;
