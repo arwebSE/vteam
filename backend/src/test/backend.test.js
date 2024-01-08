@@ -196,7 +196,7 @@ describe("Scooter tests", () => {
         };
 
         // Post request
-        const response = await fetch('http://localhost:1337/scooter', {
+        const response = await fetch('http://localhost:1337/v1/scooter', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -228,7 +228,7 @@ describe("Scooter tests", () => {
         };
 
         // Post request
-        const updateResponse = await fetch('http://localhost:1337/scooter', {
+        const updateResponse = await fetch('http://localhost:1337/v1/scooter', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -252,7 +252,7 @@ describe("Scooter tests", () => {
             }
         };
 
-        const response = await axios.get('http://localhost:1337/scooter', config);
+        const response = await axios.get('http://localhost:1337/v1/scooter', config);
         expect(response.status).toBe(200);
         console.log(response.data);
     })
@@ -264,7 +264,7 @@ describe("Scooter tests", () => {
             }
         };
 
-        const response = await axios.get('http://localhost:1337/scooter/1', config);
+        const response = await axios.get('http://localhost:1337/v1/scooter/1', config);
         expect(response.status).toBe(200);
         console.log(response.data);
     })
@@ -273,7 +273,7 @@ describe("Scooter tests", () => {
 
 
         // Delete request
-        const response = await fetch('http://localhost:1337/scooter/1', {
+        const response = await fetch('http://localhost:1337/v1/scooter/1', {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -297,7 +297,7 @@ describe("Scooter tests", () => {
         };
 
         // Post request
-        const responseone = await fetch('http://localhost:1337/scooter', {
+        const responseone = await fetch('http://localhost:1337/v1/scooter', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -315,7 +315,7 @@ describe("Scooter tests", () => {
         };
 
         // Post request
-        const responsetwo = await fetch('http://localhost:1337/scooter', {
+        const responsetwo = await fetch('http://localhost:1337/v1/scooter', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -327,7 +327,7 @@ describe("Scooter tests", () => {
         await Promise.all([responseone, responsetwo]);
 
         // Delete request
-        const delresponse = await fetch('http://localhost:1337/scooter', {
+        const delresponse = await fetch('http://localhost:1337/v1/scooter', {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
