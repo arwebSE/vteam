@@ -1,7 +1,6 @@
 import React from "react";
 import UserData from "../../../components/User/UserData";
 import withAuth from "../../../util/withAuth";
-import { useNavigate } from "react-router-dom";
 
 import "./style.css";
 
@@ -10,11 +9,6 @@ function UserProfile() {
 
     // Use the UserData component to fetch and retrieve user data
     const userData = UserData({ id: userId });
-    const navigate = useNavigate();
-
-    const handleBack = () => {
-        navigate("/user/profile");
-    };
 
     return (
         

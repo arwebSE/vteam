@@ -1,5 +1,4 @@
 import withAuth from "../../../util/withAuth";
-import { Link } from "react-router-dom";
 import BikesRented from "../../../components/User/UserReturn";
 
 import "./style.css";

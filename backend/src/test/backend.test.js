@@ -16,10 +16,11 @@ describe("User tests", () => {
 
 
         // Post
-        const response = await fetch('http://localhost:1337/user', {
+        const response = await fetch('http://localhost:1337/v1/user', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'API-KEY': 'BOI-API-KEY'
             },
             body: JSON.stringify(jsonData)
         });
@@ -42,10 +43,11 @@ describe("User tests", () => {
 
 
         // Post
-        const response = await fetch('http://localhost:1337/user/1', {
+        const response = await fetch('http://localhost:1337/v1/user/1', {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'API-KEY': 'BOI-API-KEY'
             },
             body: JSON.stringify(jsonData)
         });
@@ -55,13 +57,13 @@ describe("User tests", () => {
 
 
     test("Getting all users", async() => {
-        const response = await axios.get('http://localhost:1337/user');
+        const response = await axios.get('http://localhost:1337/v1/user');
         expect(response.status).toBe(200);
         console.log(response.data);
     })
 
     test("Getting a user", async() => {
-        const response = await axios.get('http://localhost:1337/user/1');
+        const response = await axios.get('http://localhost:1337/v1/user/1');
         expect(response.status).toBe(200);
         console.log(response.data);
     })
@@ -70,10 +72,11 @@ describe("User tests", () => {
 
 
         // Send a POST request to your API endpoint
-        const response = await fetch('http://localhost:1337/user/1', {
+        const response = await fetch('http://localhost:1337/v1/user/1', {
             method: 'DELETE',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'API-KEY': 'BOI-API-KEY'
             },
         });
         expect(response.status).toBe(200);
@@ -100,10 +103,11 @@ describe("City tests", () => {
         };
 
         // Post request
-        const response = await fetch('http://localhost:1337/city', {
+        const response = await fetch('http://localhost:1337/v1/city', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json' // Set content type to JSON
+                'Content-Type': 'application/json', // Set content type to JSON
+                'API-KEY': 'BOI-API-KEY'
             },
             body: JSON.stringify(jsonData)
         });
@@ -116,13 +120,13 @@ describe("City tests", () => {
 
 
     test("Getting all cities", async() => {
-        const response = await axios.get('http://localhost:1337/city');
+        const response = await axios.get('http://localhost:1337/v1/city');
         expect(response.status).toBe(200);
         console.log(response.data);
     })
 
     test("Getting a city", async() => {
-        const response = await axios.get('http://localhost:1337/city/Sollentuna');
+        const response = await axios.get('http://localhost:1337/v1/city/Sollentuna');
         expect(response.status).toBe(200);
         console.log(response.data);
     })
@@ -131,10 +135,11 @@ describe("City tests", () => {
 
 
         // Delete request
-        const response = await fetch('http://localhost:1337/city/Sollentuna', {
+        const response = await fetch('http://localhost:1337/v1/city/Sollentuna', {
             method: 'DELETE',
             headers: {
-                'Content-Type': 'application/json' // Set content type to JSON
+                'Content-Type': 'application/json',
+                'API-KEY': 'BOI-API-KEY' // Set content type to JSON
             },
         });
         expect(response.status).toBe(200);
@@ -170,7 +175,8 @@ describe("Scooter tests", () => {
         const response = await fetch('http://localhost:1337/scooter', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json' // Set content type to JSON
+                'Content-Type': 'application/json',
+                'API-KEY': 'BOI-API-KEY' // Set content type to JSON
             },
             body: JSON.stringify(jsonData)
         });
@@ -201,7 +207,8 @@ describe("Scooter tests", () => {
         const updateResponse = await fetch('http://localhost:1337/scooter', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json' // Set content type to JSON
+                'Content-Type': 'application/json',
+                'API-KEY': 'BOI-API-KEY' // Set content type to JSON
             },
             body: JSON.stringify(updateData)
         });
@@ -233,7 +240,8 @@ describe("Scooter tests", () => {
         const response = await fetch('http://localhost:1337/scooter/1', {
             method: 'DELETE',
             headers: {
-                'Content-Type': 'application/json' // Set content type to JSON
+                'Content-Type': 'application/json',
+                'API-KEY': 'BOI-API-KEY' // Set content type to JSON
             },
         });
         expect(response.status).toBe(200);
@@ -256,7 +264,8 @@ describe("Scooter tests", () => {
         const responseone = await fetch('http://localhost:1337/scooter', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json' // Set content type to JSON
+                'Content-Type': 'application/json',
+                'API-KEY': 'BOI-API-KEY' // Set content type to JSON
             },
             body: JSON.stringify(jsonDataone)
         });
@@ -273,7 +282,8 @@ describe("Scooter tests", () => {
         const responsetwo = await fetch('http://localhost:1337/scooter', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json' // Set content type to JSON
+                'Content-Type': 'application/json',
+                'API-KEY': 'BOI-API-KEY' // Set content type to JSON
             },
             body: JSON.stringify(jsonDatatwo)
         });
@@ -284,7 +294,8 @@ describe("Scooter tests", () => {
         const delresponse = await fetch('http://localhost:1337/scooter', {
             method: 'DELETE',
             headers: {
-                'Content-Type': 'application/json' // Set content type to JSON
+                'Content-Type': 'application/json',
+                'API-KEY': 'BOI-API-KEY' // Set content type to JSON
             },
         });
         expect(delresponse.status).toBe(200);

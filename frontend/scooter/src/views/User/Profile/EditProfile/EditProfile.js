@@ -1,6 +1,5 @@
 import ProfileEdit from "../../../../components/User/ProfileEdit";
 import withAuth from "../../../../util/withAuth";
-import { Link } from "react-router-dom";
 
 import "./style.css";
 //import logo from "../../logo.png";

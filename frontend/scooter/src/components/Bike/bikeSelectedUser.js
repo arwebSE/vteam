@@ -4,7 +4,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import bikeModel from "../../models/bikeModel";
 import userModel from "../../models/userModel";
 import userToBikeModel from "../../models/userToBikeModel";
-import logModel from "../../models/logModel";
 
 const BikeRent = () => {
     const location = useLocation();
