@@ -5,7 +5,11 @@ const userModel = {
      */
     getUsers: async function () {
         try {
-            const response = await fetch('http://localhost:1337/v1/user');
+            const response = await fetch('http://localhost:1337/v1/user', {
+                headers: {
+                    'API-KEY': 'BOI-API-KEY'
+                }
+            });
             const data = await response.json();
             return data;
         } catch (error) {
@@ -20,7 +24,11 @@ const userModel = {
      */
     getUser: async function (id) {
         try {
-            const response = await fetch(`http://localhost:1337/v1/user/${id}`);
+            const response = await fetch(`http://localhost:1337/v1/user/${id}`, {
+                headers: {
+                    'API-KEY': 'BOI-API-KEY'
+                }
+            });
             const data = await response.json();
             return data;
         } catch (error) {
@@ -36,14 +44,17 @@ const userModel = {
      */
     passVerif: async function (username, passwd) {
         try {
-            const response = await fetch(`http://localhost:1337/v1/user/ver/${username}/${passwd}`);
+            const response = await fetch(`http://localhost:1337/v1/user/ver/${username}/${passwd}`, {
+                headers: {
+                    'API-KEY': 'BOI-API-KEY'
+                }
+            });
             const data = await response.json();
             return data;
         } catch (error) {
             console.error(error);
         }
     },
-
 
     /**
      * Creates a new user in the API
@@ -59,29 +70,24 @@ const userModel = {
             userrole: "user",
             authprov: "user"
         };
-    
-        // Send a POST request to the API endpoint
-        await fetch('http://localhost:1337/v1/user', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'  // Set content type to JSON
-            },
-            body: JSON.stringify(jsonData)
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json(); // Assuming the API returns JSON
-        })
-        .then(data => {
+
+        try {
+            const response = await fetch('http://localhost:1337/v1/user', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',  // Set content type to JSON
+                    'API-KEY': 'BOI-API-KEY'
+                },
+                body: JSON.stringify(jsonData)
+            });
+
+            const data = await response.json();
             console.log('Success:', data);
             // Handle success, e.g., show a success message to the user
-        })
-        .catch(error => {
+        } catch (error) {
             console.error('Error:', error);
             // Handle errors, e.g., show an error message to the user
-        });
+        }
     },
 
     /**
@@ -98,7 +104,8 @@ const userModel = {
             const response = await fetch(`http://localhost:1337/v1/user/${id}`, {
                 method: 'PUT',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'API-KEY': 'BOI-API-KEY'
                 },
                 body: JSON.stringify({
                     username: username,
@@ -107,6 +114,7 @@ const userModel = {
                     userrole: userRole
                 })
             });
+
             const data = await response.json();
             return data;
         } catch (error) {
@@ -125,7 +133,8 @@ const userModel = {
             const response = await fetch(`http://localhost:1337/v1/user/${id}/addMoney`, {
                 method: 'PUT',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'API-KEY': 'BOI-API-KEY'
                 },
                 body: JSON.stringify({
                     amount: amount
@@ -149,13 +158,14 @@ const userModel = {
             const response = await fetch(`http://localhost:1337/v1/user/${id}/removeMoney`, {
                 method: 'PUT',
                 headers: {
-                'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'API-KEY': 'BOI-API-KEY'
                 },
                 body: JSON.stringify({
-                amount: amount
+                    amount: amount
                 })
             });
-    
+
             const data = await response.json();
             return data;
         } catch (error) {

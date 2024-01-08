@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import bikeModel from "../../models/bikeModel";
 import userModel from "../../models/userModel";
 import userToBikeModel from "../../models/userToBikeModel";
+import logModel from "../../models/logModel";
 
 const BikeRent = () => {
     const location = useLocation();
@@ -67,8 +68,19 @@ const BikeRent = () => {
                 stopTime: stopTime,
                 price: price,
             };
+
+            /*const logData = {
+                user_userid: localStorage.userId,
+                scooterId: scooterId,
+                startTime: startTime,
+                stopTime: stopTime,
+                price: price,
+                totalPrice: null,
+
+            };*/
             await bikeModel.rentBike(scooterId);
             await userToBikeModel.create(userToBikeData);
+            //await logModel.create(logData);
             await userModel.removeMoney(localStorage.userId, price);
             console.log("Bike rented successfully.");
             navigate("/user"); // Redirect to the user dashboard or another page

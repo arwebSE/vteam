@@ -1,7 +1,11 @@
 const bikeModel = {
     getBikes: async function () {
         try {
-            const response = await fetch('http://localhost:1337/v1/scooter');
+            const response = await fetch('http://localhost:1337/v1/scooter', {
+                headers: {
+                    'API-KEY': 'BOI-API-KEY'
+                }
+            });
             const data = await response.json();
             return data;
         } catch (error) {
@@ -11,7 +15,11 @@ const bikeModel = {
 
     getAllAvailable: async function () {
         try {
-            const response = await fetch('http://localhost:1337/v1/scooter/available');
+            const response = await fetch('http://localhost:1337/v1/scooter/available', {
+                headers: {
+                    'API-KEY': 'BOI-API-KEY'
+                }
+            });
             const data = await response.json();
             return data;
         } catch (error) {
@@ -21,13 +29,18 @@ const bikeModel = {
 
     getBike: async function (id) {
         try {
-            const response = await fetch(`http://localhost:1337/v1/scooter/${id}`);
+            const response = await fetch(`http://localhost:1337/v1/scooter/${id}`, {
+                headers: {
+                    'API-KEY': 'BOI-API-KEY'
+                }
+            });
             const data = await response.json();
             return data;
         } catch (error) {
             console.error(error);
         }
     },
+    
     getBikeCity: async function (lat, lng) {
         try {
             const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`);
@@ -41,12 +54,14 @@ const bikeModel = {
             console.error(error);
         }
     },
+
     createBike: async function (bike) {
         try {
             const response = await fetch('http://localhost:1337/v1/scooter', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'API-KEY': 'BOI-API-KEY'
                 },
                 body: JSON.stringify({
                     lon: bike.lon,
@@ -62,13 +77,14 @@ const bikeModel = {
             console.error(error);
         }
     },
-    editUser: async function (scooterId, lon, lat, battery, status, city) {
 
+    editUser: async function (scooterId, lon, lat, battery, status, city) {
         try {
             const response = await fetch(`http://localhost:1337/v1/scooter/${scooterId}`, {
                 method: 'PUT',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'API-KEY': 'BOI-API-KEY'
                 },
                 body: JSON.stringify({
                     lon: lon,
@@ -84,12 +100,14 @@ const bikeModel = {
             console.error(error);
         }
     },
+
     rentBike: async function (scooterId) {
         try {
             const response = await fetch(`http://localhost:1337/v1/scooter/${scooterId}`, {
                 method: 'PUT',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'API-KEY': 'BOI-API-KEY'
                 },
                 body: JSON.stringify({
                     status: 'Rented'
@@ -101,12 +119,14 @@ const bikeModel = {
             console.error(error);
         }
     },
+
     returnBike: async function (bike) {
         try {
-            const response = await fetch(`http://localhost:1337/v1/scooter/${bike.scooterId}` , {
+            const response = await fetch(`http://localhost:1337/v1/scooter/${bike.scooterId}`, {
                 method: 'PUT',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'API-KEY': 'BOI-API-KEY'
                 },
                 body: JSON.stringify({
                     lon: bike.lon,
@@ -121,7 +141,6 @@ const bikeModel = {
             console.error(error);
         }
     }
-
 }
 
 export default bikeModel;

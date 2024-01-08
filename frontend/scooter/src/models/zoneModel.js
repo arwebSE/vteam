@@ -2,7 +2,11 @@ const zoneModel = {
     // Get zone fetch request
     getZones: async function getZones() {
         try {
-            const response = await fetch(`http://localhost:1337/v1/zone`);
+            const response = await fetch(`http://localhost:1337/v1/zone`, {
+                headers: {
+                    'API-KEY': 'BOI-API-KEY'
+                }
+            });
             const data = await response.json();
             return data;
         } catch (error) {
@@ -13,7 +17,11 @@ const zoneModel = {
     // Get zone fetch request
     getZone: async function getZone(zoneId) {
         try {
-            const response = await fetch(`/zone/${zoneId}`);
+            const response = await fetch(`/zone/${zoneId}`, {
+                headers: {
+                    'API-KEY': 'BOI-API-KEY'
+                }
+            });
             const data = await response.json();
             return data;
         } catch (error) {
@@ -28,6 +36,7 @@ const zoneModel = {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'API-KEY': 'BOI-API-KEY'
                 },
                 body: JSON.stringify(zoneData),
             });
@@ -40,7 +49,11 @@ const zoneModel = {
     },
     getNogoFromCity: async function getNogoFromCity(city) {
         try {
-            const response = await fetch(`http://localhost:1337/v1/zone/nogo/${city}`);
+            const response = await fetch(`http://localhost:1337/v1/zone/nogo/${city}`, {
+                headers: {
+                    'API-KEY': 'BOI-API-KEY'
+                }
+            });
             const data = await response.json();
             return data;
         } catch (error) {
@@ -50,7 +63,11 @@ const zoneModel = {
     },
     getCityZoneFromCity: async function getCityZoneFromCity(city) {
         try {
-            const response = await fetch(`http://localhost:1337/v1/zone/city/${city}`);
+            const response = await fetch(`http://localhost:1337/v1/zone/city/${city}`, {
+                headers: {
+                    'API-KEY': 'BOI-API-KEY'
+                }
+            });
             const data = await response.json();
             return data;
         } catch (error) {
@@ -59,4 +76,5 @@ const zoneModel = {
         }
     }
 };
+
 export default zoneModel;
