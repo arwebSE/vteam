@@ -1,6 +1,8 @@
 # boi
 
 [![Node.js CI](https://github.com/arwebSE/vteam/actions/workflows/node.js.yml/badge.svg?branch=master)](https://github.com/arwebSE/vteam/actions/workflows/node.js.yml)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/arwebSE/vteam/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/arwebSE/vteam/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/arwebSE/vteam/badges/build.png?b=master)](https://scrutinizer-ci.com/g/arwebSE/vteam/build-status/master)
 
 This is the development branch for the main database section of the system.
 
