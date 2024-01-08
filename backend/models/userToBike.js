@@ -1,9 +1,15 @@
 const db = require('../databases/sql/database.js');
 
+/**
+ * A model representing operations related to the UsertoBike table in the database.
+ * @namespace
+ */
 const usertoBikeModel = {
-    /*
-        Get all information in the UsertoBike table in database (All entries)
-    */
+    /**
+     * Get all information in the UsertoBike table in the database (All entries).
+     * @param {Object} res - The Express response object.
+     * @returns {void}
+     */
     getAll: function (res) {
         db.all('SELECT * FROM UsertoBike', function (error, results, fields) {
             if (error) throw error;
@@ -11,10 +17,12 @@ const usertoBikeModel = {
         });
     },
 
-    /*
-        You can get all information about a specific UsertoBike entry with idUsertobike
-        Example: 1 (if 1 is the idUsertobike in UsertoBike table in database)
-    */
+    /**
+     * Get all information about a specific UsertoBike entry with idUsertobike.
+     * @param {number} idUsertobike - The idUsertobike of the UsertoBike entry to retrieve.
+     * @param {Object} res - The Express response object.
+     * @returns {void}
+     */
     getOne: function (idUsertobike, res) {
         const sql = 'SELECT * FROM UsertoBike WHERE idUsertobike = ?';
         db.get(sql, [idUsertobike], function (error, results, fields) {
@@ -23,20 +31,18 @@ const usertoBikeModel = {
         });
     },
 
-    /*
-        Create a new entry in the UsertoBike table with the specified values
-        idUserToBike, startTime and price is auto generated.
-    */
+    /**
+     * Create a new entry in the UsertoBike table with the specified values (user_userid, scooterId, startTime, stopTime, price).
+     * @param {Object} usertoBike - The UsertoBike object containing user_userid, scooterId, startTime, stopTime, and price.
+     * @param {Object} res - The Express response object.
+     * @returns {void}
+     */
     create: function (usertoBike, res) {
         const dateNow = new Date(usertoBike.startTime);
         const dateStartTimeString = dateNow.toLocaleString("sv-SE");
 
         const dateStopTime = new Date(usertoBike.stopTime);
         const dateStopTimeString = dateStopTime.toLocaleString("sv-SE");
-
-        //const startPrice = 10;
-        //const timeBetweenMinutes = ((dateStopTime - dateNow) / 1000) / 60;
-        //const price = parseInt(startPrice + (timeBetweenMinutes * 2));
 
         const sql = 'INSERT INTO UsertoBike (user_userid, scooterId, startTime, stopTime, price) VALUES (?, ?, ?, ?, ?)';
         const params = [usertoBike.user_userid, usertoBike.scooterId, dateStartTimeString, dateStopTimeString, usertoBike.price];
@@ -52,9 +58,13 @@ const usertoBikeModel = {
         });
     },
 
-    /*
-        Update an existing UsertoBike entry with the specified values
-    */
+    /**
+     * Update an existing UsertoBike entry with the specified values.
+     * @param {number} idUsertobike - The idUsertobike of the UsertoBike entry to update.
+     * @param {Object} usertoBike - The updated UsertoBike object containing user_userid, scooterId, startTime, stopTime, and price.
+     * @param {Object} res - The Express response object.
+     * @returns {void}
+     */
     update: function (idUsertobike, usertoBike, res) {
         const sql = 'UPDATE UsertoBike SET ' +
             'user_userid = COALESCE(?, user_userid), ' +
@@ -84,9 +94,12 @@ const usertoBikeModel = {
         });
     },
 
-    /*
-        Delete an existing UsertoBike entry from the database
-    */
+    /**
+     * Delete an existing UsertoBike entry from the database.
+     * @param {number} idUsertobike - The idUsertobike of the UsertoBike entry to delete.
+     * @param {Object} res - The Express response object.
+     * @returns {void}
+     */
     delete: function (idUsertobike, res) {
         const sql = 'DELETE FROM UsertoBike WHERE idUsertobike = ?';
         db.run(sql, [idUsertobike], function (error) {

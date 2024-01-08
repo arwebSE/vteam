@@ -23,6 +23,7 @@ import ProfileAddMoney from "./views/User/Profile/ProfileAddMoney/ProfileAddMone
 import RentBike from "./views/User/Rent/RentBike";
 import UserReturn from "./views/User/Return/UserReturn"
 import ReturnBike from "./views/User/Return/ReturnBike"
+import UserHistory from "./views/User/Profile/History/userHistory"
 
 import Sim from "./views/Sim/Sim";
 
@@ -54,6 +55,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                     <Route path="/user/rent/bike/:id" element={<RentBike />} />
                     <Route path="/user/return" element={<UserReturn />} />
                     <Route path="/user/return/:id" element={<ReturnBike />} />
+                    <Route path="/user/profile/history" element={<UserHistory />} />
 
                 </Routes >
             </Router >

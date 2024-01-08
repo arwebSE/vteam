@@ -3,7 +3,7 @@ const router = express.Router();
 const zoneModel = require('../models/zone');
 
 router.get("/", (req, res) => zoneModel.getAll(res));
-// router.get("/:zoneId", (req, res) => zoneModel.getOne(req.params.zoneId, res));
+router.get("/:zoneId", (req, res) => zoneModel.getOne(req.params.zoneId, res));
 router.get("/city/:city", (req, res) => zoneModel.getCityZones(res, req.params.city));
 router.get("/nogo/:city", (req, res) => zoneModel.getNoGoZones(res, req.params.city));
 router.get("/restricted/:city", (req, res) => zoneModel.getRestrictedZones(res, req.params.city));

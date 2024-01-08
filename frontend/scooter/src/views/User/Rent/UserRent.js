@@ -1,4 +1,5 @@
 import withAuth from "../../../util/withAuth";
+import { Link } from "react-router-dom";
 import BikeMapUser from "../../../components/User/BikeMapUser";
 
 import "./style.css";
@@ -6,32 +7,27 @@ import "./style.css";
 
 function UserRent() {
     return (
-        <div className="flex mt-20">
-            {/* Side Panel*/}
-            <div className="w-1/6 p-4 bg-white h-screen">
-                <h1 className="text-3xl font-bold text-indigo-600 mb-8">
-                    User Rent
-                </h1>
-                <div className="flex flex-col gap-5">
-                    <a
-                    className="hover:bg-indigo-700 text-center p-5 bg-indigo-600 text-white rounded"
-                    href="/user"
+    <div className="flex justify-center items-center w-full h-screen">
+        <div className="w-full max-w-4xl mx-auto">
+            <div className="flex flex-col items-center">
+                <div className="w-full flex flex-row justify-between items-center p-4">
+                    <Link
+                        to="/user"
+                        className="cursor-pointer rounded bg-indigo-600 hover:bg-indigo-700 text-lg p-3 text-white shadow-md hover:shadow-lg transition duration-300 ease-in-out"
                     >
-                    Go back
-                    </a>
+                        Back
+                    </Link>
+                    <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-indigo-600">
+                        User Rent
+                    </h1>
                 </div>
+                <p className="rounded p-3 w-3/4 text-center text-sm md:text-base lg:text-lg text-gray-700 mb-4 shadow">
+                    Double click on the bike you want to rent.
+                </p>
             </div>
-            {/* Main panel */}
-            <div className="w-5/6 p-3 flex flex-col items-center bg-stone-100">
-                <BikeMapUser />
-                <a
-                    className="hover:bg-indigo-700 text-center p-5 mt-5 bg-indigo-600 text-white rounded"
-                    href="/user/return"
-                    >
-                    Return rented bikes
-                </a>
-            </div>
+            <BikeMapUser />
         </div>
+    </div>
     );
 }
 
