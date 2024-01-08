@@ -151,6 +151,17 @@ const scooterModel = {
             res.json({ message: 'All scooters deleted successfully' });
         });
     },
+    getLowBatteryScooter: function (res) {
+        const sql = 'SELECT * FROM Scooter WHERE battery < 20';
+        db.all(sql, function (error, results) {
+            if (error) {
+                console.error('Error:', error);
+                res.status(500).json({ error: 'Internal Server Error' });
+                return;
+            }
+            res.json(results);
+        });
+    },
     /*
         Delete one specific Scooter in the database depending on the scooterId
     */

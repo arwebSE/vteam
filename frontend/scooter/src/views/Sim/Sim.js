@@ -253,17 +253,24 @@ function Sim() {
                         const targetLocation = [goals[city][i][1], goals[city][i][0]];
                         let speedKmPerHour;
                         let status;
+                        let consumption = 1;
 
+                        if (bikes.battery <= 0) {
+                            consumption = 0;
+                            speedKmPerHour = 0;
+                        }
 
                         if (bikes[i].speed === null) {
                             speedKmPerHour = 20;
                         }
                         if (turf.distance(turf.point(currentLocation), turf.point(targetLocation)) < 0.0001) {
+                            consumption = 0;
                             speedKmPerHour = 0;
                             status = "Goal Reached";
                         } else {
 
                             if (insideNogoZone(currentLocation[0], currentLocation[1], cityNogo)) {
+                                consumption = 0;
                                 speedKmPerHour = 0;
                                 status = "service";
                             } else {
@@ -297,7 +304,7 @@ function Sim() {
                             "scooterId": bikes[i].scooterId,
                             "lat": bikes[i].lat,
                             "lon": bikes[i].lon,
-                            "battery": bikes[i].battery - 1,
+                            "battery": bikes[i].battery - consumption,
                             "status": status,
                             "city_cityid": bikes[i].city_cityid,
                             "speed": speedKmPerHour
@@ -320,49 +327,56 @@ function Sim() {
 
 
     return (
-        <>
-            <div className="p-9 m-9">
-                <div className="flex flex-row items-center justify-center">
-                    <h1 className="text-4xl pl-10 text-center font-bold text-gray-900 mb-6">Scooter Simulator</h1>
-                    <img src={boi} alt="boi" className="scooter mx-auto h-16 md:h-20 lg:h-24 w-auto mb-6" />
-                </div>
-                <div className="flex p-3 flex-col items-center justify-center bg-stone-100">
-                    {/* <User /> */}
-                    <BikeMap goals={goals} />
-                    {isLoading && (
-                        <div className="progress-bar-container">
-                            <RotatingLines
-                                visible={true}
-                                height="96"
-                                width="96"
-                                color="grey"
-                                strokeWidth="5"
-                                animationDuration="0.75"
-                                ariaLabel="rotating-lines-loading"
-                                wrapperStyle={{}}
-                                wrapperClass=""
-                            />
-                            <h1 className="text-2xl text-white text-center font-bold text-gray-900 mb-6">{loadingTxt}</h1>
-                        </div>
-                    )}
-                    <form className="flex flex-col items-center" onSubmit={handleSubmit}>
-                        <label>Total bikes {sliderValue * 3}</label>
-                        <label htmlFor="quantity">Number of Bikes in each city: {sliderValue}</label>
-                        <input
-                            type="range"
-                            id="quantity"
-                            name="quantity"
-                            min="1"
-                            step="10"
-                            max="650"
-                            defaultValue="1"
-                            onChange={(e) => setSliderValue(e.target.value)}>
-                        </input>
-                        <button className="p-1.5 rounded bg-gray-800 text-white text-center">Start Simulation</button>
-                    </form>
-                </div>
+
+        <div className="flex flex-col justify-center w-full pt-9 mt-9">
+            <div className="flex flex-row items-center justify-center">
+                <h1 className="text-4xl pl-10 text-center font-bold text-gray-900 mb-6">Scooter Simulator</h1>
+                <img src={boi} alt="boi" className="scooter mx-auto h-16 md:h-20 lg:h-24 w-auto mb-6" />
             </div>
-        </>
+            <div className="flex w-full p-3 flex-col items-center justify-center">
+                {/* <User /> */}
+                <BikeMap goals={goals} />
+                {isLoading && (
+                    <div className="progress-bar-container">
+                        <RotatingLines
+                            visible={true}
+                            height="96"
+                            width="96"
+                            color="grey"
+                            strokeWidth="5"
+                            animationDuration="0.75"
+                            ariaLabel="rotating-lines-loading"
+                            wrapperStyle={{}}
+                            wrapperClass=""
+                        />
+                        <h1 className="text-2xl text-white text-center font-bold text-gray-900 mb-6">{loadingTxt}</h1>
+                    </div>
+                )}
+                <form className="flex flex-col bg-slate-200 w-11/12 items-center rounded m-4" onSubmit={handleSubmit}>
+                    <label
+                        className="mb-2"
+                        htmlFor="quantity">
+                        Number of Bikes in each city: {sliderValue}
+                    </label>
+                    <label className="font-bold">
+                        Total bikes {sliderValue * 3}
+                    </label>
+                    <input
+                        className="w-1/2 h-10"
+                        type="range"
+                        id="quantity"
+                        name="quantity"
+                        min="1"
+                        step="10"
+                        max="650"
+                        defaultValue="1"
+                        onChange={(e) => setSliderValue(e.target.value)}>
+                    </input>
+                    <button className="p-1.5 rounded bg-gray-800 text-white text-center">Start Simulation</button>
+                </form>
+            </div>
+        </div>
+
     );
 
 
