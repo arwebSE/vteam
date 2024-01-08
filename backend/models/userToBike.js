@@ -28,18 +28,18 @@ const usertoBikeModel = {
         idUserToBike, startTime and price is auto generated.
     */
     create: function (usertoBike, res) {
-        const dateNow = new Date();
+        const dateNow = new Date(usertoBike.startTime);
         const dateStartTimeString = dateNow.toLocaleString("sv-SE");
 
         const dateStopTime = new Date(usertoBike.stopTime);
         const dateStopTimeString = dateStopTime.toLocaleString("sv-SE");
 
-        const startPrice = 10;
-        const timeBetweenMinutes = ((dateStopTime - dateNow) / 1000) / 60;
-        const price = parseInt(startPrice + (timeBetweenMinutes * 2));
+        //const startPrice = 10;
+        //const timeBetweenMinutes = ((dateStopTime - dateNow) / 1000) / 60;
+        //const price = parseInt(startPrice + (timeBetweenMinutes * 2));
 
         const sql = 'INSERT INTO UsertoBike (user_userid, scooterId, startTime, stopTime, price) VALUES (?, ?, ?, ?, ?)';
-        const params = [usertoBike.user_userid, usertoBike.scooterId, dateStartTimeString, dateStopTimeString, price];
+        const params = [usertoBike.user_userid, usertoBike.scooterId, dateStartTimeString, dateStopTimeString, usertoBike.price];
 
         db.run(sql, params, function (error) {
             if (error) {

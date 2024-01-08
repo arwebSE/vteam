@@ -9,6 +9,16 @@ const bikeModel = {
         }
     },
 
+    getAllAvailable: async function () {
+        try {
+            const response = await fetch('http://localhost:1337/scooter/available');
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error(error);
+        }
+    },
+
     getBike: async function (id) {
         try {
             const response = await fetch(`http://localhost:1337/scooter/${id}`);
@@ -97,6 +107,43 @@ const bikeModel = {
         try {
             const response = await fetch('http://localhost:1337/scooter', {
                 method: 'DELETE'
+            });
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error(error);
+        }
+    },
+    rentBike: async function (scooterId) {
+        try {
+            const response = await fetch(`http://localhost:1337/scooter/${scooterId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    status: 'Rented'
+                })
+            });
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error(error);
+        }
+    },
+    returnBike: async function (bike) {
+        try {
+            const response = await fetch(`http://localhost:1337/scooter/${bike.scooterId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    lon: bike.lon,
+                    lat: bike.lat,
+                    battery: bike.battery,
+                    status: bike.status
+                })
             });
             const data = await response.json();
             return data;

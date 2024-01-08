@@ -20,6 +20,10 @@ import UserProfile from "./views/User/Profile/UserProfile";
 import LoginAuth from "./views/Oauthlogin/Oauth";
 import EditProfile from "./views/User/Profile/EditProfile/EditProfile";
 import ProfileAddMoney from "./views/User/Profile/ProfileAddMoney/ProfileAddMoney";
+import RentBike from "./views/User/Rent/RentBike";
+import UserReturn from "./views/User/Return/UserReturn"
+import ReturnBike from "./views/User/Return/ReturnBike"
+
 import Sim from "./views/Sim/Sim";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
@@ -47,6 +51,10 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                     <Route path="/user/profile" element={<UserProfile />} />
                     <Route path="/user/profile/edit" element={<EditProfile />} />
                     <Route path="/user/profile/bank" element={<ProfileAddMoney />} />
+                    <Route path="/user/rent/bike/:id" element={<RentBike />} />
+                    <Route path="/user/return" element={<UserReturn />} />
+                    <Route path="/user/return/:id" element={<ReturnBike />} />
+
                 </Routes >
             </Router >
         </AuthProvider >
