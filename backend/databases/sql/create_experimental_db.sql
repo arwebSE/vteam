@@ -13,7 +13,8 @@ CREATE TABLE Users (
     passwd VARCHAR(45),
     authprov VARCHAR(20),
     user_authid TEXT,
-    userrole TEXT
+    userrole TEXT,
+    user_balance DECIMAL(10, 2) DEFAULT 0.00
 ); CREATE TABLE City(
     cityId INTEGER PRIMARY KEY,
     id VARCHAR(45) NOT NULL,
@@ -26,6 +27,7 @@ CREATE TABLE Users (
     battery FLOAT,
     status VARCHAR(45),
     city_cityid INT,
+    speed FLOAT DEFAULT NULL,
     FOREIGN KEY(city_cityid) REFERENCES city(cityId)
 ); CREATE TABLE Zones(
     zoneId INTEGER PRIMARY KEY,

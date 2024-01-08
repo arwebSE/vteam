@@ -25,7 +25,7 @@ const userModel = {
     getOne: function (id, res) {
         db.get('SELECT * FROM Users WHERE userId = ?', id, function (error, results, fields) {
             if (error) throw error;
-             return res.json(results);
+            return res.json(results);
         });
     },
 
@@ -36,14 +36,15 @@ const userModel = {
      * @param {object} res - The response object.
      * @returns {object} The JSON representation of the results.
      */
+
     passVerif: function (username, passwd, res) {
-        db.get('SELECT * FROM Users WHERE username = ?	',  username, function (error, results, fields) {
+        db.get('SELECT * FROM Users WHERE username = ?	', username, function (error, results, fields) {
             if (error) throw error;
             return res.json(results);
         });
 
     },
-    
+
     /**
      * Creates a new user in the database.
      * @param {Object} user - The user object containing username, email, and passwd.
@@ -53,7 +54,6 @@ const userModel = {
     create: function (user, res) {
         const sql = 'INSERT INTO Users (username, email, passwd) VALUES (?, ?, ?)';
         const params = [user.body.username, user.body.email, user.body.passwd];
-        console.log(params);
 
         db.run(sql, params, function (error) {
             if (error) {
@@ -93,11 +93,11 @@ const userModel = {
         db.run(sql, params, function (error, results) {
             if (error) {
                 console.error('Error:', error);
-                // You need to handle the error here, for example by calling a callback with the error
+                res.status(500).json({ error: 'Internal Server Error' });
                 return error;
             }
-            // You need to handle the success case here, for example by calling a callback with the results
             console.log('User updated successfully.');
+            res.status(201).json({ message: 'User updated successfully' });
         });
     },
     /**
@@ -148,18 +148,39 @@ const userModel = {
     removeMoney: function (userId, amount, res) {
         const sql = 'UPDATE Users SET user_balance = COALESCE(user_balance, 0) - ? WHERE userId = ?';
         const params = [amount, userId];
-    
+
         db.run(sql, params, function (error) {
-        if (error) {
-            console.error('Error:', error);
-            res.status(500).json({ error: 'Internal Server Error' });
-            return;
-        }
-    
-        console.log('Money deducted successfully.');
-        res.json({ message: 'Money deducted successfully' });
+            if (error) {
+                console.error('Error:', error);
+                res.status(500).json({ error: 'Internal Server Error' });
+                return;
+            }
+
+            console.log('Money deducted successfully.');
+            res.json({ message: 'Money deducted successfully' });
         });
     },
+    /**
+ * Deducts money from the user's balance in the database.
+ * @param {number} userId - The ID of the user from whom money will be deducted.
+ * @param {number} amount - The amount of money to be deducted from the user's balance.
+ * @param {object} res - The Express response object to send the result back to the client.
+ */
+    removeMoney: function (userId, amount, res) {
+        const sql = 'UPDATE Users SET user_balance = COALESCE(user_balance, 0) - ? WHERE userId = ?';
+        const params = [amount, userId];
+
+        db.run(sql, params, function (error) {
+            if (error) {
+                console.error('Error:', error);
+                res.status(500).json({ error: 'Internal Server Error' });
+                return;
+            }
+
+            console.log('Money deducted successfully.');
+            res.json({ message: 'Money deducted successfully' });
+        });
+    }
 };
 
 module.exports = userModel;

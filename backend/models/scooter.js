@@ -28,11 +28,24 @@ const scooterModel = {
             res.json(results);
         });
     },
-    /**
-     * Get all information about all Scooters in the database with status = available. Also get the cityName of the city the scooter is at, if any.
-     * @param {Object} res - The Express response object.
-     * @returns {void}
-     */
+    getAllFromCity: function (city, res) {
+        const sql = 'SELECT Scooter.*' +
+            'FROM Scooter ' +
+            'JOIN City ON Scooter.city_cityid = City.cityId ' +
+            'WHERE City.id = ?;';
+        db.all(sql, [city], function (error, results) {
+            if (error) {
+                console.error('Error:', error);
+                res.status(500).json({ error: 'Internal Server Error' });
+                return;
+            }
+            res.json(results);
+        });
+    },
+
+    /*
+        Get all information about all Scooters in the database with status = available. Also get the cityName of the city the scooter is at, if any.
+    */
     getAllAvailable: function (res) {
         const sql = 'SELECT Scooter.*, IFNULL(City.id, "-") AS cityName ' +
             'FROM Scooter ' +
@@ -81,18 +94,20 @@ const scooterModel = {
             'lat = COALESCE(?, lat), ' +
             'battery = COALESCE(?, battery), ' +
             'status = COALESCE(?, status), ' +
-            'city_cityid = COALESCE(?, city_cityid) ' +
+            'city_cityid = COALESCE(?, city_cityid), ' +
+            'speed = COALESCE(?, speed)' +
             'WHERE scooterId = ?';
-    
+
         const params = [
             scooter.lon || null,
             scooter.lat || null,
             scooter.battery || null,
             scooter.status || null,
             scooter.city_cityid || null,
+            scooter.speed || null,
             scooterId
         ];
-    
+
         db.run(sql, params, function (error, results) {
             if (error) {
                 console.error('Error:', error);
@@ -103,12 +118,45 @@ const scooterModel = {
             console.log('Scooter updated successfully.');
         });
     },
-        
-    /**
-     * Delete ALL Scooters in the database, from ALL cities.
-     * @param {Object} res - The Express response object.
-     * @returns {void}
-     */
+    updateMultiple: function (scooters, res) {
+        const promises = scooters.map(scooter => {
+            return new Promise((resolve, reject) => {
+                const sql = 'UPDATE Scooter SET ' +
+                    'lon = COALESCE(?, lon), ' +
+                    'lat = COALESCE(?, lat), ' +
+                    'battery = COALESCE(?, battery), ' +
+                    'status = COALESCE(?, status), ' +
+                    'city_cityid = COALESCE(?, city_cityid), ' +
+                    'speed = COALESCE(?, speed)' +
+                    'WHERE scooterId = ?';
+
+                const params = [
+                    scooter.lon || null,
+                    scooter.lat || null,
+                    scooter.battery || null,
+                    scooter.status || null,
+                    scooter.city_cityid || null,
+                    scooter.speed !== undefined ? scooter.speed : 0,
+                    scooter.scooterId
+                ];
+
+                db.run(sql, params, function (error, results) {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        resolve();
+                    }
+                });
+            });
+        });
+
+        Promise.all(promises)
+            .then(() => res.status(201).json({ message: 'Scooters updated successfully' }))
+            .catch(error => res.status(500).json({ error: 'Internal Server Error' }));
+    },
+    /*
+        Delete ALL Scooters in the database, from ALL cities
+    */
     deleteAll: function (res) {
         const sql = 'DELETE FROM Scooter';
         db.run(sql, function (error, results) {
