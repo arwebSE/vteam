@@ -1,21 +1,26 @@
 const userToBikeModel = {
     getAll: async function () {
         try {
-          const response = await fetch('http://localhost:1337/userToBike');
-          const data = await response.json();
-          return data;
+            const response = await fetch('http://localhost:1337/v1/userToBike', {
+                headers: {
+                    'API-KEY': 'BOI-API-KEY'
+                }
+            });
+            const data = await response.json();
+            return data;
         } catch (error) {
-          console.error('Error fetching all user-to-bike relationships:', error);
+            console.error('Error fetching all user-to-bike relationships:', error);
         }
     },
 
     create: async function (usertoBike) {
         try {
             console.log(usertoBike);
-            const response = await fetch('http://localhost:1337/userToBike', {
+            const response = await fetch('http://localhost:1337/v1/userToBike', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'API-KEY': 'BOI-API-KEY'
                 },
                 body: JSON.stringify({
                     user_userid: usertoBike.user_userid,
@@ -35,10 +40,11 @@ const userToBikeModel = {
 
     delete: async function (idUsertobike) {
         try {
-            const response = await fetch(`http://localhost:1337/userToBike/${idUsertobike}`, {
+            const response = await fetch(`http://localhost:1337/v1/userToBike/${idUsertobike}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
+                    'API-KEY': 'BOI-API-KEY'
                 },
             });
 
@@ -55,7 +61,6 @@ const userToBikeModel = {
             return { error: 'Internal Server Error' };
         }
     },
-
-}
+};
 
 export default userToBikeModel;

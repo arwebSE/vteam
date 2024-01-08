@@ -34,6 +34,7 @@ export default function BikeMapUser() {
   }, []);
 
   return (
+    <div className="flex flex-col items-center gap-5">
       <MapContainer center={currentLocation} zoom={13} scrollWheelZoom={true}>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -45,5 +46,12 @@ export default function BikeMapUser() {
         <BikeMarkerUser />
         <SetViewOnClick coords={currentLocation} />
       </MapContainer>
+      <a
+          className="w-4/6 hover:bg-indigo-700 text-center p-5 mt-15 bg-indigo-600 text-white rounded"
+          href="/user/return"
+          >
+          Return rented bikes
+      </a>
+    </div>
   );
 }

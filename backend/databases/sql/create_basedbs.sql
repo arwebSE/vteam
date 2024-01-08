@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS Zones;
 DROP TABLE IF EXISTS Scooter;
 DROP TABLE IF EXISTS City;
 DROP TABLE IF EXISTS Users;
+DROP TABLE IF EXISTS Log;
 
 CREATE TABLE Users (
     userId INTEGER PRIMARY KEY,
@@ -27,11 +28,11 @@ CREATE TABLE Users (
     city_cityid INT,
     FOREIGN KEY(city_cityid) REFERENCES city(cityId)
 ); CREATE TABLE Zones(
-    pointname VARCHAR(45),
     zoneId INTEGER PRIMARY KEY,
-    city_cityid INT NULL,
-    zonetype VARCHAR(20) NOT NULL,
-    FOREIGN KEY(city_cityid) REFERENCES city(cityId)
+    city_name VARCHAR(45),
+    zonetype VARCHAR(45),
+    coordinates GEOMETRY,
+    FOREIGN KEY(city_name) REFERENCES city(id)
 );
 CREATE TABLE UsertoBike(
     idUsertobike INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -40,6 +41,18 @@ CREATE TABLE UsertoBike(
     startTime TIMESTAMP NOT NULL,
     stopTime TIMESTAMP NOT NULL,
     price FLOAT,
+    FOREIGN KEY(user_userid) REFERENCES users(userId),
+    FOREIGN KEY(scooterId) REFERENCES scooter(scooterId)
+);
+CREATE TABLE Log (
+    logId INTEGER PRIMARY KEY,
+    user_userid INT,
+    scooterId INT,
+    startTime TIMESTAMP NOT NULL,
+    stopTime TIMESTAMP NOT NULL,
+    returnTime TIMESTAMP NOT NULL,
+    price FLOAT,
+    totalPrice FLOAT,
     FOREIGN KEY(user_userid) REFERENCES users(userId),
     FOREIGN KEY(scooterId) REFERENCES scooter(scooterId)
 );
