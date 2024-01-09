@@ -7,14 +7,13 @@ router.use(enableAuth)
     // Provisory loginpage for oauth testing
 router.get('/login/google', (req, res) => {
     console.log('Reached /login/google route. If this is the second time the user logs in with google, they will instantly be redirected to home.');
-    const state = 'loginstate'
-    passport.authenticate('google', { state })(req, res);
+    passport.authenticate('google', { scope: 'profile' })(req, res);
 });
 // Processing the auth response and redirects to start
 router.get('/redir/google',
     passport.authenticate('google', { failureRedirect: 'http://localhost:3000/', failureMessage: true }),
     function(req, res) {
-        const state = req.query.state; // Get the state query parameter
+        const state = req.query.state;
         res.redirect(`http://localhost:3000/?state=${state}`);
     });
 

@@ -22,9 +22,7 @@ function LoginAuth() {
     if (isLoggedIn) {
         return null;
     }
-    return ( <
-        p > Nu är dina fiskar ordentligt varma!Antagligen gick något fel här. < /p>
-    );
+    return ( < p > Nu är dina fiskar ordentligt varma!Antagligen gick något fel här. < /p>);
 }
 
 export default LoginAuth;

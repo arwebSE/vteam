@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc"
 
@@ -18,21 +18,19 @@ function Login() {
         e.preventDefault();
         handleLogin(setIsLoggedIn, navigate, username, passwd)};
     if (isLoggedInState) {
-        const oauthlogin = (e) => {
-        e.preventDefault();
-        if (isLoggedInState === 'loginstate')
+        const oauthlogin = () => {
         handleOauthlogin(setIsLoggedIn, navigate, isLoggedInState);
 
     }
     oauthlogin();
 }
+    useEffect(() => {
+    if (isLoggedIn){
+    navigate('/home');}   
+    },[isLoggedIn, navigate]);
+    
     const [username, setUsername] = useState('');
     const [passwd, setPasswd] = useState('');
-
-    if (isLoggedIn) {
-        navigate("/home");
-        return null;
-    }
 
     return (
         <div className="flex items-center justify-center h-screen bg-gray-100">

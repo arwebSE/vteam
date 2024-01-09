@@ -9,7 +9,7 @@ const withAuth = (WrappedComponent) => {
 
         useEffect(() => {
             if (!isLoggedIn) {
-                // navigate('/');
+                navigate('/');
             }
         }, [isLoggedIn, navigate]);
 
