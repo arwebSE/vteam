@@ -28,7 +28,11 @@ const bikeModel = {
     },
     getLowBatteryBikes: async function () {
         try {
-            const response = await fetch('http://localhost:1337/scooter/lowbattery');
+            const response = await fetch('http://localhost:1337/v1/scooter/lowbattery', {
+                headers: {
+                    'API-KEY': 'BOI-API-KEY'
+                }
+            });
             const data = await response.json();
             return data;
         } catch (error) {
@@ -49,7 +53,7 @@ const bikeModel = {
             console.error(error);
         }
     },
-    
+
     getBikeCity: async function (lat, lng) {
         try {
             const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`);
@@ -88,7 +92,11 @@ const bikeModel = {
     },
     getBikeIdsFromCity: async function (city) {
         try {
-            const response = await fetch(`http://localhost:1337/scooter/ids/${city}`);
+            const response = await fetch(`http://localhost:1337/v1/scooter/ids/${city}`, {
+                headers: {
+                    'API-KEY': 'BOI-API-KEY'
+                }
+            });
             const data = await response.json();
             return data;
         } catch (error) {
@@ -120,7 +128,11 @@ const bikeModel = {
     },
     getBikesFromCity: async function (city) {
         try {
-            const response = await fetch(`http://localhost:1337/scooter/city/${city}`);
+            const response = await fetch(`http://localhost:1337/v1/scooter/city/${city}`, {
+                headers: {
+                    'API-KEY': 'BOI-API-KEY'
+                }
+            });
             const data = await response.json();
             return data;
         } catch (error) {
@@ -129,7 +141,8 @@ const bikeModel = {
     },
     deleteAllBikes: async function () {
         try {
-            const response = await fetch('http://localhost:1337/scooter', {
+            const response = await fetch('http://localhost:1337/v1/scooter', {
+                headers: { 'API-KEY': 'BOI-API-KEY' },
                 method: 'DELETE'
             });
             const data = await response.json();

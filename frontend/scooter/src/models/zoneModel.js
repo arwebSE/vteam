@@ -17,7 +17,7 @@ const zoneModel = {
     // Get zone fetch request
     getZone: async function getZone(zoneId) {
         try {
-            const response = await fetch(`/zone/${zoneId}`, {
+            const response = await fetch(`v1/zone/${zoneId}`, {
                 headers: {
                     'API-KEY': 'BOI-API-KEY'
                 }
@@ -77,7 +77,11 @@ const zoneModel = {
     },
     getRestrictedFromCity: async function getRestrictedFromCity(city) {
         try {
-            const response = await fetch(`http://localhost:1337/zone/restricted/${city}`);
+            const response = await fetch(`http://localhost:1337/v1/zone/restricted/${city}`, {
+                headers: {
+                    'API-KEY': 'BOI-API-KEY'
+                }
+            });
             const data = await response.json();
             return data;
         } catch (error) {

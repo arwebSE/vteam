@@ -21,9 +21,9 @@ app.use(cors())
 
 // API key validation middleware
 function validateApiKey(req, res, next) {
-    //const apiQueryKey = req.query['API-KEY'];
+    // const apiQueryKey = req.query['API-KEY'];
     const apiKey = req.get('API-KEY');
-
+    console.log(apiKey);
     if ((!apiKey || apiKey !== `BOI-API-KEY`) && (process.env.APIKEY !== 'BOI-API-KEY')) {
         return res.status(401).json({ error: 'Unauthorized' });
     }
