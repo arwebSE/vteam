@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc"
 
@@ -14,23 +14,32 @@ function Login() {
     const navigate = useNavigate();
     const urlParams = new URLSearchParams(window.location.search);
     const isLoggedInState = urlParams.get('state');
-    const login = (e) => {
-        e.preventDefault();
-        handleLogin(setIsLoggedIn, navigate, username, passwd)};
-    if (isLoggedInState) {
-        const oauthlogin = () => {
-        handleOauthlogin(setIsLoggedIn, navigate, isLoggedInState);
-
-    }
-    oauthlogin();
-}
-    useEffect(() => {
-    if (isLoggedIn){
-    navigate('/home');}   
-    },[isLoggedIn, navigate]);
-    
     const [username, setUsername] = useState('');
     const [passwd, setPasswd] = useState('');
+    
+
+    const login = useCallback((e) => {
+        e.preventDefault();
+        handleLogin(setIsLoggedIn,  username, passwd);
+      }, [setIsLoggedIn, username, passwd]);
+    
+    useEffect(() => {
+
+        if (isLoggedInState) {
+        const oauthlogin = () => {
+        handleOauthlogin(setIsLoggedIn, isLoggedInState);
+        };
+        oauthlogin();
+        }
+    }, [isLoggedInState, setIsLoggedIn, passwd, username]);
+
+
+  
+    useEffect(() => {
+    if (isLoggedIn){
+    navigate('/home');}   // Happens if isLoggedIn changes
+    },[isLoggedIn, navigate]);
+    
 
     return (
         <div className="flex items-center justify-center h-screen bg-gray-100">
