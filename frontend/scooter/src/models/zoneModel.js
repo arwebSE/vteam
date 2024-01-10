@@ -88,6 +88,20 @@ const zoneModel = {
             console.error('Error fetching restricted:', error);
             throw error;
         }
+    },
+    getAllParkingZones: async function getAllParkingZones() {
+        try {
+            const response = await fetch(`http://localhost:1337/v1/zone/parkings`, {
+                headers: {
+                    'API-KEY': 'BOI-API-KEY'
+                }
+            });
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error('Error fetching restricted:', error);
+            throw error;
+        }
     }
 };
 

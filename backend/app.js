@@ -16,31 +16,34 @@ const zoneRoute = require('./routes/zone');
 const userToBikeRoute = require('./routes/userToBike');
 const logRoute = require('./routes/log');
 
-//Middleware
-app.use(cors())
+// Middleware
+app.use(cors());
 
 // API key validation middleware
 function validateApiKey(req, res, next) {
-    // const apiQueryKey = req.query['API-KEY'];
     const apiKey = req.get('API-KEY');
-    console.log(apiKey);
-    if ((!apiKey || apiKey !== `BOI-API-KEY`) && (process.env.APIKEY !== 'BOI-API-KEY')) {
+    if ((!apiKey || apiKey !== 'BOI-API-KEY') && (process.env.APIKEY !== 'BOI-API-KEY')) {
+        console.log(req.path);
         return res.status(401).json({ error: 'Unauthorized' });
     }
 
     next();
 }
 
-// Use the API key validation middleware for all routes
-app.use(validateApiKey);
+// Exclude '/oauth2' route from API key validation middleware
+app.use((req, res, next) => {
+    if (req.path === '/oauth2/login/google' || req.path === '/oauth2/redir/google') {
+        return next();
+    } else {
+        validateApiKey(req, res, next);
+    }
+});
 
-// app.use(options('*', cors()));
 app.disable('x-powered-by');
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 app.get('/', (req, res) => {
-    //res.send('Hello World!');
     res.sendFile(__dirname + '/routes/test.html');
 });
 
@@ -53,10 +56,6 @@ app.use("/v1/scooter", scooterRoute);
 app.use("/v1/zone", zoneRoute);
 app.use("/v1/userToBike", userToBikeRoute);
 app.use("/v1/log", logRoute);
-// Serve the form at the '/form' route
-/*app.get('/form', (req, res) => {
-    
-});*/
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

@@ -72,6 +72,14 @@ const zoneModel = {
             res.json(results);
         });
     },
+
+    getAllParkingZones: function (res) {
+        const sql = "SELECT * FROM Zones WHERE zonetype = 'Parking Spot'";
+        database.all(sql, function (error, results) {
+            if (error) throw error;
+            res.json(results);
+        });
+    },
     /**
      * Create a new Zone entry in the database with the specified values (city_name, coordinates, zonetype).
      * @param {Object} zone - The Zone object containing city_name, coordinates, and zonetype.
