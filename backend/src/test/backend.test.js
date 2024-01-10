@@ -128,7 +128,7 @@ describe("City tests", () => {
 
 
 
-    })
+    });
 
 
     test("Getting all cities", async() => {
@@ -141,19 +141,19 @@ describe("City tests", () => {
         const response = await axios.get('http://localhost:1337/v1/city', config);
         expect(response.status).toBe(200);
         console.log(response.data);
-    })
+    });
 
-    test("Getting a city", async () => {
+    test("Getting a city", async() => {
         const config = {
             headers: {
                 'API-KEY': 'BOI-API-KEY'
             }
         };
-    
+
         const response = await axios.get('http://localhost:1337/v1/city/Sollentuna', config);
         expect(response.status).toBe(200);
         console.log(response.data);
-    })
+    });
 
     test("Deleting a city", async() => {
 
@@ -209,7 +209,7 @@ describe("Scooter tests", () => {
 
 
 
-    })
+    });
 
     test("Updating a scooter", async() => {
 
@@ -241,7 +241,7 @@ describe("Scooter tests", () => {
 
 
 
-    })
+    });
 
 
 
@@ -255,7 +255,7 @@ describe("Scooter tests", () => {
         const response = await axios.get('http://localhost:1337/v1/scooter', config);
         expect(response.status).toBe(200);
         console.log(response.data);
-    })
+    });
 
     test("Getting a scooter", async() => {
         const config = {
@@ -267,7 +267,7 @@ describe("Scooter tests", () => {
         const response = await axios.get('http://localhost:1337/v1/scooter/1', config);
         expect(response.status).toBe(200);
         console.log(response.data);
-    })
+    });
 
     test("Deleting a scooter", async() => {
 
@@ -340,8 +340,4 @@ describe("Scooter tests", () => {
     });
 
 
-})
-
-describe('City tests', () => {
-    test('Adding a city')
 })
