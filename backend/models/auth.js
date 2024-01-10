@@ -20,22 +20,14 @@ function enableAuth() {
     router.use(passport.initialize());
     router.use(passport.session());
 
-    passport.serializeUser(function(user, done) {
-        done(null, user.id)
-    })
-
-    passport.deserializeUser(function(id, done) {
-        database.get('SELECT * FROM Users WHERE userId = ?', [id], function(err, user) {
-            done(err, user)
-        });
-    });
+ 
 
     passport.use(new GoogleAuth({
-        clientID: '123314154390-dbgte1hjv7a79ugi5v6vvdp4qu3itvru.apps.googleusercontent.com',
-        clientSecret: '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',
-        callbackURL: 'http://localhost:1337/oauth2/redir/google',
-        scope: [ 'profile' ],
-        state: true
+            clientID: '123314154390-dbgte1hjv7a79ugi5v6vvdp4qu3itvru.apps.googleusercontent.com',
+            clientSecret: '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',
+            callbackURL: 'http://localhost:1337/oauth2/redir/google',
+            scope: ['profile'],
+            state: true
         },
         function verify(acessToken, refreshToken, profile, callback) {
 
@@ -43,17 +35,17 @@ function enableAuth() {
                 'google',
                 profile.id
             ], function(err, cred) {
-                if (err) {return callback(err); }
+                if (err) { return callback(err); }
 
                 if (!cred) {
                     var id = this.lastid
-                    // First time logging in with google on the site.
+                        // First time logging in with google on the site.
                     database.run('INSERT INTO Users (username, authprov, user_authid) VALUES (?, ?, ?)', [
                         profile.displayName,
                         'google',
                         profile.id
-                    ], function (err) {
-                        if (err) {return callback(err); }
+                    ], function(err) {
+                        if (err) { return callback(err); }
 
                         var user = {
                             id: id,
@@ -62,22 +54,30 @@ function enableAuth() {
                         };
                         callback(null, user);
                     });
-                    } else {
-                        // User has logged in with google before.
-                        database.get('SELECT * FROM Users WHERE user_authid = ?', 
-                        [cred.user_authid], function(err, user) {
-                            if (err) { return callback(err); }
-                            if (!err) { return callback(null, false); }
-                            callback(null, user);
-                            
-                        });
+                } else {
+                    // User has logged in with google before.
+                    database.get('SELECT * FROM Users WHERE user_authid = ?', [cred.user_authid], function(err, user) {
+                        if (err) { return callback(err); }
+                        callback(null, user);
 
-                    }
-                    
-                });
+                    });
+
                 }
+
+            });
+    passport.serializeUser(function(user, callback) {
+        callback(null, user.userId)
+    });
+
+    passport.deserializeUser(function(userId, callback) {
+        database.get('SELECT * FROM Users WHERE userId = ?', [userId], function(err, user) {
+            callback(err, user)
+        });
+    });
+        }
+        
     ));
     return router
-            }
+}
 
 module.exports = enableAuth;
