@@ -68,18 +68,8 @@ const BikeRent = () => {
                 price: price,
             };
 
-            /*const logData = {
-                user_userid: localStorage.userId,
-                scooterId: scooterId,
-                startTime: startTime,
-                stopTime: stopTime,
-                price: price,
-                totalPrice: null,
-
-            };*/
             await bikeModel.rentBike(scooterId);
             await userToBikeModel.create(userToBikeData);
-            //await logModel.create(logData);
             await userModel.removeMoney(localStorage.userId, price);
             console.log("Bike rented successfully.");
             navigate("/user"); // Redirect to the user dashboard or another page
@@ -97,7 +87,7 @@ const BikeRent = () => {
   
           const dateStopTime = new Date(stopTime);
   
-          const startPrice = 10;
+          const startPrice = 15;
           const timeBetweenMinutes = ((dateStopTime - dateNow) / 1000) / 60;
           const price = parseInt(startPrice + (timeBetweenMinutes * 2));
           return price;
