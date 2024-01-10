@@ -9,8 +9,14 @@ import cityModel from "../../models/cityModel";
 import userModel from "../../models/userModel";
 import userToBikeModel from "../../models/userToBikeModel";
 import MoveToUser from "../MoveToUser";
-import BikeMarker from "../Bike/bikeMarker";
 import logModel from "../../models/logModel";
+import zoneModel from "../../models/zoneModel";
+
+import BikeMarker from "../Bike/bikeMarker";
+import ZoneMarker from "../Zone/ZoneMarker";
+
+import * as turf from '@turf/turf';
+import wellknown from 'wellknown';
 
 import icons from "../MapIcons";
 
@@ -26,10 +32,48 @@ const MarkLocationMap = () => {
     const returnBike = async () => {
         try {
         const allBikes = await userToBikeModel.getAll();
+        const allParkingZones = await zoneModel.getAllParkingZones();
 
-        // Filter bikes based on user_userid
         const userBike = allBikes.filter(bike => bike.scooterId === parseInt(scooterId));
         console.log(userBike);
+
+        console.log(bikeLocation.lat, bikeLocation.lng);
+
+        let totalCost = userBike[0].price;
+
+        let returnPlaceCost = 0;
+        // Iterate over all parking zones
+        for (const zone of allParkingZones) {
+            // Parse the WKT geometry string
+            const geometry = wellknown.parse(zone.coordinates);
+
+            // Extract coordinates from the parsed geometry
+            const polygonCoordinates = geometry.coordinates[0].map(coord => [coord[0], coord[1]]);
+
+            console.log(polygonCoordinates);
+            const polygon = turf.polygon([polygonCoordinates]);
+
+            // Create a point feature for the bike location
+            const point = turf.point([bikeLocation.lat, bikeLocation.lng]);
+
+            // Check if the point is inside the polygon
+            const isInsidePolygon = turf.booleanPointInPolygon(point, polygon);
+
+            if (isInsidePolygon) {
+                console.log(`The bike is inside the polygon of Zone ${zone.zoneId}.`);
+                returnPlaceCost = 5;
+                console.log(returnPlaceCost);
+                totalCost = totalCost - returnPlaceCost;
+                console.log(totalCost);
+                await userModel.addMoney(localStorage.userId, returnPlaceCost);
+            } else {
+                console.log(`The bike is outside the polygon of Zone ${zone.zoneId}.`);
+                returnPlaceCost = 10;
+                console.log(returnPlaceCost);
+                totalCost = totalCost + returnPlaceCost;
+                await userModel.removeMoney(localStorage.userId, returnPlaceCost);
+            }
+        }
 
         const timeNow = new Date();
         const returnTime = new Date(userBike[0].stopTime);
@@ -45,7 +89,6 @@ const MarkLocationMap = () => {
         const scooterData = await bikeModel.getBike(scooterId);
         const startTime = new Date(userBike[0].startTime);
         const timeDiffFromStart = ((timeNow.getTime() - startTime.getTime()) / (1000 * 60));
-        let totalCost = userBike[0].price;
 
         // 1 % battery = 6 minutes
         // Calculate amount of rented time, for every 6 minutes rented, reduce 1 % battery
@@ -60,13 +103,17 @@ const MarkLocationMap = () => {
             * If user returns the bike after rent time, user has to pay extra.
             */
             if (correctlyReturned === false) {
-                totalCost = userBike[0].price + extraPrice;
+                totalCost = totalCost + extraPrice;
                 const response = await userModel.removeMoney(localStorage.userId, extraPrice);
                 console.log(response);
             }
             
+            /**
+             * If user returns it earlier than 1 minute before rent time ends, user gets money back
+             * 2/min
+             */
             if (timeDiff < -1) {
-                totalCost = userBike[0].price - returnMoney;
+                totalCost = totalCost - returnMoney;
                 const response = await userModel.addMoney(localStorage.userId, returnMoney);
                 console.log(response);
             }
@@ -158,6 +205,7 @@ const MarkLocationMap = () => {
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
+                    <ZoneMarker />
                     <BikeMarker />
                     <ClickHandler />
                     <MoveToUser />
