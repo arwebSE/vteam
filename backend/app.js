@@ -14,9 +14,26 @@ const cityRoute = require('./routes/city');
 const scooterRoute = require('./routes/scooter');
 const zoneRoute = require('./routes/zone');
 const userToBikeRoute = require('./routes/userToBike');
+const logRoute = require('./routes/log');
 
 //Middleware
 app.use(cors())
+
+// API key validation middleware
+function validateApiKey(req, res, next) {
+    // const apiQueryKey = req.query['API-KEY'];
+    const apiKey = req.get('API-KEY');
+    console.log(apiKey);
+    if ((!apiKey || apiKey !== `BOI-API-KEY`) && (process.env.APIKEY !== 'BOI-API-KEY')) {
+        return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    next();
+}
+
+// Use the API key validation middleware for all routes
+app.use(validateApiKey);
+
 // app.use(options('*', cors()));
 app.disable('x-powered-by');
 app.use(bodyParser.json()); // for parsing application/json
@@ -30,11 +47,12 @@ app.get('/', (req, res) => {
 // process.env.ENV = 'simulation';
 
 app.use("/oauth2", authRoute);
-app.use("/user", userRoute);
-app.use("/city", cityRoute);
-app.use("/scooter", scooterRoute);
-app.use("/zone", zoneRoute);
-app.use("/userToBike", userToBikeRoute);
+app.use("/v1/user", userRoute);
+app.use("/v1/city", cityRoute);
+app.use("/v1/scooter", scooterRoute);
+app.use("/v1/zone", zoneRoute);
+app.use("/v1/userToBike", userToBikeRoute);
+app.use("/v1/log", logRoute);
 // Serve the form at the '/form' route
 /*app.get('/form', (req, res) => {
     

@@ -18,7 +18,7 @@ const RentedBikeList = () => {
             setUserData(userData);
             
             // Filter bikes based on user_userid
-            const userBikes = allBikes.filter(bike => bike.user_userid === localStorage.userId);
+            const userBikes = allBikes.filter(bike => bike.user_userid === parseInt(localStorage.userId));
     
             setBikes(userBikes);
           } catch (error) {
@@ -33,11 +33,31 @@ const RentedBikeList = () => {
         navigate(`/user/return/${scooterId}`);
     };
 
+    const handleBack = () => {
+        navigate("/user/rent");
+    };
+
     return (
         <div className="flex flex-col p-6 bg-gray-100 rounded-lg shadow-md">
+            <div className="flex justify-between items-center mb-6">
+                <button
+                    onClick={handleBack}
+                    className="cursor-pointer rounded bg-indigo-600 hover:bg-indigo-700 text-lg p-3 text-white shadow-md hover:shadow-lg transition duration-300 ease-in-out flex items-center"
+                >
+                    Back to rent
+                </button>
+                <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-indigo-600">
+                    Return rented bike
+                </h1>
+            </div>
+
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-indigo-600 mb-6 text-center">
                 Bikes rented
             </h1>
+
+            <p className="rounded p-3 text-center text-sm md:text-base lg:text-lg text-gray-700 mb-4 shadow bg-white">
+                Press the bike you want to return.
+            </p>
 
             <div className="flex flex-row justify-between text-lg mb-4">
                 <h1 className="font-bold text-gray-700">

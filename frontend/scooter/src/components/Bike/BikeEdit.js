@@ -28,7 +28,7 @@ const BikeEdit = () => {
         };
 
         fetchBike();
-    });
+    }, [scooterId]);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -63,6 +63,7 @@ const BikeEdit = () => {
                 className="rounded p-3 mb-4 shadow focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 ease-in-out"
                 type="text"
                 defaultValue={"Scooter Id"}
+                value={scooterId}
             />
 
             <label className="text-lg font-semibold mb-2">Lon:</label>
@@ -90,13 +91,14 @@ const BikeEdit = () => {
             />
 
             <label className="text-lg font-semibold mb-2">Status</label>
+            <label className="text-sm mb-2">Current status: {status}</label>
             <select
                 value={status}
                 onChange={(e) => setStatus(e.target.value)}
                 className="rounded p-3 mb-6 shadow focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 ease-in-out"
             >
                 <option value="available">available</option>
-                <option value="unaviable">unaviable</option>
+                <option value="unavailable">unaviable</option>
                 <option value="service">service</option>
             </select>
 

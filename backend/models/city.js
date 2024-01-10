@@ -1,9 +1,15 @@
 const database = require('../databases/sql/database.js');
 
+/**
+ * A model representing city-related operations with the database.
+ * @namespace
+ */
 const cityModel = {
-    /*
-        Get all information in the City table in database (All cities information)
-    */
+    /**
+     * Get all information in the City table in the database (All cities information).
+     * @param {Object} res - The Express response object.
+     * @returns {void}
+     */
     getAll: function (res) {
         database.all('SELECT * FROM City', function (error, results, fields) {
             if (error) throw error;
@@ -11,10 +17,12 @@ const cityModel = {
         });
     },
 
-    /*
-        You can get all information about a specific city with cityId or id (cityName)
-        Example: 1 or Stockolm (if Stockholm is 1 in City table in database)
-    */
+    /**
+     * Get information about a specific city with cityId or id (cityName).
+     * @param {string|number} param - The cityId or id (cityName) to search for.
+     * @param {Object} res - The Express response object.
+     * @returns {void}
+     */
     getOne: function (param, res) {
         const sql = 'SELECT * FROM City WHERE cityId = ? OR id = ?';
         database.get(sql, [param, param], function (error, results, fields) {
@@ -23,9 +31,12 @@ const cityModel = {
         });
     },
 
-    /*
-        Create a new city with the VALUES (id/cityName, latitude, longitude) --> cityId creates automatically
-    */
+    /**
+     * Create a new city with the specified values (id/cityName, latitude, longitude).
+     * @param {Object} city - The city object containing id, lat, and lon.
+     * @param {Object} res - The Express response object.
+     * @returns {void}
+     */
     create: function (city, res) {
         const sql = 'INSERT INTO City (id, lat, lon) VALUES (?, ?, ?)';
         const params = [city.body.id, city.body.lat, city.body.lon];
@@ -41,10 +52,13 @@ const cityModel = {
         });
     },
 
-    /*
-         Update a already existing city with values WHERE cityId or id (cityName) --> You can Update depending on cityName or its cityId
-         Example: Stockholm or 1 (if Stockholm is 1 in the City table in database)
-    */
+    /**
+     * Update an already existing city with values based on cityId or id (cityName).
+     * @param {string|number} cityId - The cityId or id (cityName) of the city to update.
+     * @param {Object} city - The updated city object containing id, lat, and lon.
+     * @param {Object} res - The Express response object.
+     * @returns {void}
+     */
     update: function (cityId, city, res) {
         // Build the SQL query and parameters based on the provided or existing data
         const sql = 'UPDATE City SET ' +
@@ -59,7 +73,7 @@ const cityModel = {
                 city.lat || null,
                 city.lon || null,
                 cityId,
-                cityId // The third occurrence is for handling the string id
+                cityId
             ];
 
             database.run(sql, params, function (error, results) {
@@ -74,10 +88,12 @@ const cityModel = {
 
     },
 
-    /*
-        You can delete a existing city from the database with both cityId or id (cityName)
-        Example: Stockholm or 1 (if Stockholm is 1 in the City table in database)
-    */
+    /**
+     * Delete an existing city from the database with both cityId or id (cityName).
+     * @param {string|number} id - The cityId or id (cityName) of the city to delete.
+     * @param {Object} res - The Express response object.
+     * @returns {void}
+     */
     delete: function (id, res) {
         const sql = 'DELETE FROM City WHERE cityId = ? OR id = ?';
         database.run(sql, [id, id], function (error, results) {

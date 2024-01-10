@@ -63,6 +63,10 @@ export default function ZoneMap() {
 
     return (
         <div className="flex flex-col w-full items-center">
+            <div className="w-11/12 font-semibold p-10 m-5 bg-slate-200">
+                <p>To create a new zone click the map atleast 3 times. </p>
+                <p>City is where the bike is allowed to travel. No Go Zone is where the bike is not allowed to travel. Restricted Zones lowers topspeed of the scooters</p>
+            </div>
             <MapContainer center={currentLocation} zoom={13} scrollWheelZoom={true}>
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -76,11 +80,14 @@ export default function ZoneMap() {
                 <SetViewToUser coords={currentLocation} />
             </MapContainer>
             <form
-                onSubmit={handleSubmit}
-                className="flex flex-col w-11/12">
 
-                <label htmlFor="zoneType">Zone Name</label>
-                <select onChange={colorManager}>
+                onSubmit={handleSubmit}
+                className="flex flex-col bg-slate-200 w-11/12 items-center rounded m-4">
+
+                <label htmlFor="zoneType" className="text-xl font-semibold">Zone Type</label>
+                <select
+                    className="p-2 bg-white rounded shadow m-2"
+                    onChange={colorManager}>
                     <option value={{ color: "green", type: "Parking Spot" }} name="Parking Spot">Parking Spot</option>
                     <option value="red" name="No Go Zone">No Go Zone</option>
                     <option value="orange" name="Restricted Speed">Restricted Speed</option>
@@ -88,7 +95,10 @@ export default function ZoneMap() {
                 </select>
 
                 {points.length > 2 && (
-                    <input type="submit" value="Create Zone" />
+                    <input
+                        className="p-2 bg-white rounded shadow m-2"
+                        type="submit"
+                        value="Create Zone" />
                 )}
             </form>
         </div>

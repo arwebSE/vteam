@@ -8,14 +8,23 @@ const userSimulationModel = {
     //     }
     // },
     createUser: async function (userName, email, passwd) {
-        fetch('http://localhost:1337/user', {
+        fetch('http://localhost:1337/v1/user', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'API-KEY': 'BOI-API-KEY' },
             body: JSON.stringify({
                 username: userName,
                 email: email,
                 passwd: passwd
             })
+        })
+            .then(response => response.json())
+            .catch(error => console.error(error));
+    },
+    updateMultipleBikes: async function (scooters) {
+        fetch('http://localhost:1337/v1/scooter', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json', 'API-KEY': 'BOI-API-KEY' },
+            body: JSON.stringify(scooters)
         })
             .then(response => response.json())
             .catch(error => console.error(error));
