@@ -13,7 +13,8 @@ const withAuth = (WrappedComponent) => {
             }
         }, [isLoggedIn, navigate]);
 
-        return isLoggedIn ? <WrappedComponent {...props} /> : null;
+        return isLoggedIn ? < WrappedComponent {...props }
+        /> : null;
     };
 };
 

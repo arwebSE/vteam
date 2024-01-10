@@ -1,10 +1,10 @@
-import { useContext, useState } from "react";
+import { useContext, useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc"
 
 // auth imports
 import { AuthContext } from "../../util/AuthContext";
-import { handleLogin } from "../../util/authUtils";
+import { handleLogin, handleOauthlogin } from "../../util/authUtils";
 
 import "./style.css";
 import boi from "../../boi.png";
@@ -12,15 +12,34 @@ import boi from "../../boi.png";
 function Login() {
     const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
     const navigate = useNavigate();
-    const login = (e) => {
-        e.preventDefault();
-        handleLogin(setIsLoggedIn, navigate, username, passwd)};
+    const urlParams = new URLSearchParams(window.location.search);
+    const isLoggedInState = urlParams.get('state');
     const [username, setUsername] = useState('');
     const [passwd, setPasswd] = useState('');
-    if (isLoggedIn) {
-        navigate("/home");
-        return null;
-    }
+    
+
+    const login = useCallback((e) => {
+        e.preventDefault();
+        handleLogin(setIsLoggedIn,  username, passwd);
+      }, [setIsLoggedIn, username, passwd]);
+    
+    useEffect(() => {
+
+        if (isLoggedInState) {
+        const oauthlogin = () => {
+        handleOauthlogin(setIsLoggedIn, isLoggedInState);
+        };
+        oauthlogin();
+        }
+    }, [isLoggedInState, setIsLoggedIn, passwd, username]);
+
+
+  
+    useEffect(() => {
+    if (isLoggedIn){
+    navigate('/home');}   // Happens if isLoggedIn changes
+    },[isLoggedIn, navigate]);
+    
 
     return (
         <div className="flex items-center justify-center h-screen bg-gray-100">
