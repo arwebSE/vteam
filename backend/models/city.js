@@ -60,14 +60,12 @@ const cityModel = {
      * @returns {void}
      */
     update: function (cityId, city, res) {
-        // Build the SQL query and parameters based on the provided or existing data
         const sql = 'UPDATE City SET ' +
             'id = COALESCE(?, id), ' +
             'lat = COALESCE(?, lat), ' +
             'lon = COALESCE(?, lon) ' +
             'WHERE cityId = ? OR id = ?';
 
-            // Ensure that undefined values are replaced with null
             const params = [
                 city.id || null,
                 city.lat || null,

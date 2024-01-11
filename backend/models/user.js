@@ -71,8 +71,7 @@ const userModel = {
      * @param {object} res - The response object.
      * @returns {error} - If an error occurs during the update.
      */
-    update: function(userId, req, res) {
-        // Build the SQL query and parameters based on the provided or existing data
+    update: function (userId, req, res) {
         const sql = 'UPDATE Users SET ' +
             'username = COALESCE(?, username), ' +
             'email = COALESCE(?, email), ' +
@@ -80,7 +79,6 @@ const userModel = {
             'userrole = COALESCE(?, userrole) ' +
             'WHERE userId = ?';
 
-        // Ensure that undefined values are replaced with null
         const params = [
             req.username || null,
             req.email || null,

@@ -46,20 +46,18 @@ const BikeRent = () => {
 
         try {
             if (!isStopTimeValid()) {
-                console.error("Stop time must be at least 5 minutes in the future.");
-                // Handle the error, display a message, or prevent form submission
+                // Användaren måste sätta minst 5 minuter hyrtid.
+                alert("Stop time must be at least 5 minutes in the future.");
                 return;
             }
 
             const price = calculatePrice(stopTime);
 
             if (user.user_balance < price) {
-                console.log("User does not have enough money. Add more money to your account.");
+                alert("User does not have enough money. Add more money to your account.");
                 return;
             }
 
-            // Perform the logic for renting a bike
-            // For example, you might update the bike status and store rental information
             const userToBikeData = {
                 user_userid: localStorage.userId,
                 scooterId: scooterId,
@@ -72,7 +70,7 @@ const BikeRent = () => {
             await userToBikeModel.create(userToBikeData);
             await userModel.removeMoney(localStorage.userId, price);
             console.log("Bike rented successfully.");
-            navigate("/user"); // Redirect to the user dashboard or another page
+            navigate("/user");
         } catch (error) {
             console.error("Failed to rent bike:", error);
         }
@@ -87,6 +85,7 @@ const BikeRent = () => {
   
           const dateStopTime = new Date(stopTime);
   
+          // Kostnad för hyrning, 15 + 2/min
           const startPrice = 15;
           const timeBetweenMinutes = ((dateStopTime - dateNow) / 1000) / 60;
           const price = parseInt(startPrice + (timeBetweenMinutes * 2));
