@@ -1,0 +1,3 @@
+filter:
+    excluded_paths:
+        - "backend/coverage/"               # ignore coverage folder
