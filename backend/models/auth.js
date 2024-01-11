@@ -54,31 +54,35 @@ function enableAuth() {
 
                         };
                         callback(null, user);
+                        return null;
                     });
                 } else {
                     // User has logged in with google before.
                     database.get('SELECT * FROM Users WHERE user_authid = ?', [cred.user_authid], function(err, user) {
                         if (err) { return callback(err); }
                         callback(null, user);
+                        return null;
 
                     });
 
                 }
 
             });
-            passport.serializeUser(function(user, callback) {
-                callback(null, user.userId)
+            passport.serializeUser(async function(user, callback) {
+                await callback(null, user.userId);
+                return null;
             });
 
             passport.deserializeUser(function(userId, callback) {
                 database.get('SELECT * FROM Users WHERE userId = ?', [userId], function(err, user) {
-                    callback(err, user)
+                    callback(err, user);
+                    return null;
                 });
             });
         }
 
     ));
-    return router
+    return router;
 }
 
 module.exports = enableAuth;
