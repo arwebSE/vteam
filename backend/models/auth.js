@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const userModel = require('../models/user');
 
 var passport = require('passport');
 var GoogleAuth = require('passport-google-oauth20');
@@ -20,7 +19,7 @@ function enableAuth() {
     router.use(passport.initialize());
     router.use(passport.session());
 
- 
+
 
     passport.use(new GoogleAuth({
             clientID: '123314154390-dbgte1hjv7a79ugi5v6vvdp4qu3itvru.apps.googleusercontent.com',
@@ -29,6 +28,7 @@ function enableAuth() {
             scope: ['profile'],
             state: true
         },
+        // Verifies the user, in this case
         function verify(acessToken, refreshToken, profile, callback) {
 
             database.get('SELECT * FROM Users WHERE authprov = ? AND user_authid = ?', [
@@ -40,9 +40,10 @@ function enableAuth() {
                 if (!cred) {
                     var id = this.lastid
                         // First time logging in with google on the site.
-                    database.run('INSERT INTO Users (username, authprov, user_authid) VALUES (?, ?, ?)', [
+                    database.run('INSERT INTO Users (username, authprov, userrole, user_authid) VALUES (?, ?, ?, ?)', [
                         profile.displayName,
                         'google',
+                        'user',
                         profile.id
                     ], function(err) {
                         if (err) { return callback(err); }
@@ -65,17 +66,17 @@ function enableAuth() {
                 }
 
             });
-    passport.serializeUser(function(user, callback) {
-        callback(null, user.userId)
-    });
+            passport.serializeUser(function(user, callback) {
+                callback(null, user.userId)
+            });
 
-    passport.deserializeUser(function(userId, callback) {
-        database.get('SELECT * FROM Users WHERE userId = ?', [userId], function(err, user) {
-            callback(err, user)
-        });
-    });
+            passport.deserializeUser(function(userId, callback) {
+                database.get('SELECT * FROM Users WHERE userId = ?', [userId], function(err, user) {
+                    callback(err, user)
+                });
+            });
         }
-        
+
     ));
     return router
 }
