@@ -26,7 +26,6 @@ const UserEdit = () => {
             setRole(user.userrole || "user");
         } catch (error) {
             console.error("Failed to fetch user:", error);
-            // todo: handle fetch error?
         } finally {
             setLoading(false);
         }
@@ -35,7 +34,6 @@ const UserEdit = () => {
     useEffect(() => {
         fetchUser();
 
-        // component unmount cleanup
         return () => {
             setUsername("");
             setEmail("");
@@ -52,7 +50,6 @@ const UserEdit = () => {
             navigate("/admin/user");
         } catch (error) {
             console.error("Failed to update user:", error);
-            // todo: handle submit error?
         }
     };
 

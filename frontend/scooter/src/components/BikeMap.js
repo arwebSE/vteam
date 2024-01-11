@@ -24,7 +24,7 @@ function AddGoalMarker({ goals }) {
                 });
             }
         }
-    }, [goals, map]);  // useEffect dependency on 'goals' and 'map'
+    }, [goals, map]);
 
     return null;
 }

@@ -63,8 +63,8 @@ export default function MarkLocationMap() {
     const currentLocation = { lat: 59, lng: 16 }; // Default location
 
     return (
-        <div className="flex flex-col items-center gap-5">
-            <div className="w-full">
+        <div className="flex justify-center items-center flex-col gap-5">
+            <div className="flex justify-center w-full">
                 <MapContainer
                     center={currentLocation}
                     zoom={13}
@@ -81,7 +81,7 @@ export default function MarkLocationMap() {
                 </MapContainer>
             </div>
             <button
-                className="w-11/12 rounded bg-indigo-600 hover:bg-indigo-700 text-white text-lg p-3 shadow-lg hover:shadow-xl transition duration-300 ease-in-out"
+                className="flex justify-center w-11/12 rounded bg-indigo-600 hover:bg-indigo-700 text-white text-lg p-3 shadow-lg hover:shadow-xl transition duration-300 ease-in-out"
                 onClick={() => createBike()}
             >
                 Add bike
