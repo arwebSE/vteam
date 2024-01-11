@@ -133,7 +133,7 @@ const scooterModel = {
                 const params = [
                     scooter.lon || null,
                     scooter.lat || null,
-                    scooter.battery || null,
+                    scooter.battery !== undefined ? scooter.speed : 0,
                     scooter.status || null,
                     scooter.city_cityid || null,
                     scooter.speed !== undefined ? scooter.speed : 0,
