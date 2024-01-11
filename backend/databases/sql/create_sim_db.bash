@@ -1,1 +1,1 @@
-sqlite3 testdb.db < create_experimental_db.sql
+sqlite3 testdb.db < create_basedbs.sql

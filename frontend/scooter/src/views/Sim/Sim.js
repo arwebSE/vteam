@@ -12,18 +12,15 @@ import { RotatingLines } from 'react-loader-spinner';
 
 const names = require('../../data/names.json');
 
-// Delete all bikes on page load
 function Sim() {
 
     const [isLoading, setIsLoading] = useState(false);
     const [loadingTxt, setLoadingTxt] = useState("Creating users...");
     const [cities, setCities] = useState({});
-    // const [zones, setZones] = useState({});
     const [nogoZones, setNogoZones] = useState({});
     const [goals, setGoals] = useState({});
     const [sliderValue, setSliderValue] = useState(1);
     const [update, setUpdate] = useState(false);
-    // const forceUpdate = useForceUpdate();
 
     async function createUsers() {
         setLoadingTxt("Creating users...");
@@ -43,9 +40,7 @@ function Sim() {
         console.log(`Created ${sliderValue} users in ${duration} seconds`);
     }
 
-    //
-    // Returns an array of polygons representing the spawn zones
-    //
+
     async function getSpawnZones(cities) {
         let names = cities.map(city => city.id);
         let spawn = {};
@@ -91,23 +86,26 @@ function Sim() {
     async function createBikesAndGoals(cities, zones, noGoZones) {
         setLoadingTxt("Creating bikes and goals...");
 
-        // Used to store endpoints for the bikes 
+        // Variabler för att hålla cyklarna och målen
         let ids = {};
-        cities.map(city => ids[city.id] = city.cityId);
         let goals = {};
+        cities.map(city => ids[city.id] = city.cityId);
         cities.forEach(cities => {
             goals[cities.id] = [];
         });
-        let updatedGoals = { ...goals }; // Create a shallow copy
-        // Making sure the number of bikes is divisible by the number of cities
+        let updatedGoals = { ...goals }; // Skapar en kopia av goals
         let bikesEach = sliderValue;
 
+        // Alla städer får endast ha en cityzone
         for (let key in zones) {
+            // Skapar antalet cyklar från slidervärdet
             for (let k = 0; k < bikesEach; k++) {
+                // Skapar ett mål och en cykel och lagrar de i respektive array
                 for (let y = 0; y < 2; y++) {
+                    // Kontrollerar att cykeln inte hamnar i en no-go zone
                     for (let z = 0; z < zones[key].length; z++) {
                         let cityZonePolygon = zones[key][z];
-                        let noGoPolygons = noGoZones[key]; // Assuming there can be multiple no-go polygons
+                        let noGoPolygons = noGoZones[key];
 
                         let bounds = turf.bbox(cityZonePolygon);
                         let east = bounds[2];
@@ -116,27 +114,29 @@ function Sim() {
                         let south = bounds[1];
 
                         let lat, lon, point, insideCity, insideNoGo;
-
+                        // Genererar en punkt som är inuti staden
                         do {
                             lon = Math.random() * (east - west) + west;
                             lat = Math.random() * (north - south) + south;
 
                             point = turf.point([lon, lat]);
+                            // Kontrollerar att punkten är i staden
                             insideCity = turf.booleanPointInPolygon(point, cityZonePolygon);
                             insideNoGo = false;
 
-                            // Check if the point is inside any no-go zone
+                            // Kontrollerar att punkten är i en no-go zone
                             for (let i = 0; i < noGoPolygons.length; i++) {
                                 if (turf.booleanPointInPolygon(point, noGoPolygons[i])) {
                                     insideNoGo = true;
                                     break;
                                 }
                             }
-
                         } while (insideNoGo || !insideCity);
                         if (y === 1) {
+                            // Sparar målet i en array
                             updatedGoals[key].push([lon, lat]);
                         } else {
+                            // Sparar cykeln i databasen
                             let bikeData = {
                                 "lat": lat,
                                 "lon": lon,
@@ -145,6 +145,7 @@ function Sim() {
                                 "city_cityid": ids[key],
                                 "speed": 0,
                             };
+                            // Lägger till cyklar i databasen
                             await bikeModel.createBike(bikeData);
                         }
 
@@ -163,13 +164,12 @@ function Sim() {
         let cities = await cityModel.getCities();
         let zones = await getSpawnZones(cities);
         let noGoZones = await getNogoZones(cities);
-        // setZones(zones);
         setNogoZones(noGoZones);
         setCities(cities);
         setIsLoading(true);
         await createUsers();
         await createBikesAndGoals(cities, zones, noGoZones);
-        // Start countdown
+        // Startar nedräkningen
         let countdown = 3;
         const countdownInterval = setInterval(() => {
             setLoadingTxt(`Starting simulation\n ${countdown} seconds...`);
@@ -238,10 +238,9 @@ function Sim() {
     useEffect(() => {
         if (update) {
             const cities = Object.keys(goals);
-            const updateInterval = 5000; // Seconds
+            const updateInterval = 5000; // Sekunder
             setInterval(async () => {
                 for (const city of cities) {
-                    const startTime = new Date();
                     let update = [];
                     let bikes = await bikeModel.getBikesFromCity(city);
                     let cityNogo = await zoneModel.getNogoFromCity(city);
@@ -255,51 +254,53 @@ function Sim() {
                         let status;
                         let consumption = 1;
 
-                        if (bikes.battery <= 0) {
-                            consumption = 0;
-                            speedKmPerHour = 0;
-                        }
 
                         if (bikes[i].speed === null) {
                             speedKmPerHour = 20;
                         }
-                        if (turf.distance(turf.point(currentLocation), turf.point(targetLocation)) < 0.0001) {
+                        // Kolla batteriet
+                        if (bikes.battery <= 0) {
                             consumption = 0;
                             speedKmPerHour = 0;
-                            status = "Goal Reached";
                         } else {
-
-                            if (insideNogoZone(currentLocation[0], currentLocation[1], cityNogo)) {
+                            // Kolla om vi cyklen nått målet
+                            if (turf.distance(turf.point(currentLocation), turf.point(targetLocation)) < 0.0001) {
                                 consumption = 0;
                                 speedKmPerHour = 0;
-                                status = "service";
+                                status = "Goal Reached";
                             } else {
-                                if (insideRestrictedZone(currentLocation[0], currentLocation[1], cityRestricted)) {
-                                    // Adjust speed if inside a restricted zone
-                                    status = "unavailable";
-                                    speedKmPerHour = 10;
-                                } else if (insideCity(currentLocation[0], currentLocation[1], cityZone)) {
-                                    // Adjust speed if inside the city
-                                    speedKmPerHour = 20;
-                                    status = "unavailable";
-                                } else {
-                                    // Adjust speed if outside the city
+                                // Kolla om vi är i en no-go zone
+                                if (insideNogoZone(currentLocation[0], currentLocation[1], cityNogo)) {
+                                    consumption = 0;
                                     speedKmPerHour = 0;
                                     status = "service";
+                                } else {
+                                    // Dessa får cykeln röra sig i
+                                    if (insideRestrictedZone(currentLocation[0], currentLocation[1], cityRestricted)) {
+                                        status = "unavailable";
+                                        speedKmPerHour = 10;
+                                    } else if (insideCity(currentLocation[0], currentLocation[1], cityZone)) {
+                                        speedKmPerHour = 20;
+                                        status = "unavailable";
+                                    } else {
+                                        speedKmPerHour = 0;
+                                        status = "service";
+                                    }
                                 }
                             }
                         }
 
-
-                        // Calculate the distance the bike should travel in the next update
+                        // Distansen beräknas
+                        // Avståndet kan beräknas med hjälp av hastigheten och tiden
+                        // Räknas ut med mps * tid = meter
                         const dist = (speedKmPerHour / 3.6) * (updateInterval / 1000) / 1000;
-                        // Calculate the new location based on the step size
+                        // Nya positionen beräknas med turf genom att flytta en punkt längs en linje med avståndet
                         const newLocation = turf.along(turf.lineString([currentLocation, targetLocation]), dist);
 
-                        // Update the bike's location
+                        // Uppdaterar positionen
                         bikes[i].lon = newLocation.geometry.coordinates[1];
                         bikes[i].lat = newLocation.geometry.coordinates[0];
-
+                        // Sparar data i en array
                         update.push({
                             "scooterId": bikes[i].scooterId,
                             "lat": bikes[i].lat,
@@ -310,11 +311,8 @@ function Sim() {
                             "speed": speedKmPerHour
                         });
                     }
-
+                    // Uppdaterar alla cyklar med en request
                     await simModel.updateMultipleBikes(update);
-                    const endTime = new Date();
-                    const duration = (endTime - startTime) / 1000;
-                    console.log(`Updated ${bikes.length} bikes in ${duration} seconds`);
                 }
             }, updateInterval);
         }
