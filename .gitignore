@@ -42,5 +42,10 @@ simulation/sim/npm-debug.log*
 simulation/sim/yarn-debug.log*
 simulation/sim/yarn-error.log*
 
+backend/.env
+./start.bash
+./stop.bash
+./simulation.bash
+
 # macOS
 .DS_Store
