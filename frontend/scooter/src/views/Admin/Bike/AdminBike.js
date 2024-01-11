@@ -33,7 +33,7 @@ function MockAdminBike() {
             <MockMarkMap />
         </div>
     );
-    
+
 }
 
 const exportedComponent = process.env.NODE_ENV === "test" ? withAuthMock(MockAdminBike) : withAuth(AdminBike);

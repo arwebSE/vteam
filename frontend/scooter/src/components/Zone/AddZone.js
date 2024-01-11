@@ -2,7 +2,6 @@ import React from "react";
 import L from "leaflet";
 import { useMap } from "react-leaflet";
 import { useEffect } from "react";
-//import icons from "../MapIcons";
 import bikeModel from "../../models/bikeModel";
 
 function AddZone({ onMapClick, color, setCity }) {
@@ -24,7 +23,6 @@ function AddZone({ onMapClick, color, setCity }) {
                 }).addTo(map);
                 const newCity = await bikeModel.getBikeCity(lat, lng);
                 setCity(newCity);
-                // console.log("City:", city, ", set to:", newCity);
             };
 
             map.on("click", handleClick);
