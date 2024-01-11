@@ -5,9 +5,8 @@ import withAuth from "../../../util/withAuth";
 import "./style.css";
 
 function UserProfile() {
-    const userId = localStorage.userId; // Get the user ID from localStorage
+    const userId = localStorage.userId;
 
-    // Use the UserData component to fetch and retrieve user data
     const userData = UserData({ id: userId });
 
     return (

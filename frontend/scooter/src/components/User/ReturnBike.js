@@ -35,9 +35,6 @@ const MarkLocationMap = () => {
         const allParkingZones = await zoneModel.getAllParkingZones();
 
         const userBike = allBikes.filter(bike => bike.scooterId === parseInt(scooterId));
-        console.log(userBike);
-
-        console.log(bikeLocation.lat, bikeLocation.lng);
 
         let totalCost = userBike[0].price;
 
@@ -100,22 +97,21 @@ const MarkLocationMap = () => {
         let id = await cityModel.getCity(city);
         if (id) {
             /**
-            * If user returns the bike after rent time, user has to pay extra.
+            * Om användaren returnerar EFTER hyrtiden, så måste användaren betala mer
             */
             if (correctlyReturned === false) {
                 totalCost = totalCost + extraPrice;
-                const response = await userModel.removeMoney(localStorage.userId, extraPrice);
-                console.log(response);
+                await userModel.removeMoney(localStorage.userId, extraPrice);
             }
             
             /**
              * If user returns it earlier than 1 minute before rent time ends, user gets money back
+             * Om användaren returnerar sparkcykeln tidigare än 1
              * 2/min
              */
             if (timeDiff < -1) {
                 totalCost = totalCost - returnMoney;
-                const response = await userModel.addMoney(localStorage.userId, returnMoney);
-                console.log(response);
+                await userModel.addMoney(localStorage.userId, returnMoney);
             }
             const returnedBike = {
                 scooterId: scooterId,
@@ -134,12 +130,9 @@ const MarkLocationMap = () => {
                 price: userBike[0].price,
                 totalPrice: totalCost,
             };
-            const responseBikeModel = await bikeModel.returnBike(returnedBike);
-            const responseUserToBike = await userToBikeModel.delete(userBike[0].idUsertobike);
-            const responseLogModel = await logModel.create(logData);
-            console.log(responseBikeModel);
-            console.log(responseUserToBike);
-            console.log(responseLogModel);
+            await bikeModel.returnBike(returnedBike);
+            await userToBikeModel.delete(userBike[0].idUsertobike);
+            await logModel.create(logData);
             document.getElementById("map");
         }
         } catch (error) {
