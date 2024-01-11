@@ -16,6 +16,7 @@ const scooterModel = {
             res.json(results);
         });
     },
+
     /**
      * Get all information about a specific Scooter in the database by its scooterId. Also get the cityName of the city the scooter is at, if any.
      * @param {string|number} id - The scooterId of the scooter to retrieve.
@@ -28,11 +29,15 @@ const scooterModel = {
             res.json(results);
         });
     },
+
+    /**
+     * Get all information about all Scooters in the database for a specific city. 
+     * @param {string} city - The city name.
+     * @param {Object} res - The Express response object.
+     * @returns {void}
+     */
     getAllFromCity: function (city, res) {
-        const sql = 'SELECT Scooter.*' +
-            'FROM Scooter ' +
-            'JOIN City ON Scooter.city_cityid = City.cityId ' +
-            'WHERE City.id = ?;';
+        const sql = 'SELECT Scooter.* FROM Scooter JOIN City ON Scooter.city_cityid = City.cityId WHERE City.id = ?;';
         db.all(sql, [city], function (error, results) {
             if (error) {
                 console.error('Error:', error);
@@ -43,15 +48,14 @@ const scooterModel = {
         });
     },
 
-    /*
-        Get all information about all Scooters in the database with status = available. Also get the cityName of the city the scooter is at, if any.
-    */
+    /**
+     * Get all information about available Scooters in the database. Also includes the cityName of the city the scooter is at, if any.
+     *
+     * @param {Object} res - The Express response object.
+     * @returns {void}
+     */
     getAllAvailable: function (res) {
-        const sql = 'SELECT Scooter.*, IFNULL(City.id, "-") AS cityName ' +
-            'FROM Scooter ' +
-            'LEFT JOIN City ON Scooter.city_cityid = City.cityId ' +
-            'WHERE LOWER(Scooter.status) = "available"';
-
+        const sql = 'SELECT Scooter.*, IFNULL(City.id, "-") AS cityName FROM Scooter LEFT JOIN City ON Scooter.city_cityid = City.cityId WHERE LOWER(Scooter.status) = "available"';
         db.all(sql, function (error, results) {
             if (error) {
                 console.error('Error:', error);
@@ -61,13 +65,13 @@ const scooterModel = {
             res.json(results);
         });
     },
+
     /**
      * Create a new Scooter in the database with (lon, lat, battery, status, city_cityid).
      * @param {Object} scooter - The scooter object containing lon, lat, battery, status, and city_cityid.
      * @param {Object} res - The Express response object.
      * @returns {void}
      */
-
     create: function (scooter, res) {
         const sql = 'INSERT INTO Scooter (lon, lat, battery, status, city_cityid) VALUES (?, ?, ?, ?, ?)';
         const params = [scooter.lon, scooter.lat, scooter.battery, scooter.status, scooter.city_cityid];
@@ -81,6 +85,7 @@ const scooterModel = {
             console.log('Scooter created successfully. Last inserted ID:', this.lastID);
         });
     },
+
     /**
      * Update a specific Scooter in the database with data you want to change (lon, lat, battery, status, city_cityid) using the ScooterId.
      * @param {string|number} scooterId - The scooterId of the scooter to update.
@@ -118,6 +123,13 @@ const scooterModel = {
             console.log('Scooter updated successfully.');
         });
     },
+
+    /**
+     * Update multiple Scooters in the database with data you want to change (lon, lat, battery, status, city_cityid) using an array of scooters.
+     * @param {Array} scooters - An array of scooter objects containing lon, lat, battery, status, city_cityid, and speed.
+     * @param {Object} res - The Express response object.
+     * @returns {void}
+     */
     updateMultiple: function (scooters, res) {
         const promises = scooters.map(scooter => {
             return new Promise((resolve, reject) => {
@@ -154,9 +166,13 @@ const scooterModel = {
             .then(() => res.status(201).json({ message: 'Scooters updated successfully' }))
             .catch(error => res.status(500).json({ error: 'Internal Server Error' }));
     },
-    /*
-        Delete ALL Scooters in the database, from ALL cities
-    */
+
+    /**
+     * Delete all Scooters from the database.
+     *
+     * @param {Object} res - The Express response object.
+     * @returns {void}
+     */
     deleteAll: function (res) {
         const sql = 'DELETE FROM Scooter';
         db.run(sql, function (error, results) {
@@ -168,6 +184,12 @@ const scooterModel = {
             res.json({ message: 'All scooters deleted successfully' });
         });
     },
+
+    /**
+     * Get information about Scooters with low battery (battery < 20).
+     * @param {Object} res - The Express response object.
+     * @returns {void}
+     */
     getLowBatteryScooter: function (res) {
         const sql = 'SELECT * FROM Scooter WHERE battery < 20';
         db.all(sql, function (error, results) {
@@ -179,6 +201,7 @@ const scooterModel = {
             res.json(results);
         });
     },
+
     /**
      * Delete one specific Scooter in the database depending on the scooterId.
      * @param {string|number} id - The scooterId of the scooter to delete.

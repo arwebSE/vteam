@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import BikeSelected from "../../../components/Bike/bikeSelectedUser";
 
 import "./style.css";
-//import logo from "../../logo.png";
 
 function RentBike() {
     return (

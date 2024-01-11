@@ -30,7 +30,7 @@ function validateApiKey(req, res, next) {
     next();
 }
 
-// Exclude '/oauth2' route from API key validation middleware
+// Exkludera /ouath2 routes från API-KEY
 app.use((req, res, next) => {
     if (req.path === '/oauth2/login/google' || req.path === '/oauth2/redir/google') {
         return next();
