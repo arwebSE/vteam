@@ -252,16 +252,17 @@ function Sim() {
                         const targetLocation = [goals[city][i][1], goals[city][i][0]];
                         let speedKmPerHour;
                         let status;
-                        let consumption = 1;
-
+                        let consumption = 10;
+                        let charge = bikes[i].battery;
 
                         if (bikes[i].speed === null) {
                             speedKmPerHour = 20;
                         }
                         // Kolla batteriet
-                        if (bikes.battery <= 0) {
-                            consumption = 0;
+                        if (charge <= 0) {
+                            charge = 0
                             speedKmPerHour = 0;
+                            status = "service"
                         } else {
                             // Kolla om vi cyklen nått målet
                             if (turf.distance(turf.point(currentLocation), turf.point(targetLocation)) < 0.0001) {
@@ -286,6 +287,7 @@ function Sim() {
                                         speedKmPerHour = 0;
                                         status = "service";
                                     }
+                                    charge = bikes[i].battery - consumption;
                                 }
                             }
                         }
@@ -305,11 +307,13 @@ function Sim() {
                             "scooterId": bikes[i].scooterId,
                             "lat": bikes[i].lat,
                             "lon": bikes[i].lon,
-                            "battery": bikes[i].battery - consumption,
+                            "battery": charge,
                             "status": status,
                             "city_cityid": bikes[i].city_cityid,
                             "speed": speedKmPerHour
                         });
+                        console.log(bikes[i].battery)
+                        console.log(charge)
                     }
                     // Uppdaterar alla cyklar med en request
                     await simModel.updateMultipleBikes(update);

@@ -45,7 +45,6 @@ const BikeEdit = () => {
             navigate("/admin/bike");
         } catch (error) {
             console.error("Failed to update bike:", error);
-            // todo: handle submit error?
         }
     };
 

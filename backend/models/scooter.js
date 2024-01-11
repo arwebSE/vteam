@@ -131,11 +131,11 @@ const scooterModel = {
                     'WHERE scooterId = ?';
 
                 const params = [
-                    scooter.lon || null,
-                    scooter.lat || null,
-                    scooter.battery !== undefined ? scooter.speed : 0,
-                    scooter.status || null,
-                    scooter.city_cityid || null,
+                    scooter.lon !== undefined ? scooter.lon : null,
+                    scooter.lat !== undefined ? scooter.lat : null,
+                    scooter.battery !== undefined ? scooter.battery : null,
+                    scooter.status !== undefined ? scooter.status : null,
+                    scooter.city_cityid !== undefined ? scooter.city_cityid : null,
                     scooter.speed !== undefined ? scooter.speed : 0,
                     scooter.scooterId
                 ];

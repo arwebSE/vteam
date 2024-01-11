@@ -13,22 +13,18 @@ const Endpoints = ({ markers }) => {
 
     useEffect(() => {
         if (m) {
-            // Create a new marker cluster group
             const markerClusterGroup = L.markerClusterGroup();
 
             for (let [city, coordinates] of Object.entries(m)) {
                 coordinates.forEach(([lon, lat]) => {
-                    // Create a new marker
                     const marker = L.marker([lat, lon], {
                         icon: icon.goalIcon,
                     });
 
-                    // Add the marker to the cluster group instead of the map
                     markerClusterGroup.addLayer(marker);
                 });
             }
 
-            // Add the marker cluster group to the map
             map.addLayer(markerClusterGroup);
         }
     }, [map, markers]);
