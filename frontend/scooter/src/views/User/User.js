@@ -12,8 +12,6 @@ function User() {
     // Use the UserData component to fetch and retrieve user data
     const userData = UserData({ id: userId });
 
-    console.log(userData);
-
     return (
         <div className="flex mt-20">
             {/* Side Panel*/}

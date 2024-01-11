@@ -40,9 +40,10 @@ function enableAuth() {
                 if (!cred) {
                     var id = this.lastid
                         // First time logging in with google on the site.
-                    database.run('INSERT INTO Users (username, authprov, user_authid) VALUES (?, ?, ?)', [
+                    database.run('INSERT INTO Users (username, authprov, userrole, user_authid) VALUES (?, ?, ?, ?)', [
                         profile.displayName,
                         'google',
+                        'user',
                         profile.id
                     ], function(err) {
                         if (err) { return callback(err); }
