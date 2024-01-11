@@ -6,7 +6,6 @@ const passport = require('passport');
 router.use(enableAuth)
     // Provisory loginpage for oauth testing
 router.get('/login/google', (req, res) => {
-    console.log('Reached /login/google route. If this is the second time the user logs in with google, they will instantly be redirected to home.');
     passport.authenticate('google', { scope: 'profile' })(req, res);
 });
 // Processing the auth response and redirects to start
