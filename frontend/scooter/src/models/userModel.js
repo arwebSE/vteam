@@ -3,7 +3,7 @@ const userModel = {
      * Fetches all users from the API
      * @returns {Promise<Array>} Array of user objects
      */
-    getUsers: async function() {
+    getUsers: async function () {
         try {
             const response = await fetch('http://localhost:1337/v1/user', {
                 headers: {
@@ -22,7 +22,7 @@ const userModel = {
      * @param {number} id - The id of the user to fetch
      * @returns {Promise<Object>} User object
      */
-    getUser: async function(id) {
+    getUser: async function (id) {
         try {
             const response = await fetch(`http://localhost:1337/v1/user/${id}`, {
                 headers: {
@@ -42,7 +42,8 @@ const userModel = {
      * @param {string} passwd - The password to be verified.
      * @returns {Promise<any>} - A Promise that resolves to the data received from the server.
      */
-    passVerif: async function(username, passwd) {
+    passVerif: async function (username, passwd) {
+        console.log(username, passwd);
         try {
             const response = await fetch(`http://localhost:1337/v1/user/ver/${username}/${passwd}`, {
                 headers: {
@@ -50,6 +51,7 @@ const userModel = {
                 }
             });
             const data = await response.json();
+            console.log(data);
             return data;
         } catch (error) {
             console.error(error);
@@ -62,7 +64,7 @@ const userModel = {
      * @param {string} email - The email of the new user
      * @param {string} password - The password of the new user
      */
-    createUser: async function(username, email, password) {
+    createUser: async function (username, email, password) {
         const userrole = "user"
         const jsonData = {
             username: username,
@@ -100,7 +102,7 @@ const userModel = {
      * @param {string} userRole - The new role of the user
      * @returns {Promise<Object>} Updated user object
      */
-    editUser: async function(id, username, email, passwd, userRole) {
+    editUser: async function (id, username, email, passwd, userRole) {
         try {
             const response = await fetch(`http://localhost:1337/v1/user/${id}`, {
                 method: 'PUT',
@@ -129,7 +131,7 @@ const userModel = {
      * @param {number} amount - The amount of money to be added to the user's balance.
      * @param {object} res - The Express response object to send the result back to the client.
      */
-    addMoney: async function(id, amount) {
+    addMoney: async function (id, amount) {
         try {
             const response = await fetch(`http://localhost:1337/v1/user/${id}/addMoney`, {
                 method: 'PUT',
@@ -154,7 +156,7 @@ const userModel = {
      * @param {number} id - The ID of the user from whom money will be deducted.
      * @param {number} amount - The amount of money to be deducted from the user's balance.
      */
-    removeMoney: async function(id, amount) {
+    removeMoney: async function (id, amount) {
         try {
             const response = await fetch(`http://localhost:1337/v1/user/${id}/removeMoney`, {
                 method: 'PUT',

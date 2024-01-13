@@ -22,30 +22,30 @@ function enableAuth() {
 
 
     passport.use(new GoogleAuth({
-            clientID: '123314154390-dbgte1hjv7a79ugi5v6vvdp4qu3itvru.apps.googleusercontent.com',
-            clientSecret: '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',
-            callbackURL: 'http://localhost:1337/oauth2/redir/google',
-            scope: ['profile'],
-            state: true
-        },
+        clientID: '123314154390-dbgte1hjv7a79ugi5v6vvdp4qu3itvru.apps.googleusercontent.com',
+        clientSecret: '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',
+        callbackURL: 'http://localhost:1337/oauth2/redir/google',
+        scope: ['profile'],
+        state: true
+    },
         // Verifies the user, in this case
         function verify(acessToken, refreshToken, profile, callback) {
 
             database.get('SELECT * FROM Users WHERE authprov = ? AND user_authid = ?', [
                 'google',
                 profile.id
-            ], function(err, cred) {
+            ], function (err, cred) {
                 if (err) { return callback(err); }
 
                 if (!cred) {
                     var id = this.lastid
-                        // First time logging in with google on the site.
+                    // First time logging in with google on the site.
                     database.run('INSERT INTO Users (username, authprov, userrole, user_authid) VALUES (?, ?, ?, ?)', [
                         profile.displayName,
                         'google',
                         'user',
                         profile.id
-                    ], function(err) {
+                    ], function (err) {
                         if (err) { return callback(err); }
 
                         var user = {
@@ -53,30 +53,30 @@ function enableAuth() {
                             name: profile.displayName,
 
                         };
-                        callback(null, user);
-                        return null;
+
+                        return callback(null, user);;
                     });
                 } else {
                     // User has logged in with google before.
-                    database.get('SELECT * FROM Users WHERE user_authid = ?', [cred.user_authid], function(err, user) {
+                    database.get('SELECT * FROM Users WHERE user_authid = ?', [cred.user_authid], function (err, user) {
                         if (err) { return callback(err); }
-                        callback(null, user);
-                        return null;
+                        if (!cred) { return callback(null, false); }
+                        return callback(null, user);;
 
                     });
 
                 }
 
             });
-            passport.serializeUser(async function(user, callback) {
-                await callback(null, user.userId);
-                return null;
+            passport.serializeUser(function (user, callback) {
+                process.nextTick(function () {
+                    callback(null, { name: user.name });
+                });
             });
 
-            passport.deserializeUser(function(userId, callback) {
-                database.get('SELECT * FROM Users WHERE userId = ?', [userId], function(err, user) {
-                    callback(err, user);
-                    return null;
+            passport.deserializeUser(function (userId, callback) {
+                process.nextTick(function () {
+                    return callback(null, userId);
                 });
             });
         }

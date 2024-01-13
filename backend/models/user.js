@@ -10,8 +10,8 @@ const userModel = {
      * @param {Object} res - The response object used to send the JSON data.
      * @returns {Object} An array of user objects.
      */
-    getAll: function(res) {
-        db.all('SELECT * FROM Users', function(error, results, fields) {
+    getAll: function (res) {
+        db.all('SELECT * FROM Users', function (error, results, fields) {
             if (error) throw error;
             return res.json(results);
         });
@@ -22,8 +22,8 @@ const userModel = {
      * @param {object} res - The Express response object.
      * @returns {object} The user data as a JSON response.
      */
-    getOne: function(id, res) {
-        db.get('SELECT * FROM Users WHERE userId = ?', id, function(error, results, fields) {
+    getOne: function (id, res) {
+        db.get('SELECT * FROM Users WHERE userId = ?', id, function (error, results, fields) {
             if (error) throw error;
             return res.json(results);
         });
@@ -37,11 +37,19 @@ const userModel = {
      * @returns {object} The JSON representation of the results.
      */
 
-    passVerif: function(username, passwd, res) {
-        db.get('SELECT * FROM Users WHERE username = ?	', username, function(error, results, fields) {
-            if (error) throw error;
-            return res.json(results);
-        });
+    passVerif: function (username, passwd, res) {
+        console.log("passVerif")
+        console.log(username, passwd);
+        db.get(
+            'SELECT * FROM Users WHERE (username = ? AND passwd = ?) OR (username = ? AND user_authid = ?)',
+            [username, passwd, username, passwd],  // Assuming passwd is the password and usercredentials is the user credentials
+            function (error, results) {
+                if (error) {
+                    throw error;
+                }
+                return res.json(results);
+            }
+        );
 
     },
 
@@ -51,11 +59,11 @@ const userModel = {
      * @param {Object} res - The response object to send the result back to the client.
      * @returns {Object} - The result of the operation.
      */
-    create: function(user, res) {
+    create: function (user, res) {
         const sql = 'INSERT INTO Users (username, email, passwd, userrole, authprov) VALUES (?, ?, ?, ?, ?)';
         const params = [user.body.username, user.body.email, user.body.passwd, 'user', 'user'];
 
-        db.run(sql, params, function(error) {
+        db.run(sql, params, function (error) {
             if (error) {
                 console.error('Error:', error);
                 res.status(500).json({ error: 'Internal Server Error' });
@@ -88,7 +96,7 @@ const userModel = {
         ];
         console.log(params);
         console.log(params);
-        db.run(sql, params, function(error, results) {
+        db.run(sql, params, function (error, results) {
             if (error) {
                 console.error('Error:', error);
                 res.status(500).json({ error: 'Internal Server Error' });
@@ -104,9 +112,9 @@ const userModel = {
      * @param {object} res - The response object.
      * @returns {object} - The JSON response containing the result of the deletion.
      */
-    delete: function(id, res) {
+    delete: function (id, res) {
         const sql = 'DELETE FROM Users WHERE userId = ?';
-        db.run(sql, id, function(error, results) {
+        db.run(sql, id, function (error, results) {
             if (error) {
                 console.error('Error:', error);
                 res.status(500).json({ error: 'Internal Server Error' });
@@ -122,11 +130,11 @@ const userModel = {
      * @param {number} amount - The amount of money to be added to the user's balance.
      * @param {object} res - The Express response object to send the result back to the client.
      */
-    addMoney: function(userId, amount, res) {
+    addMoney: function (userId, amount, res) {
         const sql = 'UPDATE Users SET user_balance = COALESCE(user_balance, 0) + ? WHERE userId = ?';
         const params = [amount, userId];
 
-        db.run(sql, params, function(error) {
+        db.run(sql, params, function (error) {
             if (error) {
                 console.error('Error:', error);
                 res.status(500).json({ error: 'Internal Server Error' });
@@ -143,11 +151,11 @@ const userModel = {
      * @param {number} amount - The amount of money to be deducted from the user's balance.
      * @param {object} res - The Express response object to send the result back to the client.
      */
-    removeMoney: function(userId, amount, res) {
+    removeMoney: function (userId, amount, res) {
         const sql = 'UPDATE Users SET user_balance = COALESCE(user_balance, 0) - ? WHERE userId = ?';
         const params = [amount, userId];
 
-        db.run(sql, params, function(error) {
+        db.run(sql, params, function (error) {
             if (error) {
                 console.error('Error:', error);
                 res.status(500).json({ error: 'Internal Server Error' });
@@ -164,11 +172,11 @@ const userModel = {
      * @param {number} amount - The amount of money to be deducted from the user's balance.
      * @param {object} res - The Express response object to send the result back to the client.
      */
-    removeMoney: function(userId, amount, res) {
+    removeMoney: function (userId, amount, res) {
         const sql = 'UPDATE Users SET user_balance = COALESCE(user_balance, 0) - ? WHERE userId = ?';
         const params = [amount, userId];
 
-        db.run(sql, params, function(error) {
+        db.run(sql, params, function (error) {
             if (error) {
                 console.error('Error:', error);
                 res.status(500).json({ error: 'Internal Server Error' });
