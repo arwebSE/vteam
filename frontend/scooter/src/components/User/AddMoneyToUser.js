@@ -3,7 +3,6 @@ import userModel from "../../models/userModel";
 import { useNavigate } from "react-router-dom";
 
 const AddMoneyToUser = () => {
-  const [userId] = localStorage.userId;
   const [creditCard, setCreditCard] = useState('');
   const [money, setMoney] = useState('');
   const [isCreditCardValid, setIsCreditCardValid] = useState(true);
@@ -29,7 +28,7 @@ const AddMoneyToUser = () => {
 
     console.log('Adding money to user...');
     setIsMoneyAmountValid(true);
-    userModel.addMoney(userId, money);
+    userModel.addMoney(localStorage.userId, money);
     setSuccessMessage('Successfully added money');
   };
 

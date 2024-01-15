@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: zone.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: zone.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const database = require('../databases/sql/database.js');
+
+/**
+ * A model representing operations related to the Zones table in the database.
+ * @namespace
+ */
+const zoneModel = {
+
+    /**
+     * Get all information in the Zones table in the database (All entries).
+     * @param {Object} res - The Express response object.
+     * @returns {void}
+     */
+    getAll: function (res) {
+        const sql = 'SELECT * FROM Zones';
+
+        database.all(sql, function (error, results, fields) {
+            if (error) throw error;
+            res.json(results);
+        });
+    },
+
+    /**
+     * Get information about a specific Zone by its zoneId or pointname.
+     * @param {string|number} identifier - The zoneId or pointname of the Zone to retrieve.
+     * @param {Object} res - The Express response object.
+     * @returns {void}
+     */
+    getOne: function (identifier, res) {
+        const sql = 'SELECT zoneId, city_name, zonetype, coordinates ' +
+            'FROM Zones ' +
+            'WHERE zoneId = ? OR city_name = ?';
+
+        database.get(sql, [identifier, identifier], function (error, results, fields) {
+            if (error) throw error;
+            res.json(results);
+        });
+    },
+
+    /**
+     * Get all City Zones in a specific city.
+     * @param {Object} res - The Express response object.
+     * @param {string} city - The name of the city.
+     * @returns {void}
+     */
+    getCityZones: function (res, city) {
+        const sql = "SELECT * FROM Zones WHERE zonetype = 'City' AND city_name = ?";
+        database.all(sql, [city], function (error, results) {
+            if (error) throw error;
+            res.json(results);
+        });
+    },
+
+    /**
+     * Get all No Go Zones in a specific city.
+     * @param {Object} res - The Express response object.
+     * @param {string} city - The name of the city.
+     * @returns {void}
+     */
+    getNoGoZones: function (res, city) {
+        const sql = "SELECT * FROM Zones WHERE zonetype = 'No Go Zone' AND city_name = ?";
+        database.all(sql, [city], function (error, results) {
+            if (error) throw error;
+            res.json(results);
+        });
+    },
+
+    /**
+     * Get all Restricted Speed Zones in a specific city.
+     * @param {Object} res - The Express response object.
+     * @param {string} city - The name of the city.
+     * @returns {void}
+     */
+    getRestrictedZones: function (res, city) {
+        const sql = "SELECT * FROM Zones WHERE zonetype = 'Restricted Speed' AND city_name = ?";
+        database.all(sql, [city], function (error, results) {
+            if (error) throw error;
+            res.json(results);
+        });
+    },
+
+    /**
+     * Get all Parking Spot Zones in the database.
+     * @param {Object} res - The Express response object.
+     * @returns {void}
+     */
+    getAllParkingZones: function (res) {
+        const sql = "SELECT * FROM Zones WHERE zonetype = 'Parking Spot'";
+        database.all(sql, function (error, results) {
+            if (error) throw error;
+            res.json(results);
+        });
+    },
+
+    /**
+     * Create a new Zone entry in the database with the specified values (city_name, coordinates, zonetype).
+     * @param {Object} zone - The Zone object containing city_name, coordinates, and zonetype.
+     * @param {Object} res - The Express response object.
+     * @returns {void}
+     */
+    create: function (zone, res) {
+        const sql = 'INSERT INTO Zones (city_name, coordinates, zonetype) VALUES (?, ?, ?)';
+        const params = [zone.body.city_name, zone.body.coordinates, zone.body.zonetype];
+        console.log(params);
+        database.run(sql, params, function (error) {
+            if (error) {
+                console.error('Error:', error);
+                res.status(500).json({ error: 'Internal Server Error' });
+                return;
+            }
+            res.status(201).json({ message: 'Zone created successfully', zoneId: this.lastID });
+            console.log('Zone created successfully. Last inserted ID:', this.lastID);
+        });
+    },
+
+    /**
+     * Update an existing Zone entry with the specified values.
+     * @param {string|number} identifier - The zoneId or pointname of the Zone to update.
+     * @param {Object} zone - The updated Zone object containing pointname, zoneId, city_cityid, and zonetype.
+     * @param {Object} res - The Express response object.
+     * @returns {void}
+     */
+    update: function (identifier, zone, res) {
+        const sql = 'UPDATE Zones SET ' +
+            'pointname = COALESCE(?, pointname), ' +
+            'zoneId = COALESCE(?, zoneId), ' +
+            'city_cityid = COALESCE(?, city_cityid), ' +
+            'zonetype = COALESCE(?, zonetype) ' +
+            'WHERE zoneId = ? OR pointname = ?';
+
+        const params = [
+            zone.pointname || null,
+            zone.zoneId || null,
+            zone.city_cityid || null,
+            zone.zonetype || null,
+            identifier,
+            identifier
+        ];
+
+        database.run(sql, params, function (error, results) {
+            if (error) {
+                console.error('Error:', error);
+                res.status(500).json({ error: 'Internal Server Error' });
+                return;
+            }
+            res.status(201).json({ message: 'Zone updated successfully' });
+            console.log('Zone updated successfully.');
+        });
+    },
+
+    /**
+     * Delete one Zone from the database by its zoneId.
+     * @param {number} zoneId - The zoneId of the Zone to delete.
+     * @param {Object} res - The Express response object.
+     * @returns {void}
+     */
+    delete: function (zoneId, res) {
+        const sql = 'DELETE FROM Zones WHERE zoneId = ?';
+        database.run(sql, [zoneId], function (error, results) {
+            if (error) {
+                console.error('Error:', error);
+                res.status(500).json({ error: 'Internal Server Error' });
+                return;
+            }
+            res.json({ message: 'Zone deleted successfully' });
+        });
+    }
+};
+
+module.exports = zoneModel;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="cityModel.html">cityModel</a></li><li><a href="logModel.html">logModel</a></li><li><a href="scooterModel.html">scooterModel</a></li><li><a href="userModel.html">userModel</a></li><li><a href="usertoBikeModel.html">usertoBikeModel</a></li><li><a href="zoneModel.html">zoneModel</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Fri Jan 12 2024 15:45:24 GMT+0100 (Central European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

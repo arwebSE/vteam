@@ -65,6 +65,12 @@ const zoneModel = {
         });
     },
 
+    /**
+     * Get all Restricted Speed Zones in a specific city.
+     * @param {Object} res - The Express response object.
+     * @param {string} city - The name of the city.
+     * @returns {void}
+     */
     getRestrictedZones: function (res, city) {
         const sql = "SELECT * FROM Zones WHERE zonetype = 'Restricted Speed' AND city_name = ?";
         database.all(sql, [city], function (error, results) {
@@ -73,6 +79,11 @@ const zoneModel = {
         });
     },
 
+    /**
+     * Get all Parking Spot Zones in the database.
+     * @param {Object} res - The Express response object.
+     * @returns {void}
+     */
     getAllParkingZones: function (res) {
         const sql = "SELECT * FROM Zones WHERE zonetype = 'Parking Spot'";
         database.all(sql, function (error, results) {
@@ -80,6 +91,7 @@ const zoneModel = {
             res.json(results);
         });
     },
+
     /**
      * Create a new Zone entry in the database with the specified values (city_name, coordinates, zonetype).
      * @param {Object} zone - The Zone object containing city_name, coordinates, and zonetype.
@@ -135,6 +147,7 @@ const zoneModel = {
             console.log('Zone updated successfully.');
         });
     },
+
     /**
      * Delete one Zone from the database by its zoneId.
      * @param {number} zoneId - The zoneId of the Zone to delete.

@@ -36,7 +36,7 @@ export default function LowBatteryMap() {
     }, []);
 
     return (
-        <div>
+        <div className="flex justify-center items-center pt-10 mt-10">
             <MapContainer center={currentLocation} zoom={13} scrollWheelZoom={true} >
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

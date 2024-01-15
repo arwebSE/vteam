@@ -27,29 +27,22 @@ export default function BikeMarker({ update }) {
             setBikes(await bikeModel.getBikes());
         };
 
-        // Call updateBikes immediately
         updateBikes();
 
-        // Then call updateBikes every 10 seconds
         const intervalId = setInterval(updateBikes, 5000);
 
-        // Clear interval on component unmount
         return () => clearInterval(intervalId);
     }, [update]);
 
     useEffect(() => {
-        // Remove old cluster
         if (cluster) {
             map.removeLayer(cluster);
         }
 
-        // Create a new marker cluster group
         const markerClusterGroup = L.markerClusterGroup();
 
         if (bikes) {
-            // Update existing markers
             bikes.forEach((bike) => {
-                // Create new marker for new bike
                 const newMarker = L.marker([bike.lat, bike.lon], {
                     icon: icons.bikeIcon,
                 })
@@ -58,7 +51,6 @@ export default function BikeMarker({ update }) {
                     })
                     .bindPopup(`Scooter: ${bike.scooterId} Speed: ${bike.speed}`);
 
-                // Add the marker to the cluster group instead of the map
                 markerClusterGroup.addLayer(newMarker);
             });
         }
