@@ -13,7 +13,8 @@ router.get('/redir/google',
     passport.authenticate('google', { failureRedirect: 'http://localhost:3000/', failureMessage: true }),
     function(req, res) {
         const state = req.query.state;
-        res.redirect(`http://localhost:3000/?state=${state}`);
+        userid = req.user.userId
+        res.redirect(`http://localhost:3000/?state=${state}&userid=${userid}`);
     });
 
 
