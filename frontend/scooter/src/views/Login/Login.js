@@ -9,14 +9,17 @@ import { handleLogin, handleOauthlogin } from "../../util/authUtils";
 import "./style.css";
 import boi from "../../boi.png";
 
+
 function Login() {
     const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
     const navigate = useNavigate();
     const urlParams = new URLSearchParams(window.location.search);
     const isLoggedInState = urlParams.get('state');
+    const userid = urlParams.get('userid');
     const [username, setUsername] = useState('');
     const [passwd, setPasswd] = useState('');
     
+
 
     const login = useCallback((e) => {
         e.preventDefault();
@@ -27,11 +30,11 @@ function Login() {
 
         if (isLoggedInState) {
         const oauthlogin = () => {
-        handleOauthlogin(setIsLoggedIn, isLoggedInState);
+        handleOauthlogin(setIsLoggedIn, isLoggedInState, userid);
         };
         oauthlogin();
         }
-    }, [isLoggedInState, setIsLoggedIn, passwd, username]);
+    }, [isLoggedInState, setIsLoggedIn, userid, passwd, username]);
 
 
   

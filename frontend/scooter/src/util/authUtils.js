@@ -14,10 +14,10 @@ export const handleLogin = async(setIsLoggedIn, username, passwd) => {
     }
 };
 
-export const handleOauthlogin = async(setIsLoggedIn, state) => {
-    console.log(state);
+export const handleOauthlogin = async(setIsLoggedIn, state, userid) => {
     if (state) {
         setIsLoggedIn(true);
+        localStorage.setItem('userId', userid);
         localStorage.setItem('isLoggedIn', 'true'); // save login state
     } else {
         alert("Wrong username or password");
