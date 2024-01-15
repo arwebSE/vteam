@@ -3,10 +3,23 @@ import withAuth from "../../../util/withAuth";
 import "./style.css";
 import BikeEdit from "../../../components/Bike/BikeEdit";
 
+import { useNavigate } from "react-router-dom";
+import { useEffect } from 'react';
+
 // Test WithAuth import
 import withAuthMock from "../../../test/Auth.mock";
 
 function EditBike() {
+    const userRole = localStorage.getItem('userRole');
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (userRole !== "admin") {
+            navigate('/home');
+        }
+    }, [userRole, navigate]);
+
     return (
         <div className="flex justify-center items-center w-full h-screen mt-10">
             <div className="w-full max-w-4xl mx-auto">

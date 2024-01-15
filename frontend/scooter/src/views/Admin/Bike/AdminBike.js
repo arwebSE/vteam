@@ -3,11 +3,25 @@ import { Link } from "react-router-dom";
 import "./style.css";
 import MarkMap from "../../../components/Bike/markLocationMap";
 
+import { useNavigate } from "react-router-dom";
+import { useEffect } from 'react';
+
 // Mock imports
 import withAuthMock from "../../../test/Auth.mock";
 import MockMarkMap from "../../../test/markLocationMap.mock";
 //import logo from "../../../logo.png";
+
 function AdminBike() {
+    const userRole = localStorage.getItem('userRole');
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (userRole !== "admin") {
+            navigate('/home');
+        }
+    }, [userRole, navigate]);
+
     return (
         <div className="flex flex-col w-full mt-12 pt-10">
             <Link
@@ -33,7 +47,7 @@ function MockAdminBike() {
             <MockMarkMap />
         </div>
     );
-    
+
 }
 
 const exportedComponent = process.env.NODE_ENV === "test" ? withAuthMock(MockAdminBike) : withAuth(AdminBike);

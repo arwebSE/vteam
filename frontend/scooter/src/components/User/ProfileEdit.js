@@ -3,7 +3,6 @@ import userModel from "../../models/userModel";
 import { useNavigate } from "react-router-dom";
 
 const ProfileEdit = () => {
-  const [userId] = localStorage.userId;
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -11,12 +10,10 @@ const ProfileEdit = () => {
 
   const updateUser = () => {
     try {
-      userModel.editUser(userId, username, email, password);
-      // Refresh the page
+      userModel.editUser(localStorage.userId, username, email, password);
       window.location.reload();
     } catch (error) {
       console.error("Failed to update user:", error);
-      // todo: handle submit error?
     }
   };
 

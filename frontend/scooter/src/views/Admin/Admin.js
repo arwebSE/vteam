@@ -4,11 +4,25 @@ import BikeMap from "../../components/BikeMap";
 import "./style.css";
 //import logo from "../../logo.png";
 
+import { useNavigate } from "react-router-dom";
+import { useEffect } from 'react';
+
 
 // Mock imports
 import withAuthMock from "../../test/Auth.mock";
 import MockBikeMap from "../../test/BikeMap.mock";
+
 function Admin() {
+    const userRole = localStorage.getItem('userRole');
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (userRole !== "admin") {
+            navigate('/home');
+        }
+    }, [userRole, navigate]);
+
     return (
         <div className="flex mt-20">
             {/* Main */}

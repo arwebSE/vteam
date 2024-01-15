@@ -1,6 +1,6 @@
 import userModel from '../models/userModel';
 // Function for handling login
-export const handleLogin = async(setIsLoggedIn, setuserRole, username, passwd) => {
+export const handleLogin = async(setIsLoggedIn, username, passwd) => {
     const passdata = await userModel.passVerif(username, passwd);
 
     if (passdata) {
