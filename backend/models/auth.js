@@ -68,15 +68,18 @@ function enableAuth() {
                 }
 
             });
-            passport.serializeUser(async function(user, callback) {
-                await callback(null, user.userId);
-                return null;
+            passport.serializeUser(function(user, callback) {
+                process.nextTick(function() {
+                    callback(null, {
+                        id: user.id,
+                        name: user.name
+                    });
+                });
             });
 
             passport.deserializeUser(function(userId, callback) {
-                database.get('SELECT * FROM Users WHERE userId = ?', [userId], function(err, user) {
-                    callback(err, user);
-                    return null;
+                process.nextTick(function() {
+                    return callback(null, userId);
                 });
             });
         }
