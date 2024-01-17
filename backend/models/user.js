@@ -38,8 +38,7 @@ const userModel = {
      */
 
     passVerif: function (username, passwd, res) {
-        console.log("passVerif")
-        console.log(username, passwd);
+
         db.get(
             'SELECT * FROM Users WHERE (username = ? AND passwd = ?) OR (username = ? AND user_authid = ?)',
             [username, passwd, username, passwd],  // Assuming passwd is the password and usercredentials is the user credentials

@@ -1,8 +1,8 @@
 import userModel from '../models/userModel';
 // Function for handling login
-export const handleLogin = async (setIsLoggedIn, setuserRole, username, passwd) => {
+export const handleLogin = async (setIsLoggedIn, username, passwd) => {
     const passdata = await userModel.passVerif(username, passwd);
-
+    console.log(passdata)
     if (passdata) {
         setIsLoggedIn(true);
         localStorage.setItem('isLoggedIn', 'true'); // save login state
