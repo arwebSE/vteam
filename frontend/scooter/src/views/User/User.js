@@ -9,6 +9,7 @@ function User() {
     const userId = localStorage.userId;
 
     const userData = UserData({ id: userId });
+    console.log(localStorage.userId);
 
     return (
         <div className="flex justify-center items-center w-full mt-20">

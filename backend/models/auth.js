@@ -70,7 +70,10 @@ function enableAuth() {
             });
             passport.serializeUser(function (user, callback) {
                 process.nextTick(function () {
-                    callback(null, { name: user.name });
+                    callback(null, {
+                        id: user.id,
+                        name: user.name
+                    });
                 });
             });
 
