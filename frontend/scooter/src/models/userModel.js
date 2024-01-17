@@ -102,7 +102,7 @@ const userModel = {
      * @param {string} userRole - The new role of the user
      * @returns {Promise<Object>} Updated user object
      */
-    editUser: async function (id, username, email, passwd, userRole) {
+    editUser: async function (id, username, email, passwd, userRole = "user") {
         try {
             const response = await fetch(`http://localhost:1337/v1/user/${id}`, {
                 method: 'PUT',

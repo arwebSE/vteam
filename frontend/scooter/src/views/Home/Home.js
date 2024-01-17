@@ -10,15 +10,14 @@ import withAuthMock from "../../test/Auth.mock";
 function Home() {
     const navigate = useNavigate();
     const userRole = localStorage.getItem('userRole');
-    console.log(userRole);
-    
+
     useEffect(() => {
         if (userRole === "admin") {
-          navigate('/admin');
+            navigate('/admin');
         } else {
             navigate('/user');
         }
-      }, [userRole, navigate]);
+    }, [userRole, navigate]);
 
     return (
         <div className="flex items-center justify-center h-screen bg-gray-100">
