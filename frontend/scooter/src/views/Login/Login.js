@@ -18,31 +18,32 @@ function Login() {
     const userid = urlParams.get('userid');
     const [username, setUsername] = useState('');
     const [passwd, setPasswd] = useState('');
-    
+
 
 
     const login = useCallback((e) => {
         e.preventDefault();
-        handleLogin(setIsLoggedIn,  username, passwd);
-      }, [setIsLoggedIn, username, passwd]);
-    
+        handleLogin(setIsLoggedIn, username, passwd);
+    }, [setIsLoggedIn, username, passwd]);
+
     useEffect(() => {
 
         if (isLoggedInState) {
-        const oauthlogin = () => {
-        handleOauthlogin(setIsLoggedIn, isLoggedInState, userid);
-        };
-        oauthlogin();
+            const oauthlogin = () => {
+                handleOauthlogin(setIsLoggedIn, isLoggedInState, userid);
+            };
+            oauthlogin();
         }
-    }, [isLoggedInState, setIsLoggedIn, userid, passwd, username]);
+    }, [isLoggedInState, setIsLoggedIn]);
 
 
-  
+
     useEffect(() => {
-    if (isLoggedIn){
-    navigate('/home');}   // Happens if isLoggedIn changes
-    },[isLoggedIn, navigate]);
-    
+        if (isLoggedIn) {
+            navigate('/home');
+        }   // Happens if isLoggedIn changes
+    }, [isLoggedIn, navigate]);
+
 
     return (
         <div className="flex items-center justify-center h-screen bg-gray-100">
@@ -106,16 +107,16 @@ function Login() {
                 <a
                     className="w-full mt-6 flex items-baseline justify-center  border border-transparent rounded-md shadow-sm text-base md:text-lg font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     href="http://localhost:1337/oauth2/login/google"
-                >  
+                >
                     <div className="googleIcon pt-1">
-                        <FcGoogle/>
+                        <FcGoogle />
                     </div>
                     <div className="signintext px-3">
                         Sign in with Google
                     </div>
                 </a>
 
-               
+
             </div>
         </div>
     );

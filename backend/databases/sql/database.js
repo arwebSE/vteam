@@ -27,7 +27,7 @@ if (process.env.ENV === 'simulation') {
     `
     DELETE FROM Scooter;
     DELETE FROM Users;
-    
+    INSERT INTO Users (username, passwd, userrole) VALUES ('admin', 'admin', 'admin');
     `
     , function (err) {
       if (err) {
