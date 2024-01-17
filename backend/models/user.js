@@ -38,11 +38,17 @@ const userModel = {
      */
 
     passVerif: function (username, passwd, res) {
-        db.get('SELECT * FROM Users WHERE username = ?	', username, function (error, results, fields) {
-            if (error) throw error;
-            return res.json(results);
-        });
 
+        db.get(
+            'SELECT * FROM Users WHERE (username = ? AND passwd = ?) OR (username = ? AND user_authid = ?)',
+            [username, passwd, username, passwd],  // Assuming passwd is the password and usercredentials is the user credentials
+            function (error, results) {
+                if (error) {
+                    throw error;
+                }
+                return res.json(results);
+            }
+        );
     },
 
     /**
