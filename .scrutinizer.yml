@@ -6,7 +6,7 @@ build:
     coverage:
       tests:
         override:
-          - command: "cd backend/ && npm install --save-dev && && npm test"
+          - command: "cd backend/ && npm install --save-dev && npm test"
             coverage:
               file: backend/coverage/clover.xml   # <- Set this to where we find the coverage data.
               format: clover
