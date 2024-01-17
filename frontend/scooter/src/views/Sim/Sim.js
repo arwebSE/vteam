@@ -10,6 +10,12 @@ import { useState, useEffect } from "react";
 import * as turf from '@turf/turf';
 import { RotatingLines } from 'react-loader-spinner';
 
+// Mycket av denna komponent bygger på Turf.js
+// Dokumentationen för Turf.js finns här:
+// https://turfjs.org/
+
+// Denna komponent är en simulering av hur cyklarna rör sig i städerna
+
 const names = require('../../data/names.json');
 
 function Sim() {
@@ -44,6 +50,7 @@ function Sim() {
     async function getSpawnZones(cities) {
         let names = cities.map(city => city.id);
         let spawn = {};
+
 
         for (let i = 0; i < names.length; i++) {
             let cityZones = await zoneModel.getCityZoneFromCity(names[i]);
@@ -162,6 +169,7 @@ function Sim() {
 
         e.preventDefault();
         let cities = await cityModel.getCities();
+        console.log(cities)
         let zones = await getSpawnZones(cities);
         let noGoZones = await getNogoZones(cities);
         setNogoZones(noGoZones);
