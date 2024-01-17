@@ -5,9 +5,9 @@
 [![Build Status](https://scrutinizer-ci.com/g/arwebSE/vteam/badges/build.png?b=master)](https://scrutinizer-ci.com/g/arwebSE/vteam/build-status/master)
 [![Code Coverage](https://scrutinizer-ci.com/g/arwebSE/vteam/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/arwebSE/vteam/?branch=master)
 
-This is the development branch for the main database section of the system.
-
-As of right now, the database is implemented together with a mysql-sever using docker-compose.
+This is our project for the "vteam" course, where we have made a service that allows the users to hire electronic kickbikes.
+A simulation of the service running with multiple hypothetical users is also avaliable in the simulation environment. 
+(INSTRUCTIONS FOR RUNNING SIMULATION)
 
 ## Requirements
 -   [SpatiaLite](https://www.gaia-gis.it/fossil/libspatialite/index)
