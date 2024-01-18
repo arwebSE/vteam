@@ -5,6 +5,8 @@ build:
         paths:
           - "./tests"
       environment:
+        node:
+              version: '18.17.1'
         PATH_COVERAGE: "./coverage/clover.xml"
       overrides:
         - command: ./test.sh
