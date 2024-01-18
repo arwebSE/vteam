@@ -1,3 +1,16 @@
+build:
+  nodes:
+    coverage:
+      tests:
+        paths:
+          - "./tests"
+      environment:
+        PATH_COVERAGE: "./coverage/clover.xml"
+      overrides:
+        - command: ./test.sh
+          coverage:
+            file: "./coverage/clover.xml"
+            format: "clover"
+
 filter:
-    excluded_paths:
-        - "backend/coverage/"               # ignore coverage folder
+  excluded_paths: [coverage/*]
