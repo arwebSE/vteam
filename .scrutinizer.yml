@@ -6,17 +6,6 @@ build:
         node: "16"
 
     nodes:
-        coverage:
-            dependencies:
-                before:
-                    - cd backend
-                    - npm install
-            tests:
-                override:
-                    - command: "npm test"
-                      coverage:
-                          file: "backend/coverage/clover.xml"
-                          format: clover
         analysis:
             tests:
                 override:
