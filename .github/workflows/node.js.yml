@@ -41,7 +41,10 @@ jobs:
     - name: Start Backend server for testing
       run: |
         docker compose up -d backend
-    - name: Run backend tests
+    - name: Run backend tests and get coverage
       run: |
         cd backend
-        npm test
+        npm run coverage
+    - name: Coveralls GitHub Action
+      uses: coverallsapp/github-action@v2.2.3
+            
