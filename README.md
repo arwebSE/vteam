@@ -3,7 +3,7 @@
 [![Node.js CI](https://github.com/arwebSE/vteam/actions/workflows/node.js.yml/badge.svg?branch=master)](https://github.com/arwebSE/vteam/actions/workflows/node.js.yml)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/arwebSE/vteam/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/arwebSE/vteam/?branch=master)
 [![Build Status](https://scrutinizer-ci.com/g/arwebSE/vteam/badges/build.png?b=master)](https://scrutinizer-ci.com/g/arwebSE/vteam/build-status/master)
-[![Code Coverage](https://scrutinizer-ci.com/g/arwebSE/vteam/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/arwebSE/vteam/?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/arwebSE/vteam/badge.svg?branch=master)](https://coveralls.io/github/arwebSE/vteam?branch=master)
 
 This is our project for the "vteam" course, where we have made a service that allows the users to hire electronic kickbikes.
 A simulation of the service running with multiple hypothetical users is also avaliable in the simulation environment. 
