@@ -1,0 +1,33 @@
+checks:
+    javascript: true
+
+build:
+    environment:
+        node: '14'
+
+    nodes:
+        coverage:
+            dependencies:
+                before:
+                    - nvm install 14 # Ensure using correct Node.js version
+                    - nvm use 14
+                    - cd backend
+                    - npm cache clean --force # Clear npm cache
+                    - npm install
+            tests:
+                override:
+                  - command: "cd backend/ && npm test"
+                    coverage:
+                        file: "backend/coverage/clover.xml"
+                        format: clover
+        analysis:
+            tests:
+                override:
+                    - js-scrutinizer-run
+        tests: true
+    environment:
+                node:
+                    version: "v20.5.1"      
+filter:
+    excluded_paths:
+        - "backend/coverage/lcov-report"
