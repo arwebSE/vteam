@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">40% </span>
+                <span class="strong">39.39% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>26/65</span>
+                <span class='fraction'>26/66</span>
             </div>
         
             
@@ -248,7 +248,11 @@
 <a name='L183'></a><a href='#L183'>183</a>
 <a name='L184'></a><a href='#L184'>184</a>
 <a name='L185'></a><a href='#L185'>185</a>
-<a name='L186'></a><a href='#L186'>186</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L186'></a><a href='#L186'>186</a>
+<a name='L187'></a><a href='#L187'>187</a>
+<a name='L188'></a><a href='#L188'>188</a>
+<a name='L189'></a><a href='#L189'>189</a>
+<a name='L190'></a><a href='#L190'>190</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -276,6 +280,7 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -289,9 +294,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -322,9 +332,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -473,11 +481,17 @@ const userModel = {
      */
 &nbsp;
     passVerif: <span class="fstat-no" title="function not covered" >fu</span>nction (username, passwd, res) {
-<span class="cstat-no" title="statement not covered" >        db.get('SELECT * FROM Users WHERE username = ?	', username, <span class="fstat-no" title="function not covered" >fu</span>nction (error, results, fields) {</span>
-<span class="cstat-no" title="statement not covered" >            if (error) <span class="cstat-no" title="statement not covered" >throw error;</span></span>
-<span class="cstat-no" title="statement not covered" >            return res.json(results);</span>
-        });
 &nbsp;
+<span class="cstat-no" title="statement not covered" >        db.get(</span>
+            'SELECT * FROM Users WHERE (username = ? AND passwd = ?) OR (username = ? AND user_authid = ?)',
+            [username, passwd, username, passwd],  // Assuming passwd is the password and usercredentials is the user credentials
+<span class="fstat-no" title="function not covered" >            fu</span>nction (error, results) {
+<span class="cstat-no" title="statement not covered" >                if (error) {</span>
+<span class="cstat-no" title="statement not covered" >                    throw error;</span>
+                }
+<span class="cstat-no" title="statement not covered" >                return res.json(results);</span>
+            }
+        );
     },
 &nbsp;
     /**
@@ -507,7 +521,6 @@ const userModel = {
      * @returns {error} - If an error occurs during the update.
      */
     update: function (userId, req, res) {
-        // Build the SQL query and parameters based on the provided or existing data
         const sql = 'UPDATE Users SET ' +
             'username = COALESCE(?, username), ' +
             'email = COALESCE(?, email), ' +
@@ -515,7 +528,6 @@ const userModel = {
             'userrole = COALESCE(?, userrole) ' +
             'WHERE userId = ?';
 &nbsp;
-        // Ensure that undefined values are replaced with null
         const params = [
             req.username || <span class="branch-1 cbranch-no" title="branch not covered" >null,</span>
             req.email || <span class="branch-1 cbranch-no" title="branch not covered" >null,</span>
@@ -625,7 +637,7 @@ module.exports = userModel;</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-01-11T13:27:55.627Z
+                at 2024-01-18T08:41:54.667Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

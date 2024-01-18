@@ -10,6 +10,12 @@ import { useState, useEffect } from "react";
 import * as turf from '@turf/turf';
 import { RotatingLines } from 'react-loader-spinner';
 
+// Mycket av denna komponent bygger på Turf.js
+// Dokumentationen för Turf.js finns här:
+// https://turfjs.org/
+
+// Denna komponent är en simulering av hur cyklarna rör sig i städerna
+
 const names = require('../../data/names.json');
 
 function Sim() {
@@ -44,6 +50,7 @@ function Sim() {
     async function getSpawnZones(cities) {
         let names = cities.map(city => city.id);
         let spawn = {};
+
 
         for (let i = 0; i < names.length; i++) {
             let cityZones = await zoneModel.getCityZoneFromCity(names[i]);
@@ -162,6 +169,7 @@ function Sim() {
 
         e.preventDefault();
         let cities = await cityModel.getCities();
+        console.log(cities)
         let zones = await getSpawnZones(cities);
         let noGoZones = await getNogoZones(cities);
         setNogoZones(noGoZones);
@@ -252,7 +260,7 @@ function Sim() {
                         const targetLocation = [goals[city][i][1], goals[city][i][0]];
                         let speedKmPerHour;
                         let status;
-                        let consumption = 10;
+                        let consumption = 1;
                         let charge = bikes[i].battery;
 
                         if (bikes[i].speed === null) {
@@ -295,7 +303,7 @@ function Sim() {
                         // Distansen beräknas
                         // Avståndet kan beräknas med hjälp av hastigheten och tiden
                         // Räknas ut med mps * tid = meter
-                        const dist = (speedKmPerHour / 3.6) * (updateInterval / 1000) / 1000;
+                        const dist = (updateInterval / 1000) * ((speedKmPerHour / 3.6) / 1000);
                         // Nya positionen beräknas med turf genom att flytta en punkt längs en linje med avståndet
                         const newLocation = turf.along(turf.lineString([currentLocation, targetLocation]), dist);
 
@@ -312,8 +320,7 @@ function Sim() {
                             "city_cityid": bikes[i].city_cityid,
                             "speed": speedKmPerHour
                         });
-                        console.log(bikes[i].battery)
-                        console.log(charge)
+
                     }
                     // Uppdaterar alla cyklar med en request
                     await simModel.updateMultipleBikes(update);
