@@ -1,0 +1,15 @@
+build:
+  nodes:
+    coverage:
+      environment:
+        # Set the path to your Jest coverage report directory
+        PATH_COVERAGE: "coverage"
+      overrides:
+        - command: |
+            # Install dependencies and run your tests
+            npm install
+            npm test
+
+            # Upload Jest coverage reports to Scrutinizer
+            curl -L https://scrutinizer-ci.com/ocular.phar -o ocular.phar
+            php ocular.phar code-coverage:upload --format=php-clover ${PATH_COVERAGE}/clover.xml
