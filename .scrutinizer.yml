@@ -9,14 +9,13 @@ build:
         coverage:
             dependencies:
                 before:
-                    - nvm install 14 # Ensure using correct Node.js version
+                    - nvm install 14
                     - nvm use 14
                     - cd backend
-                    - npm cache clean --force # Clear npm cache
                     - npm install
             tests:
                 override:
-                    - command: "cd backend && npm test"
+                    - command: "npm test"
                       coverage:
                           file: "backend/coverage/clover.xml"
                           format: clover
