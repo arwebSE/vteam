@@ -16,7 +16,7 @@ build:
                     - npm install
             tests:
                 override:
-                    - command: "cd backend/ && npm test"
+                    - command: "cd backend && npm test"
                       coverage:
                           file: "backend/coverage/clover.xml"
                           format: clover
