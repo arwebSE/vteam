@@ -3,14 +3,12 @@ checks:
 
 build:
     environment:
-        node: "20"
+        node: "16"
 
     nodes:
         coverage:
             dependencies:
                 before:
-                    - nvm install 20
-                    - nvm use 20
                     - cd backend
                     - npm install
             tests:
