@@ -12,7 +12,6 @@ const AddMoneyToUser = () => {
 
   const addMoney = () => {
     if (creditCard.length < 12 || creditCard.length > 14) {
-      console.log("You have to write a correct credit card.");
       setIsCreditCardValid(false);
       setSuccessMessage('You have to write a correct credit card.');
       return;
@@ -20,7 +19,6 @@ const AddMoneyToUser = () => {
     setIsCreditCardValid(true);
 
     if (!money || money <= 0) {
-      console.log("You have to write a correct amount of money.");
       setIsMoneyAmountValid(false);
       setSuccessMessage('You have to write a correct amount of money.');
       return;
@@ -52,7 +50,7 @@ const AddMoneyToUser = () => {
           </button>
         </div>
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-indigo-600 mb-8 font-sans text-center">
-          Edit profile!
+          Add money!
         </h1>
 
         <p className="rounded p-3 text-center text-sm md:text-base lg:text-lg text-gray-700 shadow bg-white mb-12">

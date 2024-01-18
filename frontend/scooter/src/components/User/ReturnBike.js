@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { MapContainer, TileLayer, useMap } from "react-leaflet";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import L from "leaflet";
 
@@ -12,7 +12,7 @@ import MoveToUser from "../MoveToUser";
 import logModel from "../../models/logModel";
 import zoneModel from "../../models/zoneModel";
 
-import BikeMarker from "../Bike/bikeMarker";
+import BikeMarker from "../Bike/bikeMarkerUser";
 import ZoneMarker from "../Zone/ZoneMarker";
 
 import * as turf from '@turf/turf';
@@ -28,6 +28,7 @@ let city = "";
 const MarkLocationMap = () => {
     const location = useLocation();
     const scooterId = location.pathname.split("/").pop();
+    const navigate = useNavigate();
 
     const returnBike = async () => {
         try {
@@ -37,17 +38,16 @@ const MarkLocationMap = () => {
         const userBike = allBikes.filter(bike => bike.scooterId === parseInt(scooterId));
 
         let totalCost = userBike[0].price;
+        let isInside = false;
 
         let returnPlaceCost = 0;
         // Iterate over all parking zones
         for (const zone of allParkingZones) {
-            // Parse the WKT geometry string
+
             const geometry = wellknown.parse(zone.coordinates);
 
-            // Extract coordinates from the parsed geometry
             const polygonCoordinates = geometry.coordinates[0].map(coord => [coord[0], coord[1]]);
 
-            console.log(polygonCoordinates);
             const polygon = turf.polygon([polygonCoordinates]);
 
             // Create a point feature for the bike location
@@ -57,19 +57,21 @@ const MarkLocationMap = () => {
             const isInsidePolygon = turf.booleanPointInPolygon(point, polygon);
 
             if (isInsidePolygon) {
-                console.log(`The bike is inside the polygon of Zone ${zone.zoneId}.`);
-                returnPlaceCost = 5;
-                console.log(returnPlaceCost);
-                totalCost = totalCost - returnPlaceCost;
-                console.log(totalCost);
-                await userModel.addMoney(localStorage.userId, returnPlaceCost);
+                isInside = true;
+                break;
             } else {
-                console.log(`The bike is outside the polygon of Zone ${zone.zoneId}.`);
-                returnPlaceCost = 10;
-                console.log(returnPlaceCost);
-                totalCost = totalCost + returnPlaceCost;
-                await userModel.removeMoney(localStorage.userId, returnPlaceCost);
+                isInside = false;
             }
+        }
+
+        if (isInside === true) {
+            returnPlaceCost = 5;
+            totalCost = totalCost - returnPlaceCost;
+            await userModel.addMoney(localStorage.userId, returnPlaceCost);
+        } else {
+            returnPlaceCost = 10;
+            totalCost = totalCost + returnPlaceCost;
+            await userModel.removeMoney(localStorage.userId, returnPlaceCost);
         }
 
         const timeNow = new Date();
@@ -134,6 +136,8 @@ const MarkLocationMap = () => {
             await userToBikeModel.delete(userBike[0].idUsertobike);
             await logModel.create(logData);
             document.getElementById("map");
+
+            navigate("/user/profile/history");
         }
         } catch (error) {
             console.log("Error in returnBike: ", error);

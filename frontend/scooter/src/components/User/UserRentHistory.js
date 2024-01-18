@@ -17,8 +17,6 @@ const RentHistory = () => {
             const userData = await userModel.getUser(localStorage.userId);
 
             setUserData(userData);
-            console.log(userData);
-            console.log(userLogs);
             setLogs(userLogs);
           } catch (error) {
             console.error("Error fetching rented logs:", error);
@@ -98,7 +96,7 @@ const RentHistory = () => {
                         </div>
                          )}
                          {!showTimeDetails[log.logId] && (
-                            <p className="font-semibold text-gray-600"> Price: {log.price }</p>
+                            <p className="font-semibold text-gray-600"> Price: {log.totalPrice }</p>
                          )}
                         <h1 className="text-lg font-semibold text-gray-800">
                             { index + 1 }

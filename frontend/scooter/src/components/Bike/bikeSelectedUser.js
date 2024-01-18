@@ -96,15 +96,31 @@ const BikeRent = () => {
       }
   };
   
+  const handleBack = () => {
+    navigate("/user/rent");
+  };
 
   return (
       <form
           onSubmit={handleSubmit}
           className="flex flex-col bg-gray-100 rounded-lg shadow-xl p-12"
       >
-          <h1 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+        <div className="flex justify-start mb-6">
+          <button
+              onClick={handleBack}
+              className="cursor-pointer rounded bg-indigo-600 hover:bg-indigo-700 text-lg p-3 text-white shadow-md hover:shadow-lg transition duration-300 ease-in-out flex items-center"
+          >
+            Back to map
+          </button>
+        </div>
+
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-indigo-600 mb-8 font-sans text-center">
               Rent Bike
           </h1>
+
+        <p className="rounded p-3 text-center text-sm md:text-base lg:text-lg text-gray-700 shadow bg-white mb-12">
+        Fill in stop time and press rent. Minimum time is 5 minutes.
+        </p>
 
           <h2 className="text-lg font-semibold mb-2">Balance: {money}</h2>
 
