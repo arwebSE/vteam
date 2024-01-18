@@ -10,7 +10,6 @@ build:
             dependencies:
                 before:
                     - cd backend
-                    - export LD_LIBRARY_PATH="/usr/local/lib64/:$LD_LIBRARY_PATH"
                     - npm install
             tests:
                 override:
