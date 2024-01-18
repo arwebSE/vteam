@@ -3,7 +3,7 @@ checks:
 
 build:
     environment:
-        node: '14'
+        node: "14"
 
     nodes:
         coverage:
@@ -16,18 +16,15 @@ build:
                     - npm install
             tests:
                 override:
-                  - command: "cd backend/ && npm test"
-                    coverage:
-                        file: "backend/coverage/clover.xml"
-                        format: clover
+                    - command: "cd backend/ && npm test"
+                      coverage:
+                          file: "backend/coverage/clover.xml"
+                          format: clover
         analysis:
             tests:
                 override:
                     - js-scrutinizer-run
         tests: true
-    environment:
-                node:
-                    version: "v20.5.1"      
 filter:
     excluded_paths:
         - "backend/coverage/lcov-report"
