@@ -1,7 +1,10 @@
+import url from "./getUrl";
+
 const bikeModel = {
     getBikes: async function () {
         try {
-            const response = await fetch('http://localhost:1337/v1/scooter', {
+            const path = url.getUrl();
+            const response = await fetch(`${path}v1/scooter`, {
                 headers: {
                     'API-KEY': 'BOI-API-KEY'
                 }
@@ -15,7 +18,8 @@ const bikeModel = {
 
     getAllAvailable: async function () {
         try {
-            const response = await fetch('http://localhost:1337/v1/scooter/available', {
+            const path = url.getUrl();
+            const response = await fetch(`${path}v1/scooter/available`, {
                 headers: {
                     'API-KEY': 'BOI-API-KEY'
                 }
@@ -28,7 +32,8 @@ const bikeModel = {
     },
     getLowBatteryBikes: async function () {
         try {
-            const response = await fetch('http://localhost:1337/v1/scooter/lowbattery', {
+            const path = url.getUrl();
+            const response = await fetch(`${path}v1/scooter/lowbattery`, {
                 headers: {
                     'API-KEY': 'BOI-API-KEY'
                 }
@@ -42,7 +47,8 @@ const bikeModel = {
 
     getBike: async function (id) {
         try {
-            const response = await fetch(`http://localhost:1337/v1/scooter/${id}`, {
+            const path = url.getUrl();
+            const response = await fetch(`${path}v1/scooter/${id}`, {
                 headers: {
                     'API-KEY': 'BOI-API-KEY'
                 }
@@ -56,6 +62,7 @@ const bikeModel = {
 
     getBikeCity: async function (lat, lng) {
         try {
+
             const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`);
             const data = await response.json();
             if (data.address.city === undefined) {
@@ -70,7 +77,9 @@ const bikeModel = {
 
     createBike: async function (bike) {
         try {
-            const response = await fetch('http://localhost:1337/v1/scooter', {
+            const path = url.getUrl();
+
+            const response = await fetch(`${path}/v1/scooter`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -92,7 +101,9 @@ const bikeModel = {
     },
     getBikeIdsFromCity: async function (city) {
         try {
-            const response = await fetch(`http://localhost:1337/v1/scooter/ids/${city}`, {
+            const path = url.getUrl();
+
+            const response = await fetch(`${path}/v1/scooter/ids/${city}`, {
                 headers: {
                     'API-KEY': 'BOI-API-KEY'
                 }
@@ -105,7 +116,8 @@ const bikeModel = {
     },
     editUser: async function (scooterId, lon, lat, battery, status, city, speed = 0) {
         try {
-            const response = await fetch(`http://localhost:1337/v1/scooter/${scooterId}`, {
+            const path = url.getUrl();
+            const response = await fetch(`${path}/v1/scooter/${scooterId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -128,7 +140,9 @@ const bikeModel = {
     },
     getBikesFromCity: async function (city) {
         try {
-            const response = await fetch(`http://localhost:1337/v1/scooter/city/${city}`, {
+            const path = url.getUrl();
+
+            const response = await fetch(`${path}/v1/scooter/city/${city}`, {
                 headers: {
                     'API-KEY': 'BOI-API-KEY'
                 }
@@ -141,7 +155,8 @@ const bikeModel = {
     },
     deleteAllBikes: async function () {
         try {
-            const response = await fetch('http://localhost:1337/v1/scooter', {
+            const path = url.getUrl();
+            const response = await fetch(`${path}/v1/scooter`, {
                 headers: { 'API-KEY': 'BOI-API-KEY' },
                 method: 'DELETE'
             });
@@ -153,7 +168,9 @@ const bikeModel = {
     },
     rentBike: async function (scooterId) {
         try {
-            const response = await fetch(`http://localhost:1337/v1/scooter/${scooterId}`, {
+            const path = url.getUrl();
+
+            const response = await fetch(`${path}/v1/scooter/${scooterId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -172,7 +189,7 @@ const bikeModel = {
 
     returnBike: async function (bike) {
         try {
-            const response = await fetch(`http://localhost:1337/v1/scooter/${bike.scooterId}`, {
+            const response = await fetch(`${path}/v1/scooter/${bike.scooterId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

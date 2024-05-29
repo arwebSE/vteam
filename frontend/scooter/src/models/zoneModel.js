@@ -1,8 +1,11 @@
+import url from "./getUrl";
 const zoneModel = {
     // Get zone fetch request
     getZones: async function getZones() {
         try {
-            const response = await fetch(`http://localhost:1337/v1/zone`, {
+            const path = url.getUrl();
+
+            const response = await fetch(`${path}/v1/zone`, {
                 headers: {
                     'API-KEY': 'BOI-API-KEY'
                 }
@@ -17,7 +20,9 @@ const zoneModel = {
     // Get zone fetch request
     getZone: async function getZone(zoneId) {
         try {
-            const response = await fetch(`v1/zone/${zoneId}`, {
+            const path = url.getUrl();
+
+            const response = await fetch(`${path}/v1/zone/${zoneId}`, {
                 headers: {
                     'API-KEY': 'BOI-API-KEY'
                 }
@@ -32,7 +37,9 @@ const zoneModel = {
     // Put zone fetch request
     createZone: async function createZone(zoneData) {
         try {
-            const response = await fetch(`http://localhost:1337/v1/zone`, {
+            const path = url.getUrl();
+
+            const response = await fetch(`${path}/v1/zone`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -49,7 +56,9 @@ const zoneModel = {
     },
     getNogoFromCity: async function getNogoFromCity(city) {
         try {
-            const response = await fetch(`http://localhost:1337/v1/zone/nogo/${city}`, {
+            const path = url.getUrl();
+
+            const response = await fetch(`${path}/v1/zone/nogo/${city}`, {
                 headers: {
                     'API-KEY': 'BOI-API-KEY'
                 }
@@ -63,7 +72,9 @@ const zoneModel = {
     },
     getCityZoneFromCity: async function getCityZoneFromCity(city) {
         try {
-            const response = await fetch(`http://localhost:1337/v1/zone/city/${city}`, {
+            const path = url.getUrl();
+
+            const response = await fetch(`${path}/v1/zone/city/${city}`, {
                 headers: {
                     'API-KEY': 'BOI-API-KEY'
                 }
@@ -77,7 +88,8 @@ const zoneModel = {
     },
     getRestrictedFromCity: async function getRestrictedFromCity(city) {
         try {
-            const response = await fetch(`http://localhost:1337/v1/zone/restricted/${city}`, {
+            const path = url.getUrl();
+            const response = await fetch(`${path}/v1/zone/restricted/${city}`, {
                 headers: {
                     'API-KEY': 'BOI-API-KEY'
                 }
@@ -91,7 +103,9 @@ const zoneModel = {
     },
     getAllParkingZones: async function getAllParkingZones() {
         try {
-            const response = await fetch(`http://localhost:1337/v1/zone/parkings`, {
+            const path = url.getUrl();
+
+            const response = await fetch(`${path}/v1/zone/parkings`, {
                 headers: {
                     'API-KEY': 'BOI-API-KEY'
                 }
