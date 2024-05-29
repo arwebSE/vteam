@@ -1,10 +1,10 @@
-import url from "./getUrl";
+import urlModel from "./getUrl";
 
 const cityModel = {
     // Get with name of city or city id
     getCity: async function (city) {
         try {
-            const path = url.getUrl();
+            const path = urlModel.getUrl();
             const url = `${path}/v1/city/${city}`;
             const response = await fetch(url, {
                 headers: {
@@ -20,7 +20,7 @@ const cityModel = {
 
     getCities: async function () {
         try {
-            const path = url.getUrl();
+            const path = urlModel.getUrl();
 
             const response = await fetch(`${path}/v1/city`, {
                 headers: {

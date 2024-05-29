@@ -37,4 +37,5 @@ const userSimulationModel = {
     }
 };
 
-module.exports = userSimulationModel;
+// module.exports = userSimulationModel;
+export default userSimulationModel;

@@ -189,6 +189,8 @@ const bikeModel = {
 
     returnBike: async function (bike) {
         try {
+            const path = url.getUrl();
+
             const response = await fetch(`${path}/v1/scooter/${bike.scooterId}`, {
                 method: 'PUT',
                 headers: {
