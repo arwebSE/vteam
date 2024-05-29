@@ -4,7 +4,7 @@ const bikeModel = {
     getBikes: async function () {
         try {
             const path = url.getUrl();
-            const response = await fetch(`${path}v1/scooter`, {
+            const response = await fetch(`${path}/v1/scooter`, {
                 headers: {
                     'API-KEY': 'BOI-API-KEY'
                 }
@@ -19,7 +19,7 @@ const bikeModel = {
     getAllAvailable: async function () {
         try {
             const path = url.getUrl();
-            const response = await fetch(`${path}v1/scooter/available`, {
+            const response = await fetch(`${path}/v1/scooter/available`, {
                 headers: {
                     'API-KEY': 'BOI-API-KEY'
                 }
@@ -33,7 +33,7 @@ const bikeModel = {
     getLowBatteryBikes: async function () {
         try {
             const path = url.getUrl();
-            const response = await fetch(`${path}v1/scooter/lowbattery`, {
+            const response = await fetch(`${path}/v1/scooter/lowbattery`, {
                 headers: {
                     'API-KEY': 'BOI-API-KEY'
                 }
@@ -48,7 +48,7 @@ const bikeModel = {
     getBike: async function (id) {
         try {
             const path = url.getUrl();
-            const response = await fetch(`${path}v1/scooter/${id}`, {
+            const response = await fetch(`${path}/v1/scooter/${id}`, {
                 headers: {
                     'API-KEY': 'BOI-API-KEY'
                 }
