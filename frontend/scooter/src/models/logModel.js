@@ -1,4 +1,4 @@
-import url from './url.js';
+import url from './getUrl.js';
 
 const logModel = {
     getAll: async function () {
