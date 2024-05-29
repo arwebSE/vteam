@@ -1,7 +1,11 @@
+import url from './url.js';
+
 const logModel = {
     getAll: async function () {
         try {
-            const response = await fetch('http://localhost:1337/v1/log', {
+            const path = url.getUrl();
+
+            const response = await fetch(`${path}/v1/log`, {
                 headers: {
                     'API-KEY': 'BOI-API-KEY'
                 }
@@ -15,7 +19,8 @@ const logModel = {
 
     getOneUserLogs: async function (userId) {
         try {
-            const response = await fetch(`http://localhost:1337/v1/log/${userId}`, {
+            const path = url.getUrl();
+            const response = await fetch(`${path}/v1/log/${userId}`, {
                 headers: {
                     'API-KEY': 'BOI-API-KEY'
                 }
@@ -39,7 +44,9 @@ const logModel = {
         };
         console.log(log);
         try {
-            const response = await fetch('http://localhost:1337/v1/log', {
+            const path = url.getUrl();
+
+            const response = await fetch(`${path}/v1/log`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -58,7 +65,8 @@ const logModel = {
 
     update: async function (logId, log) {
         try {
-            const response = await fetch(`http://localhost:1337/v1/log/${logId}`, {
+            const path = url.getUrl();
+            const response = await fetch(`${path}/v1/log/${logId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -86,7 +94,9 @@ const logModel = {
 
     returnBikeLogUpdate: async function (logId, log) {
         try {
-            const response = await fetch(`http://localhost:1337/v1/log/${logId}`, {
+            const path = url.getUrl();
+
+            const response = await fetch(`${path}/v1/log/${logId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -109,7 +119,9 @@ const logModel = {
 
     delete: async function (logId) {
         try {
-            const response = await fetch(`http://localhost:1337/v1/log/${logId}`, {
+            const path = url.getUrl();
+
+            const response = await fetch(`${path}/v1/log/${logId}`, {
                 method: 'DELETE',
                 headers: {
                     'API-KEY': 'BOI-API-KEY'

@@ -1,3 +1,5 @@
+import url from "./getUrl";
+
 const userSimulationModel = {
     // getUsers: async function () {
     //     try {
@@ -8,7 +10,9 @@ const userSimulationModel = {
     //     }
     // },
     createUser: async function (userName, email, passwd) {
-        fetch('http://localhost:1337/v1/user', {
+        const path = url.getUrl();
+
+        fetch(`${path}/v1/user`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'API-KEY': 'BOI-API-KEY' },
             body: JSON.stringify({
@@ -21,7 +25,9 @@ const userSimulationModel = {
             .catch(error => console.error(error));
     },
     updateMultipleBikes: async function (scooters) {
-        fetch('http://localhost:1337/v1/scooter', {
+        const path = url.getUrl();
+
+        fetch(`${path}/v1/scooter`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json', 'API-KEY': 'BOI-API-KEY' },
             body: JSON.stringify(scooters)

@@ -1,3 +1,5 @@
+import url from "./getUrl";
+
 const userModel = {
     /**
      * Fetches all users from the API
@@ -5,7 +7,9 @@ const userModel = {
      */
     getUsers: async function () {
         try {
-            const response = await fetch('http://localhost:1337/v1/user', {
+            const path = url.getUrl();
+
+            const response = await fetch(`${path}/v1/user`, {
                 headers: {
                     'API-KEY': 'BOI-API-KEY'
                 }
@@ -24,7 +28,9 @@ const userModel = {
      */
     getUser: async function (id) {
         try {
-            const response = await fetch(`http://localhost:1337/v1/user/${id}`, {
+            const path = url.getUrl();
+
+            const response = await fetch(`${path}/v1/user/${id}`, {
                 headers: {
                     'API-KEY': 'BOI-API-KEY'
                 }
@@ -45,7 +51,9 @@ const userModel = {
     passVerif: async function (username, passwd) {
         console.log(username, passwd);
         try {
-            const response = await fetch(`http://localhost:1337/v1/user/ver/${username}/${passwd}`, {
+            const path = url.getUrl();
+
+            const response = await fetch(`${path}/v1/user/ver/${username}/${passwd}`, {
                 headers: {
                     'API-KEY': 'BOI-API-KEY'
                 }
@@ -75,7 +83,9 @@ const userModel = {
         };
 
         try {
-            const response = await fetch('http://localhost:1337/v1/user', {
+            const path = url.getUrl();
+
+            const response = await fetch(`${path}/v1/user`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json', // Set content type to JSON
@@ -104,7 +114,9 @@ const userModel = {
      */
     editUser: async function (id, username, email, passwd, userRole = "user") {
         try {
-            const response = await fetch(`http://localhost:1337/v1/user/${id}`, {
+            const path = url.getUrl();
+
+            const response = await fetch(`${path}/v1/user/${id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -133,7 +145,9 @@ const userModel = {
      */
     addMoney: async function (id, amount) {
         try {
-            const response = await fetch(`http://localhost:1337/v1/user/${id}/addMoney`, {
+            const path = url.getUrl();
+
+            const response = await fetch(`${path}/v1/user/${id}/addMoney`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -158,7 +172,9 @@ const userModel = {
      */
     removeMoney: async function (id, amount) {
         try {
-            const response = await fetch(`http://localhost:1337/v1/user/${id}/removeMoney`, {
+            const path = url.getUrl();
+
+            const response = await fetch(`${path}/v1/user/${id}/removeMoney`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
