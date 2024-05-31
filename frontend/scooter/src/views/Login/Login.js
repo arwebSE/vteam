@@ -2,6 +2,8 @@ import { useContext, useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc"
 
+import url from "../../util/url";
+
 // auth imports
 import { AuthContext } from "../../util/AuthContext";
 import { handleLogin, handleOauthlogin } from "../../util/authUtils";
@@ -11,6 +13,7 @@ import boi from "../../boi.png";
 
 
 function Login() {
+    const url = url.getUrl();
     const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
     const navigate = useNavigate();
     const urlParams = new URLSearchParams(window.location.search);
@@ -106,7 +109,7 @@ function Login() {
 
                 <a
                     className="w-full mt-6 flex items-baseline justify-center  border border-transparent rounded-md shadow-sm text-base md:text-lg font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    href="http://localhost:1337/oauth2/login/google"
+                    href={url + "/oauth2/login/google"}
                 >
                     <div className="googleIcon pt-1">
                         <FcGoogle />
