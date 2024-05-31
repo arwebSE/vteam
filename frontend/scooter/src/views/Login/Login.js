@@ -2,7 +2,7 @@ import { useContext, useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc"
 
-import url from "../../util/url";
+import urlModel from "../../model/getUrl";
 
 // auth imports
 import { AuthContext } from "../../util/AuthContext";
@@ -13,7 +13,7 @@ import boi from "../../boi.png";
 
 
 function Login() {
-    const url = url.getUrl();
+    const url = urlModel.getUrl();
     const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
     const navigate = useNavigate();
     const urlParams = new URLSearchParams(window.location.search);
