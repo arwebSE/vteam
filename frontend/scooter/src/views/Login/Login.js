@@ -2,7 +2,7 @@ import { useContext, useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc"
 
-import urlModel from "../../model/getUrl";
+import urlModel from "../../models/getUrl";
 
 // auth imports
 import { AuthContext } from "../../util/AuthContext";
